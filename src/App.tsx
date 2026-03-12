@@ -21,10 +21,15 @@ import SanctionUserTable from './components/SanctionUserTable';
 import SanctionDetailPanel from './components/SanctionDetailPanel';
 import MemoModal from './components/MemoModal';
 import Pagination from './components/Pagination';
+import FieldDefinitions from './components/FieldDefinitions';
+
+type Tab = 'main' | 'definitions';
 
 const ITEMS_PER_PAGE = 10;
 
 function App() {
+  const [activeTab, setActiveTab] = useState<Tab>('main');
+
   // 필터 상태
   const [period, setPeriod] = useState<PeriodFilter>('all');
   const [customDateRange, setCustomDateRange] = useState({
@@ -196,9 +201,39 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-[1400px] mx-auto p-6">
-        {/* 헤더 */}
-        <h1 className="text-xl font-bold mb-6">제재 유저 관리</h1>
+        {/* 헤더 + 탭 */}
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-xl font-bold">제재 유저 관리</h1>
+          <div className="flex gap-1">
+            <button
+              onClick={() => setActiveTab('main')}
+              className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
+                activeTab === 'main'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              제재 관리
+            </button>
+            <button
+              onClick={() => setActiveTab('definitions')}
+              className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
+                activeTab === 'definitions'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              필드 정의서
+            </button>
+          </div>
+        </div>
 
+        {activeTab === 'definitions' ? (
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <FieldDefinitions />
+          </div>
+        ) : (
+        <>
         {/* 필터 */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
           <Filters
@@ -238,6 +273,8 @@ function App() {
             onPageChange={setCurrentPage}
           />
         </div>
+        </>
+        )}
       </div>
 
       {/* 상세 패널 */}
