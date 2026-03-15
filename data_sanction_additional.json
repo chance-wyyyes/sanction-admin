@@ -1,0 +1,1192 @@
+[
+  {
+    "targetUserId": "R0qGPxyyFqb6rIae5dWod00uKYpe",
+    "targetNickname": "한Rare봉",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 1항 ② / 제2조 3항 ① 외부 거래 행위 - 다른 회원을 외부 플랫폼 또는 커뮤니티 등으로 유도하거나 유도할 목적으로 판단되는 행위 / 기타 와이스 서비스를 통하지 않은 방식의 거래 또는 이에 준하는 행위 등 * 경고 1회",
+    "validUntil": "2025. 11. 5. 오전 11:40:57",
+    "timestamp": "2025-11-02 11:42:14 KST",
+    "slackTs": "1762051334.579829"
+  },
+  {
+    "targetUserId": "h7XH5H9sRvZTwbDW3nU6VYZFxbr0",
+    "targetNickname": "재키찬",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ① 외부 거래 행위 - 연락처·계좌번호를 안내하거나 노출하여 직거래를 유도하는 행위 *(경고 1회)",
+    "validUntil": "2025. 11. 5. 오후 10:57:56",
+    "timestamp": "2025-11-02 22:58:23 KST",
+    "slackTs": "1762091903.991589"
+  },
+  {
+    "targetUserId": "TZvxyRZ8IJyaQhHAsoycjHWWVLtj",
+    "targetNickname": "qwertyuiop",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat",
+    "reason": "운영정책 제2조 1항 ② 회원의 커뮤니티 이용이 서비스 성격 및 실질에 부합하지 않는다고 판단하는 경우 - 다른 회원을 외부 플랫폼 또는 커뮤니티 등으로 유도하거나 유도할 목적으로 판단되는 행위 *(경고 1회)",
+    "validUntil": "2025. 11. 5. 오전 10:56:54",
+    "timestamp": "2025-11-03 10:57:39 KST",
+    "slackTs": "1762135059.012439"
+  },
+  {
+    "targetUserId": "p8LfjU6ymCgSRWzvgbjeb7PanVjG",
+    "targetNickname": "가조쿠",
+    "adminName": "방지훈",
+    "blocked": "makeLiveChannel, openChat, wssChat",
+    "reason": "운영정책 제2조 2항 ③ 회사의 사전 승인 없이 일반 진행이 제한된 콘텐츠를 송출하는 경우 - 자체 제작 랜덤박스(오리파/수제팩 등 포함)",
+    "validUntil": "2025. 11. 10. 오후 5:30:17",
+    "timestamp": "2025-11-03 17:32:22 KST",
+    "slackTs": "1762158742.402349"
+  },
+  {
+    "targetUserId": "NLvRZZjOMfvvdiNmBB2NMQz47oZd",
+    "targetNickname": "투쟁플레이스",
+    "adminName": "방지훈",
+    "blocked": "permBan",
+    "reason": "부계정 추정",
+    "validUntil": "2099. 11. 3. 오후 5:35:26",
+    "timestamp": "2025-11-03 17:35:50 KST",
+    "slackTs": "1762158950.961789"
+  },
+  {
+    "targetUserId": "d1fdAXBKfsYCCbCjtmo1LbkyhQTH",
+    "targetNickname": "굿럭",
+    "adminName": "Chance",
+    "blocked": "makeNewSelling, wssChat",
+    "reason": "운영정책 제2조 2항 ③ 회사의 사전 승인 없이 일반 진행이 제한된 콘텐츠를 송출하는 경우 - 자체 제작 랜덤박스(오리파/수제팩 등 포함)",
+    "validUntil": "2025. 11. 10. 오후 5:59:06",
+    "timestamp": "2025-11-03 18:01:10 KST",
+    "slackTs": "1762160470.523169"
+  },
+  {
+    "targetUserId": "fSOPcOvICTMOCzw4YxgqOJxK2f03",
+    "targetNickname": "똥꾸멍의악마",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat",
+    "reason": "운영정책 제2조 1항 ① 다른 회원의 서비스 이용에 불편을 주거나 커뮤니티의 질서를 훼손하는 경우 * 추가 적발시 누적제한이 적용될 수 있습니다.",
+    "validUntil": "2025. 11. 7. 오전 12:13:32",
+    "timestamp": "2025-11-04 00:15:09 KST",
+    "slackTs": "1762182909.755229"
+  },
+  {
+    "targetUserId": "Y98Emhw5eYwq4LglvwKyAf1DWoFB",
+    "targetNickname": "징냥",
+    "adminName": "Chance",
+    "blocked": "makeNewSelling",
+    "reason": "운영정책 제2조 3항 ③ 기타 문제 소지가 있는 판매 행위 - 본인 소유가 아닌 가쳐 기계를 활용한 대리 가쳐는 진행이 불가합니다.",
+    "validUntil": "2099. 11. 18. 오후 5:06:48",
+    "timestamp": "2025-11-04 17:10:33 KST",
+    "slackTs": "1762243833.459259"
+  },
+  {
+    "targetUserId": "Y98Emhw5eYwq4LglvwKyAf1DWoFB",
+    "targetNickname": "징냥",
+    "adminName": "Chance",
+    "blocked": "liveDonation, updateProfile, openChat, wssChat",
+    "reason": "운영정책 제2조 3항 ③ 기타 문제 소지가 있는 판매 행위 - 본인 소유가 아닌 가쳐 기계를 활용한 대리 가쳐는 진행이 불가합니다.",
+    "validUntil": "2025. 11. 18. 오후 5:10:36",
+    "timestamp": "2025-11-04 17:10:52 KST",
+    "slackTs": "1762243852.243219"
+  },
+  {
+    "targetUserId": "MwDK3TWX9fTyLMw5ThuB6BlITKb2",
+    "targetNickname": "야옹이상점부계",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "부계정",
+    "validUntil": "2099. 11. 4. 오후 8:12:28",
+    "timestamp": "2025-11-04 20:12:41 KST",
+    "slackTs": "1762254761.328179"
+  },
+  {
+    "targetUserId": "fd0uzPug5b9YZzBNMsSmVDJes6Bu",
+    "targetNickname": "루키커리",
+    "adminName": "장성진",
+    "blocked": "makeLiveChannel, wssChat, wssBlockAll, updateProfile, wssBidAsk, openChat, makeNewSelling, makeNewGiveaway, makeNewHitPost, liveDonation, openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 4항 ① 권한 없는 제3자에게 계정을 유·무상으로 대여하거나 딜러 본인의 관여 없이 라이브 진행 또는 기타 서비스 이용을 허용하는 경우 / ② 딜러가 본인 명의가 아닌 타인의 계좌를 사용하거나 정산 계좌 정보를 오입력하여 정산 업무에 지장을 초래하는 경우",
+    "validUntil": "2099. 11. 4. 오후 9:05:03",
+    "timestamp": "2025-11-04 21:06:52 KST",
+    "slackTs": "1762258012.819819"
+  },
+  {
+    "targetUserId": "GqgT9536kXHVnxultPzcr6ELZe2W",
+    "targetNickname": "주최하는치커리958",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat",
+    "reason": "운영정책 제2조 4항 ② 딜러가 본인 명의가 아닌 타인의 계좌를 사용하거나 정산 계좌 정보를 오입력하여 정산 업무에 지장을 초래하는 경우",
+    "validUntil": "2025. 12. 4. 오후 9:07:35",
+    "timestamp": "2025-11-04 21:08:32 KST",
+    "slackTs": "1762258112.822669"
+  },
+  {
+    "targetUserId": "wrnzpzJPkSoiYihSIV4wiBBjfaJb",
+    "targetNickname": "파프리",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat",
+    "reason": "운영정책 제2조 3항 ① 외부 거래 행위 - 연락처·계좌번호를 안내하거나 노출하여 직거래를 유도하는 행위 *(경고 1회)",
+    "validUntil": "2025. 11. 8. 오전 12:19:07",
+    "timestamp": "2025-11-05 00:19:35 KST",
+    "slackTs": "1762269575.984619"
+  },
+  {
+    "targetUserId": "lPQE9C6HRCmHmwvBMCeAHXUaj08g",
+    "targetNickname": "제티제이",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "럭키세븐 부계정",
+    "validUntil": "2099. 11. 5. 오후 6:34:11",
+    "timestamp": "2025-11-05 18:34:22 KST",
+    "slackTs": "1762335262.394299"
+  },
+  {
+    "targetUserId": "HPpc0a8vjkqtYnWR5DoTmMMIz3wT",
+    "targetNickname": "루피기엘5",
+    "adminName": "방지훈",
+    "blocked": "makeLiveChannel, makeNewSelling",
+    "reason": "운영정책 제2조 2항 ① 라이브 진행 콘텐츠에 있어 제재 사유에 해당하는 경우 / 운영정책 제2조 4항 ① 권한 없는 제3자에게 계정을 대여하는 경우",
+    "validUntil": "2099. 11. 5. 오후 6:48:27",
+    "timestamp": "2025-11-05 18:51:31 KST",
+    "slackTs": "1762336291.776249"
+  },
+  {
+    "targetUserId": "HPpc0a8vjkqtYnWR5DoTmMMIz3wT",
+    "targetNickname": "루피기엘5",
+    "adminName": "방지훈",
+    "blocked": "openChat, wssChat",
+    "reason": "운영정책 제2조 2항 ① / 운영정책 제2조 4항 ① 권한 없는 제3자에게 계정을 대여하는 경우",
+    "validUntil": "2025. 11. 19. 오후 6:51:35",
+    "timestamp": "2025-11-05 18:51:45 KST",
+    "slackTs": "1762336305.709339"
+  },
+  {
+    "targetUserId": "dCj6R0f5qzXQN644YmhWQigIgsO2",
+    "targetNickname": "내일의식빵",
+    "adminName": "방지훈",
+    "blocked": "makeLiveChannel, openChat, wssChat",
+    "reason": "운영정책 제2조 2항 ③ 회사의 사전 승인 없이 일반 진행이 제한된 콘텐츠를 송출하는 경우 - 자체 제작 랜덤박스",
+    "validUntil": "2025. 11. 9. 오후 7:56:56",
+    "timestamp": "2025-11-06 19:58:22 KST",
+    "slackTs": "1762426702.606599"
+  },
+  {
+    "targetUserId": "dCj6R0f5qzXQN644YmhWQigIgsO2",
+    "targetNickname": "내일의식빵",
+    "adminName": "방지훈",
+    "blocked": "makeNewSelling",
+    "reason": "운영정책 제2조 2항 ③ 회사의 사전 승인 없이 일반 진행이 제한된 콘텐츠를 송출하는 경우 - 자체 제작 랜덤박스",
+    "validUntil": "2025. 11. 9. 오후 7:58:32",
+    "timestamp": "2025-11-06 19:58:50 KST",
+    "slackTs": "1762426730.222449"
+  },
+  {
+    "targetUserId": "9tD1TG8NZryUXLIFU7RJv6u47DQN",
+    "targetNickname": "SoDa",
+    "adminName": "Chance",
+    "blocked": "makeNewSelling",
+    "reason": "운영정책 제2조 2항 ③ 회사의 사전 승인 없이 일반 진행이 제한된 콘텐츠를 송출하는 경우 - 자체 제작 랜덤박스",
+    "validUntil": "2099. 11. 21. 오후 3:06:52",
+    "timestamp": "2025-11-07 15:08:41 KST",
+    "slackTs": "1762495721.884709"
+  },
+  {
+    "targetUserId": "9tD1TG8NZryUXLIFU7RJv6u47DQN",
+    "targetNickname": "SoDa",
+    "adminName": "Chance",
+    "blocked": "updateProfile, liveDonation, openChat, wssChat",
+    "reason": "운영정책 제2조 2항 ③ 회사의 사전 승인 없이 일반 진행이 제한된 콘텐츠를 송출하는 경우 - 자체 제작 랜덤박스",
+    "validUntil": "2025. 11. 21. 오후 3:08:46",
+    "timestamp": "2025-11-07 15:08:55 KST",
+    "slackTs": "1762495735.753949"
+  },
+  {
+    "targetUserId": "ILw85Ge5jOJblRSifqIVCTLWA26X",
+    "targetNickname": "오늘의식빵",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "내일의식빵 부계정",
+    "validUntil": "2099. 11. 8. 오전 9:31:20",
+    "timestamp": "2025-11-08 09:31:38 KST",
+    "slackTs": "1762561898.000299"
+  },
+  {
+    "targetUserId": "McnRwagyudfsI5ZrovXcia6RUZlt",
+    "targetNickname": "Kisue1",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat",
+    "reason": "운영정책 제2조 1항 ② 다른 회원을 외부 플랫폼 또는 커뮤니티 등으로 유도하는 행위 * 딜러 권한이 회수되었습니다.",
+    "validUntil": "2025. 11. 13. 오전 1:17:43",
+    "timestamp": "2025-11-10 01:18:58 KST",
+    "slackTs": "1762705138.768079"
+  },
+  {
+    "targetUserId": "KAbd8a6378",
+    "targetNickname": "로건이아빠",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ① 외부 거래 행위 - 기타 와이스 서비스를 통하지 않은 방식의 거래 또는 이에 준하는 행위 등",
+    "validUntil": "2025. 11. 17. 오전 10:51:42",
+    "timestamp": "2025-11-10 10:52:53 KST",
+    "slackTs": "1762739573.144049"
+  },
+  {
+    "targetUserId": "CK8PTYrSsUkI0N6FbhAMELVaILd2",
+    "targetNickname": "쏟우다",
+    "adminName": "Chance",
+    "blocked": "permBan",
+    "reason": "SoDa 부계정",
+    "validUntil": "2099. 11. 10. 오후 12:42:16",
+    "timestamp": "2025-11-10 12:42:31 KST",
+    "slackTs": "1762746151.594099"
+  },
+  {
+    "targetUserId": "H6SddZsxXtVsgvb0UAi8Tpl6ktzz",
+    "targetNickname": "치키쩜",
+    "adminName": "Chance",
+    "blocked": "makeNewSelling",
+    "reason": "운영정책 제2조 2항 ③ 자체 제작 랜덤박스 / 운영정책 제2조 3항 ③ 기타 문제 소지가 있는 판매 행위 - 입찰 과열 또는 분쟁을 유발할 가능성이 있는 방식의 경품 활용",
+    "validUntil": "2099. 11. 24. 오후 3:41:40",
+    "timestamp": "2025-11-10 15:48:41 KST",
+    "slackTs": "1762757321.555849"
+  },
+  {
+    "targetUserId": "H6SddZsxXtVsgvb0UAi8Tpl6ktzz",
+    "targetNickname": "치키쩜",
+    "adminName": "Chance",
+    "blocked": "updateProfile, liveDonation, openChat, wssChat",
+    "reason": "운영정책 제2조 2항 ③ 자체 제작 랜덤박스 / 운영정책 제2조 3항 ③ 입찰 과열 또는 분쟁을 유발할 가능성이 있는 방식의 경품 활용",
+    "validUntil": "2025. 11. 24. 오후 3:48:44",
+    "timestamp": "2025-11-10 15:48:56 KST",
+    "slackTs": "1762757336.416399"
+  },
+  {
+    "targetUserId": "g80bItAndLwmsOvQVJmt60dBi7ym",
+    "targetNickname": "리앨",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ③ 기타 문제 소지가 있는 판매 행위 - 본인 소유가 아닌 가쳐 기계를 활용한 대리 가쳐는 진행이 불가합니다.",
+    "validUntil": "2025. 11. 20. 오후 4:01:37",
+    "timestamp": "2025-11-10 16:02:29 KST",
+    "slackTs": "1762758149.703189"
+  },
+  {
+    "targetUserId": "H6SddZsxXtVsgvb0UAi8Tpl6ktzz",
+    "targetNickname": "치키쩜",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 2항 ③ 자체 제작 랜덤박스 / 운영정책 제2조 3항 ③ 입찰 과열 또는 분쟁을 유발할 가능성이 있는 방식의 경품 활용 (재제재)",
+    "validUntil": "2025. 11. 13. 오후 4:03:41",
+    "timestamp": "2025-11-10 16:04:17 KST",
+    "slackTs": "1762758257.358549"
+  },
+  {
+    "targetUserId": "39aQdjEVe5NG2NugRh3RpGlDxfmd",
+    "targetNickname": "레드코인",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "유저님께서 일부 운영 정책을 위반하는 라이브를 지속하여 임시적으로 이용이 제한되었습니다.",
+    "validUntil": "2025. 11. 11. 오후 12:17:00",
+    "timestamp": "2025-11-10 22:17:46 KST",
+    "slackTs": "1762780666.931369"
+  },
+  {
+    "targetUserId": "NAOUVX5estBC-3HjW5ltteL2iRhivHHUSSiSJqMpAbl7s",
+    "targetNickname": "STH",
+    "adminName": "방지훈",
+    "blocked": "makeLiveChannel, makeNewSelling",
+    "reason": "운영정책 제2조 2항 ③ 자체 제작 랜덤박스(오리파/수제팩 등 포함)",
+    "validUntil": "2025. 11. 19. 오후 11:29:19",
+    "timestamp": "2025-11-12 23:30:50 KST",
+    "slackTs": "1762957850.707139"
+  },
+  {
+    "targetUserId": "NAOUVX5estBC-3HjW5ltteL2iRhivHHUSSiSJqMpAbl7s",
+    "targetNickname": "STH",
+    "adminName": "방지훈",
+    "blocked": "openChat, wssChat",
+    "reason": "운영정책 제2조 2항 ③ 자체 제작 랜덤박스(오리파/수제팩 등 포함)",
+    "validUntil": "2025. 11. 15. 오후 11:31:02",
+    "timestamp": "2025-11-12 23:31:49 KST",
+    "slackTs": "1762957909.844689"
+  },
+  {
+    "targetUserId": "46j9xLC6vgV6BlVWpiVjNshD5NX2",
+    "targetNickname": "군대가기싫다",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ① 외부 거래 행위 - 연락처·계좌번호를 안내하거나 노출하여 직거래를 유도하는 행위",
+    "validUntil": "2025. 11. 17. 오전 10:45:41",
+    "timestamp": "2025-11-14 10:46:32 KST",
+    "slackTs": "1763084792.279149"
+  },
+  {
+    "targetUserId": "KAa8234da2",
+    "targetNickname": "참여하는석류영",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ① 외부 거래 행위 - 연락처·계좌번호를 안내하거나 노출하여 직거래를 유도하는 행위",
+    "validUntil": "2025. 11. 17. 오전 10:47:02",
+    "timestamp": "2025-11-14 10:47:12 KST",
+    "slackTs": "1763084832.487509"
+  },
+  {
+    "targetUserId": "dCj6R0f5qzXQN644YmhWQigIgsO2",
+    "targetNickname": "내일의식빵",
+    "adminName": "이문규",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 1항 ① 다른 회원의 서비스 이용에 불편을 주거나 커뮤니티의 질서를 훼손하는 경우 - 다른 회원 또는 회사를 비방하는 행위",
+    "validUntil": "2025. 11. 18. 오전 10:58:53",
+    "timestamp": "2025-11-15 22:58:48 KST",
+    "slackTs": "1763215128.903219"
+  },
+  {
+    "targetUserId": "dCj6R0f5qzXQN644YmhWQigIgsO2",
+    "targetNickname": "내일의식빵",
+    "adminName": "이문규",
+    "blocked": "wssChat",
+    "reason": "운영정책 제2조 1항 ① 다른 회원 또는 회사를 비방하는 행위",
+    "validUntil": "2025. 11. 18. 오전 10:58:52",
+    "timestamp": "2025-11-15 22:59:16 KST",
+    "slackTs": "1763215156.120649"
+  },
+  {
+    "targetUserId": "dCj6R0f5qzXQN644YmhWQigIgsO2",
+    "targetNickname": "내일의식빵",
+    "adminName": "이문규",
+    "blocked": "makeNewSelling, openChat, wssChat",
+    "reason": "운영정책 제2조 1항 ① 다른 회원 또는 회사를 비방하는 행위 / 커뮤니티 질서를 훼손하는 행위",
+    "validUntil": "2025. 11. 18. 오전 10:58:48",
+    "timestamp": "2025-11-15 23:00:11 KST",
+    "slackTs": "1763215211.028649"
+  },
+  {
+    "targetUserId": "1U3udZRyopsTq01NOknatc7XN2wx",
+    "targetNickname": "끄룹",
+    "adminName": "장성진",
+    "blocked": "wssBidAsk, openChat, updateProfile, openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ② 부정·허위 거래 행위 - 카테고리와 무관한 상품의 판매 또는 이를 요청하는 행위 > 조치사항 : 서비스 이용 제한 및 부정 거래 상품 전액 환불조치 적용",
+    "validUntil": "2025. 11. 23. 오후 8:40:12",
+    "timestamp": "2025-11-16 20:41:51 KST",
+    "slackTs": "1763293311.619159"
+  },
+  {
+    "targetUserId": "LXEL6qF8BJYD9JnveXrsVphqD0sV",
+    "targetNickname": "(T*O*P)고*모*리",
+    "adminName": "장성진",
+    "blocked": "updateProfile, wssBidAsk, openChat, wssChat",
+    "reason": "운영정책 위반. 현재 모니터링 절차 진행중이며 이후 제한 적용이 될 예정입니다. 판매된 해당 라이브 상품 중 판매가 불가능한 상품은 전액 환불 조치가 시행될 예정입니다.",
+    "validUntil": "2025. 11. 16. 오후 8:42:26",
+    "timestamp": "2025-11-16 20:42:40 KST",
+    "slackTs": "1763293360.505679"
+  },
+  {
+    "targetUserId": "LXEL6qF8BJYD9JnveXrsVphqD0sV",
+    "targetNickname": "(T*O*P)고*모*리",
+    "adminName": "장성진",
+    "blocked": "makeLiveChannel, wssChat, updateProfile, wssBlockAll, wssBidAsk, openChat, makeNewSelling, openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 위반. 현재 모니터링 절차 진행중이며 이후 제한 적용이 될 예정입니다. 판매된 해당 라이브 상품 중 판매가 불가능한 상품은 전액 환불 조치가 시행될 예정입니다.",
+    "validUntil": "2082. 11. 16. 오후 8:43:01",
+    "timestamp": "2025-11-16 20:43:14 KST",
+    "slackTs": "1763293394.425879"
+  },
+  {
+    "targetUserId": "LXEL6qF8BJYD9JnveXrsVphqD0sV",
+    "targetNickname": "(T*O*P)고*모*리",
+    "adminName": "장성진",
+    "blocked": "makeNewSelling",
+    "reason": "운영정책 제2조 3항 ② 부정·허위 거래 행위 / 운영정책 제2조 2항 ⑥ 기타 법규 위반 행위 또는 사회통념에 반하는 콘텐츠 / 운영정책 제2조 4항 ① 서비스 내 공지 또는 운영진의 정당한 안내·지시를 따르지 않는 경우",
+    "validUntil": "2099. 11. 17. 오전 10:34:50",
+    "timestamp": "2025-11-17 10:38:07 KST",
+    "slackTs": "1763343487.572649"
+  },
+  {
+    "targetUserId": "LXEL6qF8BJYD9JnveXrsVphqD0sV",
+    "targetNickname": "(T*O*P)고*모*리",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat",
+    "reason": "운영정책 제2조 3항 ② 부정·허위 거래 행위 / 운영정책 제2조 2항 ⑥ 기타 법규 위반 / 운영정책 제2조 4항 ① 서비스 내 공지 또는 운영진의 정당한 안내·지시를 따르지 않는 경우",
+    "validUntil": "2025. 12. 1. 오전 10:38:09",
+    "timestamp": "2025-11-17 10:38:17 KST",
+    "slackTs": "1763343497.430509"
+  },
+  {
+    "targetUserId": "LXEL6qF8BJYD9JnveXrsVphqD0sV",
+    "targetNickname": "(T*O*P)고*모*리",
+    "adminName": "장성진",
+    "blocked": "wssBidAsk, updateProfile, liveDonation",
+    "reason": "운영정책 제2조 3항 ② 부정·허위 거래 행위 / 운영정책 제2조 2항 ⑥ 기타 법규 위반 / 운영정책 제2조 4항 ① 서비스 내 공지 또는 운영진의 정당한 안내·지시를 따르지 않는 경우",
+    "validUntil": "2025. 11. 24. 오전 10:38:19",
+    "timestamp": "2025-11-17 10:38:41 KST",
+    "slackTs": "1763343521.613639"
+  },
+  {
+    "targetUserId": "F5PrhEJAcxFjVfOmsIIninqmIXQd",
+    "targetNickname": "MrNobody",
+    "adminName": "방지훈",
+    "blocked": "permBan",
+    "reason": "단순 변심으로 판매 철회",
+    "validUntil": "2099. 11. 17. 오후 5:31:00",
+    "timestamp": "2025-11-17 17:31:18 KST",
+    "slackTs": "1763368278.558409"
+  },
+  {
+    "targetUserId": "xtOW45I6Pz8LWyTzHWmkpOoKNqRc",
+    "targetNickname": "팡귀니이짼",
+    "adminName": "Chance",
+    "blocked": "permBan",
+    "reason": "부계정",
+    "validUntil": "2099. 11. 19. 오후 2:45:40",
+    "timestamp": "2025-11-19 14:45:58 KST",
+    "slackTs": "1763531158.714749"
+  },
+  {
+    "targetUserId": "xtOW45I6Pz8LWyTzHWmkpOoKNqRc",
+    "targetNickname": "팡귀니이짼",
+    "adminName": "Chance",
+    "blocked": "permBan",
+    "reason": "부계정",
+    "validUntil": "2099. 11. 19. 오후 2:45:40",
+    "timestamp": "2025-11-19 14:45:59 KST",
+    "slackTs": "1763531159.033829"
+  },
+  {
+    "targetUserId": "W6sJehJYwwfrWZCNeuUKuWZaRIAY",
+    "targetNickname": "로로즈",
+    "adminName": "장성진",
+    "blocked": "makeNewSelling",
+    "reason": "운영정책 제2조 1항 ② 외부 플랫폼 유도 / 운영정책 제2조 3항 ① 외부 거래 행위 - 연락처·계좌번호를 안내하거나 노출하여 직거래를 유도하는 행위",
+    "validUntil": "2099. 11. 21. 오후 1:38:14",
+    "timestamp": "2025-11-21 13:38:40 KST",
+    "slackTs": "1763699920.538099"
+  },
+  {
+    "targetUserId": "W6sJehJYwwfrWZCNeuUKuWZaRIAY",
+    "targetNickname": "로로즈",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat",
+    "reason": "운영정책 제2조 1항 ② 외부 플랫폼 유도 / 운영정책 제2조 3항 ① 외부 거래 행위 - 연락처·계좌번호를 안내하거나 노출하여 직거래를 유도하는 행위",
+    "validUntil": "2025. 11. 28. 오후 1:38:43",
+    "timestamp": "2025-11-21 13:38:51 KST",
+    "slackTs": "1763699931.470909"
+  },
+  {
+    "targetUserId": "x702UtvnfWl9cb3GnJlwBxiwpRq1",
+    "targetNickname": "카카오14년산",
+    "adminName": "김운하",
+    "blocked": "wssBlockAll, openChat, makeNewSelling",
+    "reason": "헛소리를 너무 해서 제재",
+    "validUntil": "2099. 11. 25. 오후 4:41:34",
+    "timestamp": "2025-11-25 16:41:49 KST",
+    "slackTs": "1764056509.628149"
+  },
+  {
+    "targetUserId": "KAc10b5b4d",
+    "targetNickname": "퉁퉁부인",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ③ 기타 문제 소지가 있는 판매 행위 - 최대·최다 구매자 경품 증정",
+    "validUntil": "2025. 11. 28. 오후 5:13:00",
+    "timestamp": "2025-11-25 17:14:15 KST",
+    "slackTs": "1764058455.532849"
+  },
+  {
+    "targetUserId": "aablrrIw59aBrcJgVlmqS4abZs4b",
+    "targetNickname": "번트홈런",
+    "adminName": "이문규",
+    "blocked": "makeNewSelling",
+    "reason": "등록하신 계좌 정보의 오류로 인해, 은행 측 입금이 실패했습니다. 본인 명의의 정상적인 계좌로 변경 후, 고객센터로 해제를 문의 부탁드립니다.",
+    "validUntil": "9999. 11. 25. 오후 5:14:33",
+    "timestamp": "2025-11-25 17:15:36 KST",
+    "slackTs": "1764058536.555969"
+  },
+  {
+    "targetUserId": "WNb8TgOszLZlu69YuBAqrRZszAcx",
+    "targetNickname": "다이호",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ③ 기타 문제 소지가 있는 판매 행위 - 입찰 과열 또는 분쟁을 유발할 가능성이 있는 방식의 경품 활용. 구매자 한정 무료나눠 진행은 불가합니다.",
+    "validUntil": "2026. 1. 5. 오후 4:41:21",
+    "timestamp": "2026-01-02 16:43:34 KST",
+    "slackTs": "1767339814.735209"
+  },
+  {
+    "targetUserId": "tHWPnBitbn9laq2cYRgogh77EaVM",
+    "targetNickname": "테이크",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ③ 기타 문제 소지가 있는 판매 행위 - 입찰 과열 또는 분쟁을 유발할 가능성이 있는 방식의 경품 활용. 구매자 한정 무료나눠 진행은 불가합니다.",
+    "validUntil": "2026. 1. 3. 오후 5:52:32",
+    "timestamp": "2026-01-02 17:52:59 KST",
+    "slackTs": "1767343979.875289"
+  },
+  {
+    "targetUserId": "LGUFvndaEYjduXVd6mLznNT7awXi",
+    "targetNickname": "꼬자",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "홍모 부계정",
+    "validUntil": "2099. 1. 3. 오후 3:49:26",
+    "timestamp": "2026-01-03 15:49:39 KST",
+    "slackTs": "1767422979.718479"
+  },
+  {
+    "targetUserId": "L5fUJ814GIoYzO2Pz7hqmHAodkfz",
+    "targetNickname": "LUNA",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "잇츠미잡화점 부계정",
+    "validUntil": "2099. 1. 3. 오후 3:50:44",
+    "timestamp": "2026-01-03 15:50:56 KST",
+    "slackTs": "1767423056.324769"
+  },
+  {
+    "targetUserId": "pbum9yZbg0iaI0Fpb5e859517wfY",
+    "targetNickname": "어른뭉방구",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "Entropy 부계정",
+    "validUntil": "2099. 1. 3. 오후 3:51:15",
+    "timestamp": "2026-01-03 15:51:31 KST",
+    "slackTs": "1767423091.952529"
+  },
+  {
+    "targetUserId": "KA9cda929a",
+    "targetNickname": "감동하는자두511",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "태현 부계정",
+    "validUntil": "2099. 1. 3. 오후 3:51:48",
+    "timestamp": "2026-01-03 15:51:59 KST",
+    "slackTs": "1767423119.472919"
+  },
+  {
+    "targetUserId": "antTtqLQdxP9zQHTwGAex6L5OGNk",
+    "targetNickname": "겨울엔붕어빵",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "이여름 부계정",
+    "validUntil": "2099. 1. 3. 오후 3:52:39",
+    "timestamp": "2026-01-03 15:52:50 KST",
+    "slackTs": "1767423170.966799"
+  },
+  {
+    "targetUserId": "69Sfr1tXrr8TleYRrDdzownW4VDC",
+    "targetNickname": "우즈마키나루토",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ① 외부 거래 행위 - 연락처·계좌번호를 안내하거나 노출하여 직거래를 유도하는 행위",
+    "validUntil": "2026. 1. 8. 오후 8:53:09",
+    "timestamp": "2026-01-05 20:54:05 KST",
+    "slackTs": "1767614045.948059"
+  },
+  {
+    "targetUserId": "KpH2ExeNJ62SLb4lX4fIpmA4WEMC",
+    "targetNickname": "4ten",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ① 외부 거래 행위 - 연락처·계좌번호를 안내하거나 노출하여 직거래를 유도하는 행위",
+    "validUntil": "2026. 1. 8. 오후 8:54:39",
+    "timestamp": "2026-01-05 20:54:50 KST",
+    "slackTs": "1767614090.333869"
+  },
+  {
+    "targetUserId": "OVk0iIIbwsBWyo9DgMOyAT04lGlb",
+    "targetNickname": "라부부잡이쫑이",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ③ 기타 문제 소지가 있는 판매 행위 - 본인 소유가 아닌 가쳐 기계를 활용한 대리 가쳐는 진행이 불가합니다.",
+    "validUntil": "2026. 1. 7. 오후 7:08:01",
+    "timestamp": "2026-01-06 19:08:14 KST",
+    "slackTs": "1767694094.517409"
+  },
+  {
+    "targetUserId": "KA8e3c55e4",
+    "targetNickname": "황기현",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "designal 부계정",
+    "validUntil": "2099. 1. 7. 오후 10:22:17",
+    "timestamp": "2026-01-07 22:22:33 KST",
+    "slackTs": "1767792153.755919"
+  },
+  {
+    "targetUserId": "1HPqpY0fWUc8D0pk6HtiDCL0zkpt",
+    "targetNickname": "로또상",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "건율아부지 부계정",
+    "validUntil": "2099. 1. 7. 오후 10:24:22",
+    "timestamp": "2026-01-07 22:24:50 KST",
+    "slackTs": "1767792290.053939"
+  },
+  {
+    "targetUserId": "HD8o7jXHTaazUcyxnpsHRm2DhX23",
+    "targetNickname": "222번째날",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "중당번크 부계정",
+    "validUntil": "2099. 1. 7. 오후 10:25:25",
+    "timestamp": "2026-01-07 22:25:37 KST",
+    "slackTs": "1767792337.490569"
+  },
+  {
+    "targetUserId": "Ro5p1uqy0G1CF8i5Dk75MuNSWVpD",
+    "targetNickname": "하이후",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "짱원 부계정",
+    "validUntil": "2099. 1. 8. 오전 1:13:17",
+    "timestamp": "2026-01-08 01:13:29 KST",
+    "slackTs": "1767802409.678349"
+  },
+  {
+    "targetUserId": "cnfwGMlO0GEtgBO0EilPfHZQx8tR",
+    "targetNickname": "마멜공주2",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "마멜공주 부계정",
+    "validUntil": "2099. 1. 8. 오전 1:21:33",
+    "timestamp": "2026-01-08 01:21:46 KST",
+    "slackTs": "1767802906.260829"
+  },
+  {
+    "targetUserId": "bHXfavLr1jwMdPWb7eAvy9aFW7VI",
+    "targetNickname": "하동",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "마스 부계정",
+    "validUntil": "2099. 1. 8. 오전 1:23:06",
+    "timestamp": "2026-01-08 01:23:18 KST",
+    "slackTs": "1767802998.959969"
+  },
+  {
+    "targetUserId": "8o0b2juyecF67b1hm2AqwoUnJk23",
+    "targetNickname": "쓰다듬는금귤89",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "DJ_Dongjin_Lee 부계정",
+    "validUntil": "2099. 1. 8. 오전 1:24:16",
+    "timestamp": "2026-01-08 01:24:29 KST",
+    "slackTs": "1767803069.358639"
+  },
+  {
+    "targetUserId": "KaCyPCZJxSWXWdrVtVF26QvW4Lzm",
+    "targetNickname": "템페스트",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "쿠도신이치와에도가와코난 부계정",
+    "validUntil": "2099. 1. 8. 오전 1:25:32",
+    "timestamp": "2026-01-08 01:25:44 KST",
+    "slackTs": "1767803144.145459"
+  },
+  {
+    "targetUserId": "EdEybdIByFWe3C0rtY8IKe9u4DaI",
+    "targetNickname": "지터",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "비빔면짱 부계정",
+    "validUntil": "2099. 1. 8. 오전 1:27:08",
+    "timestamp": "2026-01-08 01:27:19 KST",
+    "slackTs": "1767803239.999139"
+  },
+  {
+    "targetUserId": "ATRZitGi0PEYssFPszKiUzhnF24h",
+    "targetNickname": "AMEX",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "TomSachs 부계정",
+    "validUntil": "2099. 1. 8. 오전 1:27:55",
+    "timestamp": "2026-01-08 01:28:06 KST",
+    "slackTs": "1767803286.880959"
+  },
+  {
+    "targetUserId": "KAacd13545",
+    "targetNickname": "푸푸파",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "벤제마 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-01-13 16:43:30 KST",
+    "slackTs": "1768203435.584179"
+  },
+  {
+    "targetUserId": "KAbef55f70",
+    "targetNickname": "올라가는캐슈애플912",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "벚꽃맛우유 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-01-13 16:43:58 KST",
+    "slackTs": "1768204462.145179"
+  },
+  {
+    "targetUserId": "tyoC2JDtTOqH9dD9cgW83mf9DBhx",
+    "targetNickname": "아임어갱스터",
+    "adminName": "이문규",
+    "blocked": "makeNewSelling",
+    "reason": "운영정책 제2조 1항 ① 다른 회원 또는 회사를 비방하는 행위",
+    "validUntil": "9999. 1. 17. 오후 11:38:43",
+    "timestamp": "2026-01-17 23:40:27 KST",
+    "slackTs": "1768660827.761429"
+  },
+  {
+    "targetUserId": "tyoC2JDtTOqH9dD9cgW83mf9DBhx",
+    "targetNickname": "아임어갱스터",
+    "adminName": "이문규",
+    "blocked": "wssChat, updateProfile, openChat, openChat, wssChat",
+    "reason": "운영정책 제2조 1항 ① 다른 회원의 서비스 이용에 불편을 주거나 커뮤니티의 질서를 훼손하는 경우 - 다른 회원 또는 회사를 비방하는 행위",
+    "validUntil": "2026. 1. 22. 오후 11:40:54",
+    "timestamp": "2026-01-17 23:41:33 KST",
+    "slackTs": "1768660893.266559"
+  },
+  {
+    "targetUserId": "TH6J9dW0LNNqaS9HGqnNbRGUtXK4",
+    "targetNickname": "이아톤",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 2항 ⑤ 라이브 진행이 서비스 성격 및 실질에 부합하지 않는다고 판단하는 경우 / 실질적 콘텐츠가 제공되지 않는 라이브 진행",
+    "validUntil": "2026. 1. 18. 오후 11:55:17",
+    "timestamp": "2026-01-18 00:01:29 KST",
+    "slackTs": "1768662089.753069"
+  },
+  {
+    "targetUserId": "1O5BBNAC3S3DwVjefW5gRniAbRCq",
+    "targetNickname": "쿠지맨",
+    "adminName": "방지훈",
+    "blocked": "makeLiveChannel, makeNewSelling, openChat, wssChat",
+    "reason": "운영정책 제2조 3항 ① 외부 거래 행위",
+    "validUntil": "2026. 1. 24. 오후 9:23:00",
+    "timestamp": "2026-01-21 21:24:31 KST",
+    "slackTs": "1768998271.908809"
+  },
+  {
+    "targetUserId": "EslFvhBTNEoT4QmGIS09sGDhwUIq",
+    "targetNickname": "초릿부계정",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "초릿 부계정",
+    "validUntil": "2099. 1. 25. 오후 11:16:31",
+    "timestamp": "2026-01-25 23:16:41 KST",
+    "slackTs": "1769402889.771649"
+  },
+  {
+    "targetUserId": "OrSkNOib477a6qS3F0Kx3wT8I5iF",
+    "targetNickname": "피크티니(부계정)",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "피크티니 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-01-25 23:17:54 KST",
+    "slackTs": "1769402785.390709"
+  },
+  {
+    "targetUserId": "O0gx72H88R8uvSy8q5ViJWMRL4J0",
+    "targetNickname": "부계2",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "부계정 추정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-01-25 23:18:46 KST",
+    "slackTs": "1769350761.023579"
+  },
+  {
+    "targetUserId": "TbMU8JEaMbSwjZVHNHiDa0DhNeqY",
+    "targetNickname": "이로원부계",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "이로원 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-01-25 23:19:03 KST",
+    "slackTs": "1769350743.926039"
+  },
+  {
+    "targetUserId": "gTgYwj5jtZNFPXjNdOtZPizniTjs",
+    "targetNickname": "스이세부계",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "스이세 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-01-25 23:19:21 KST",
+    "slackTs": "1769350726.961139"
+  },
+  {
+    "targetUserId": "ETwIGW3biqyNH842iiDI68ccNK2v",
+    "targetNickname": "한달50콩제한국어사전",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 1항 ② 다른 회원을 외부 플랫폼 또는 커뮤니티 등으로 유도하는 행위 *조치사항: 경고 1회 (소통 제한)",
+    "validUntil": "2026. 1. 28. 오후 1:45:57",
+    "timestamp": "2026-01-26 13:46:25 KST",
+    "slackTs": "1769494480.457039"
+  },
+  {
+    "targetUserId": "AkQkufxSNdlyHr5kOd9fZUvW10xF",
+    "targetNickname": "탈셍하러왔습니노",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "영구제재",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-01-31 01:04:24 KST",
+    "slackTs": "1769789064.126639"
+  },
+  {
+    "targetUserId": "c3n60yNDBtRE2ZXbVSv0VqKtua32",
+    "targetNickname": "탈셍그거범죄야하지마",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "영구제재",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-01-31 01:10:50 KST",
+    "slackTs": "1769789450.151809"
+  },
+  {
+    "targetUserId": "GPeOK0GqT16qrsqqvc76ll9TF6kx",
+    "targetNickname": "ddak2da",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "꽃을든오빠 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:25:19 KST",
+    "slackTs": "1770701247.574719"
+  },
+  {
+    "targetUserId": "kip2ElzLjxeICuB2JxpPODcUCJet",
+    "targetNickname": "라노쓰",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "콩라노 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:25:37 KST",
+    "slackTs": "1770701247.574720"
+  },
+  {
+    "targetUserId": "8tAltk960Jny0UmRN75b1z2LBCW1",
+    "targetNickname": "박원건",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "회킬러 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:26:25 KST",
+    "slackTs": "1770701247.574721"
+  },
+  {
+    "targetUserId": "d7skar6Laf0xPN65c0oUOlQ7TdD8",
+    "targetNickname": "잡는딸기620",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "판타지플래닛 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:26:44 KST",
+    "slackTs": "1770701247.574722"
+  },
+  {
+    "targetUserId": "bN0NFijZSBl596OFK6rpHjPs6ojd",
+    "targetNickname": "헤일리",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "진격의거인수집가 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:27:02 KST",
+    "slackTs": "1770701247.574723"
+  },
+  {
+    "targetUserId": "iq3yQEAjQMczDfOHhNex2nfyzZr1",
+    "targetNickname": "모으는토란514",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "헵이런 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:27:31 KST",
+    "slackTs": "1770701247.574724"
+  },
+  {
+    "targetUserId": "w5a3F125XYkPVPigiPu0zVAHObU4",
+    "targetNickname": "지탱하는애호박526",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "마동석 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:27:52 KST",
+    "slackTs": "1770701444.901809"
+  },
+  {
+    "targetUserId": "ZVsN7oZHiZyUvXjgWZLNMhpkEeaf",
+    "targetNickname": "퍼기",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "홍성오빠 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:28:10 KST",
+    "slackTs": "1770701444.901810"
+  },
+  {
+    "targetUserId": "cBPly2HqjxSRMDE17oOXcDrIAQqY",
+    "targetNickname": "니크",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "부산방파제 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:28:28 KST",
+    "slackTs": "1770701444.901811"
+  },
+  {
+    "targetUserId": "hVqOUGl3DaPchF9tvowTaLs95gM2",
+    "targetNickname": "재배하는연근561",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "망두 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:28:42 KST",
+    "slackTs": "1770701444.901812"
+  },
+  {
+    "targetUserId": "megiez3XXVy3vTxTXCTzaAM98dv4",
+    "targetNickname": "칭코",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "남우찬 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:29:00 KST",
+    "slackTs": "1770701698.276209"
+  },
+  {
+    "targetUserId": "gq6I7wHdehZwUWeo6GdPWvMe9ISk",
+    "targetNickname": "wogurzza****",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "치키쩜 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:29:38 KST",
+    "slackTs": "1770701698.276210"
+  },
+  {
+    "targetUserId": "Se4vbUD7trQTzLgOticxsoxRUilG",
+    "targetNickname": "최씨",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "킴산 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:29:53 KST",
+    "slackTs": "1770701698.276211"
+  },
+  {
+    "targetUserId": "T6F53BlkJCVM1itGZM5BGpiJKJ1I",
+    "targetNickname": "뚜셍",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "키플래닛 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:30:09 KST",
+    "slackTs": "1770701698.276212"
+  },
+  {
+    "targetUserId": "KAa0ff7147",
+    "targetNickname": "투피스오빠",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "로켓단의영광 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:30:35 KST",
+    "slackTs": "1770701698.276213"
+  },
+  {
+    "targetUserId": "rZNDqYcDMSdeZRMr3RZzTvrPFfKd",
+    "targetNickname": "추측하는노니693",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "당구공 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:30:53 KST",
+    "slackTs": "1770701698.276214"
+  },
+  {
+    "targetUserId": "jvvJ8mScWT279D66bAWpE3VoFXvP",
+    "targetNickname": "돌아다니는행인",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "루비아빠 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:31:07 KST",
+    "slackTs": "1770701698.276215"
+  },
+  {
+    "targetUserId": "KAb28b7d81",
+    "targetNickname": "제창하는부추782",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "syt 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-10 20:31:22 KST",
+    "slackTs": "1770701698.276216"
+  },
+  {
+    "targetUserId": "2VKPTnwvomggMedBTdz7CxIoi7He",
+    "targetNickname": "돈벼락",
+    "adminName": "Chance",
+    "blocked": "permBan",
+    "reason": "내일의식빵 부계정(타인명의)",
+    "validUntil": "2099. 2. 16. 오후 6:39:51",
+    "timestamp": "2026-02-16 18:40:11 KST",
+    "slackTs": "1771234811.601919"
+  },
+  {
+    "targetUserId": "Dv0Cvct5Rc7A0QH0jfu65DdLwvJi",
+    "targetNickname": "나누는피칸924",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "이쿠요오잇 부계정",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-20 13:37:23 KST",
+    "slackTs": "1771562243.727289"
+  },
+  {
+    "targetUserId": "l2h1QtYNHkA47uG5FhkRaXxXmZ9g",
+    "targetNickname": "도라시",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 1항 ② 다른 회원을 외부 플랫폼 또는 커뮤니티 등으로 유도하는 행위",
+    "validUntil": "2026. 2. 21. 오후 3:35:30",
+    "timestamp": "2026-02-20 15:36:15 KST",
+    "slackTs": "1771569375.633869"
+  },
+  {
+    "targetUserId": "KAad3b7590",
+    "targetNickname": "후니후니훈",
+    "adminName": "Chance",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ③ 기타 문제 소지가 있는 판매 행위 - 무료나눠 진행 시 구매자와 비구매자에게 상이한 상품을 제공할 수 없습니다.",
+    "validUntil": "2026. 2. 21. 오후 3:56:21",
+    "timestamp": "2026-02-20 15:58:56 KST",
+    "slackTs": "1771570736.850829"
+  },
+  {
+    "targetUserId": "Zkt4KvheYhxOmDa1dzvKGcbu4rVo",
+    "targetNickname": "도파민쿠지",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 1항 ② 다른 회원을 외부 플랫폼 또는 커뮤니티 등으로 유도하는 행위 (외부 소통 유도 및 외부 거래 유도 등) *조치사항: 딜러 재심사 대상",
+    "validUntil": "2099. 2. 25. 오전 1:20:09",
+    "timestamp": "2026-02-25 01:20:50 KST",
+    "slackTs": "1772002468.723809"
+  },
+  {
+    "targetUserId": "WHP5K2gmoC0QMaVHCraOOllAebOD",
+    "targetNickname": "멍키.D.루피",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 1항 ② 다른 회원을 외부 플랫폼 또는 커뮤니티 등으로 유도하는 행위 *조치사항: 경고 1회 (서비스 이용 제한) / 딜러 권한이 회수되었습니다",
+    "validUntil": "2026. 2. 28. 오전 1:25:03",
+    "timestamp": "2026-02-25 01:25:20 KST",
+    "slackTs": "1772005351.338129"
+  },
+  {
+    "targetUserId": "Zkt4KvheYhxOmDa1dzvKGcbu4rVo",
+    "targetNickname": "도파민쿠지",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "임시 영구제재 조치",
+    "validUntil": "Invalid Date",
+    "timestamp": "2026-02-25 01:26:22 KST",
+    "slackTs": "1772005351.338130"
+  },
+  {
+    "targetUserId": "C0YkXFcggvoe01fsQGdKGHJ1YgDP",
+    "targetNickname": "화도",
+    "adminName": "방지훈",
+    "blocked": "makeLiveChannel, makeNewSelling, openChat, wssChat",
+    "reason": "운영정책 제2조 3항 ② 부정·허위 거래 행위 - 서비스 이용약관상 판매 불가 상품 등 와이스 거래 금지 품목을 노출·판매하는 행위 등",
+    "validUntil": "2026. 3. 2. 오후 1:53:33",
+    "timestamp": "2026-02-27 13:54:33 KST",
+    "slackTs": "1772168073.196839"
+  },
+  {
+    "targetUserId": "eQLqQuwCiehOtTUFCW6854635P6j",
+    "targetNickname": "고르는으름장이여",
+    "adminName": "장성진",
+    "blocked": "제재 조치 (딜러 판매/정산정보 변경)",
+    "reason": "검색 결과에서 확인 (딜러 정보 변경과 함께 제재 조치)",
+    "validUntil": "Unknown",
+    "timestamp": "2026-03-10 11:35:25 KST",
+    "slackTs": "1773110125.056039"
+  },
+  {
+    "targetUserId": "nuclBJV3TNA5KYoUEeZJvxmP3URB",
+    "targetNickname": "운전하는탄제린461",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "ㅅㅊㅍ 부계정",
+    "validUntil": "Unknown",
+    "timestamp": "2026-03-10 18:48:59 KST",
+    "slackTs": "1773136139.524649"
+  },
+  {
+    "targetUserId": "3peLBS71A7URqNuJdohJcjhNq6cz",
+    "targetNickname": "쿠지쿠키",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "핼켓 부계정",
+    "validUntil": "Unknown",
+    "timestamp": "2026-03-13 00:03:20 KST",
+    "slackTs": "1773327800.787229"
+  },
+  {
+    "targetUserId": "Fx8bgbsEtyEuFWgXtRkjoJBLgiDg",
+    "targetNickname": "ggc",
+    "adminName": "장성진",
+    "blocked": "제재 조치 (딜러 권한 회수 + 셀러 부여)",
+    "reason": "제재 조치 (검색 결과에서 확인)",
+    "validUntil": "Unknown",
+    "timestamp": "2026-03-13 11:39:24 KST",
+    "slackTs": "1773369564.785719"
+  },
+  {
+    "targetUserId": "x8h4wpwTHACtjNjk3zvPovPiX12z",
+    "targetNickname": "당귀입니다",
+    "adminName": "장성진",
+    "blocked": "openChat, wssChat, makeLiveChannel",
+    "reason": "운영정책 제2조 3항 ① 외부 거래 행위 - 와이스 서비스를 벗어난 외부 결제 링크를 안내하거나 유도하는 행위. 조치사항: 경고 1회",
+    "validUntil": "2026. 3. 16. 오후 1:01:34",
+    "timestamp": "2026-03-14 13:02:02 KST",
+    "slackTs": "1773460922.831369"
+  },
+  {
+    "targetUserId": "cCPEwmJZ0vqQx6QiiJAAiMv73O17",
+    "targetNickname": "내꺼다줘요",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "나나씨 부계정",
+    "validUntil": "Unknown",
+    "timestamp": "2026-03-14 13:05:11 KST",
+    "slackTs": "1773461111.710679"
+  },
+  {
+    "targetUserId": "ZGnKJZ8MOQAcngNcDmWYiNEg0fD1",
+    "targetNickname": "천안더피규어",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "더피규어 부계정",
+    "validUntil": "Unknown",
+    "timestamp": "2026-03-14 13:05:52 KST",
+    "slackTs": "1773461152.519709"
+  },
+  {
+    "targetUserId": "xOTkdlqMeg4V2YGjIMZojgiVGOto",
+    "targetNickname": "꽉찬궤",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "헬릭스 부계정",
+    "validUntil": "Unknown",
+    "timestamp": "2026-03-14 13:06:45 KST",
+    "slackTs": "1773461205.921869"
+  },
+  {
+    "targetUserId": "mQApAUD1GlvRllMELvaPKgCE2CPT",
+    "targetNickname": "고흐끄",
+    "adminName": "장성진",
+    "blocked": "permBan",
+    "reason": "나랑드 부계정 (이전 반복적 부계정 생성 유저 - 천우영)",
+    "validUntil": "Unknown",
+    "timestamp": "2026-03-15 23:15:07 KST",
+    "slackTs": "1773584107.156079"
+  }
+]
