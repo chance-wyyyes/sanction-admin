@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제재 유저 라벨링 분석</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --card: #f8f9fa;
+    --border: #e2e4e9;
+    --text: #1a1d27;
+    --muted: #6b7280;
+    --accent: #4f46e5;
+    --red: #dc2626;
+    --orange: #ea580c;
+    --yellow: #ca8a04;
+    --green: #16a34a;
+    --blue: #2563eb;
+    --purple: #7c3aed;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 2rem;
+    line-height: 1.6;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .header p { color: var(--muted); font-size: 0.9rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .stat-card .label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-card .value { font-size: 1.8rem; font-weight: 700; margin-top: 0.25rem; }
+  .stat-card .sub { color: var(--muted); font-size: 0.8rem; margin-top: 0.25rem; }
+  .section { margin-bottom: 2.5rem; }
+  .section h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  th {
+    background: #f1f3f5;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  td {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  tr:hover td { background: rgba(0,0,0,0.02); }
+  .badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-ext { background: rgba(234,88,12,0.1); color: var(--orange); }
+  .badge-inap { background: rgba(220,38,38,0.1); color: var(--red); }
+  .badge-fraud { background: rgba(124,58,237,0.1); color: var(--purple); }
+  .badge-prod { background: rgba(22,163,74,0.1); color: var(--green); }
+  .badge-other { background: rgba(107,114,128,0.1); color: var(--muted); }
+  .bar-container { display: flex; height: 32px; border-radius: 8px; overflow: hidden; margin-bottom: 0.5rem; }
+  .bar-segment { display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; min-width: 30px; }
+  .bar-ext { background: var(--orange); color: #000; }
+  .bar-inap { background: var(--red); color: #fff; }
+  .bar-fraud { background: var(--purple); color: #fff; }
+  .bar-other { background: #9ca3af; color: #fff; }
+  .legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+  .example { color: var(--muted); font-style: italic; font-size: 0.85rem; }
+  .example em { color: var(--text); font-style: normal; background: rgba(0,0,0,0.04); padding: 0.1rem 0.3rem; border-radius: 3px; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .note {
+    background: rgba(79, 70, 229, 0.05);
+    border: 1px solid rgba(79, 70, 229, 0.15);
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+  .heatmap-grid {
+    display: grid;
+    grid-template-columns: 140px repeat(5, 1fr);
+    gap: 2px;
+  }
+  .heatmap-header {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    font-weight: 600;
+  }
+  .heatmap-row-label {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+  }
+  .heatmap-cell {
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .heat-0 { background: #f3f4f6; color: #d1d5db; }
+  .heat-1 { background: rgba(79,70,229,0.08); color: rgba(79,70,229,0.6); }
+  .heat-2 { background: rgba(79,70,229,0.15); color: rgba(79,70,229,0.8); }
+  .heat-3 { background: rgba(79,70,229,0.3); color: #fff; }
+  .heat-4 { background: rgba(79,70,229,0.55); color: #fff; }
+  .heat-5 { background: rgba(79,70,229,0.8); color: #fff; }
+  .insight-list { list-style: none; }
+  .insight-list li {
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--accent);
+    margin-bottom: 0.5rem;
+    background: var(--card);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.9rem;
+  }
+  .keyword-tag {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    background: #f3f4f6;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-family: monospace;
+    margin: 0.1rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>제재 유저 라벨링 분석 리포트</h1>
+  <p>수집 기간: 2025-09 ~ 2026-03 &nbsp;|&nbsp; 작성일: 2026-03-15</p>
+</div>
+
+<!-- 상단 요약 카드 -->
+<div class="grid">
+  <div class="stat-card">
+    <div class="label">총 수집 건수</div>
+    <div class="value">7,632</div>
+    <div class="sub">4개 구분 전체 수집 완료</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">라벨링 완료</div>
+    <div class="value" style="color:var(--green)">5,815</div>
+    <div class="sub">Live + 신고 + 경고 + 제재</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">미라벨링 (DM)</div>
+    <div class="value" style="color:var(--yellow)">1,817</div>
+    <div class="sub">키워드 기반 분류 필요</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">고유 유저</div>
+    <div class="value">2,498<span style="font-size:0.9rem; color:var(--muted)">+</span></div>
+    <div class="sub">494 + 903 + 1,000+ + 46 + 55</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">확정 라벨</div>
+    <div class="value" style="color:var(--accent)">5종</div>
+    <div class="sub">전 구분 공통 적용</div>
+  </div>
+</div>
+
+<!-- 라벨 정의 -->
+<div class="section">
+  <h2>확정 라벨 체계 (5종)</h2>
+  <table>
+    <thead>
+      <tr><th>라벨</th><th>표시명</th><th>정의</th><th>주요 키워드</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-ext">EXTERNAL_TRADE</span></td>
+        <td>외부거래</td>
+        <td>플랫폼 외부 거래 유도/시도, 연락처·계좌 교환, 시세 언급</td>
+        <td><span class="keyword-tag">카톡</span><span class="keyword-tag">010</span><span class="keyword-tag">계좌</span><span class="keyword-tag">입금</span><span class="keyword-tag">수고비</span><span class="keyword-tag">시세</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-inap">INAPPROPRIATE_CONTENT</span></td>
+        <td>부적절 콘텐츠</td>
+        <td>욕설, 모욕, 비하, 폭력적 위협, 딜러/컬렉터 공격</td>
+        <td><span class="keyword-tag">욕설</span><span class="keyword-tag">모욕</span><span class="keyword-tag">위협</span><span class="keyword-tag">비하</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-fraud">FRAUD</span></td>
+        <td>사기/부정</td>
+        <td>부계정, 개인정보 악용, 사기 행위</td>
+        <td><span class="keyword-tag">부계정</span><span class="keyword-tag">개인정보</span><span class="keyword-tag">사기</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-prod">PRODUCT_SELLING</span></td>
+        <td>상품판매</td>
+        <td>허가되지 않은 상품 판매/공구</td>
+        <td><span class="keyword-tag">공구</span><span class="keyword-tag">판매</span><span class="keyword-tag">구해요</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-other">OTHER</span></td>
+        <td>기타</td>
+        <td>위 항목에 해당하지 않거나 사유 미기입</td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 구분별 라벨 분포 -->
+<div class="section">
+  <h2>구분별 라벨 분포 (라벨링 완료 5,815건)</h2>
+
+  <!-- 전체 바 차트 -->
+  <div style="margin-bottom:1.5rem">
+    <div style="font-size:0.85rem; color:var(--muted); margin-bottom:0.5rem;">전체 분포</div>
+    <div class="bar-container">
+      <div class="bar-segment bar-inap" style="width:58.3%">58.3%</div>
+      <div class="bar-segment bar-ext" style="width:28.1%">28.1%</div>
+      <div class="bar-segment bar-other" style="width:13.0%">13.0%</div>
+      <div class="bar-segment bar-fraud" style="width:0.6%"></div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>INAPPROPRIATE_CONTENT 58.3%</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>EXTERNAL_TRADE 28.1%</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#9ca3af"></div>OTHER 13.0%</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>FRAUD 0.6%</div>
+    </div>
+  </div>
+
+  <!-- 상세 테이블 -->
+  <table>
+    <thead>
+      <tr>
+        <th>라벨</th>
+        <th class="num">감지 (Live)</th>
+        <th class="num">신고</th>
+        <th class="num">경고</th>
+        <th class="num">제재</th>
+        <th class="num">소계</th>
+        <th class="num">비율</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-ext">EXTERNAL_TRADE</span></td>
+        <td class="num">1,066</td>
+        <td class="num">495</td>
+        <td class="num">51</td>
+        <td class="num">24</td>
+        <td class="num highlight">1,636</td>
+        <td class="num">28.1%</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-inap">INAPPROPRIATE_CONTENT</span></td>
+        <td class="num">2,556</td>
+        <td class="num">833</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num highlight">3,389</td>
+        <td class="num">58.3%</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-fraud">FRAUD</span></td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">21</td>
+        <td class="num">14</td>
+        <td class="num highlight">35</td>
+        <td class="num">0.6%</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-prod">PRODUCT_SELLING</span></td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num">0</td>
+        <td class="num" style="color:var(--muted)">0</td>
+        <td class="num" style="color:var(--muted)">0.0%</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-other">OTHER</span></td>
+        <td class="num">39</td>
+        <td class="num">684</td>
+        <td class="num">4</td>
+        <td class="num">28</td>
+        <td class="num">755</td>
+        <td class="num">13.0%</td>
+      </tr>
+      <tr style="font-weight:600; background:rgba(0,0,0,0.02)">
+        <td>합계</td>
+        <td class="num">3,661</td>
+        <td class="num">2,012</td>
+        <td class="num">76</td>
+        <td class="num">66</td>
+        <td class="num">5,815</td>
+        <td class="num">100%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    DM Patrol 1,817건은 미라벨링 상태로 위 표에 미포함.
+  </div>
+</div>
+
+<!-- 히트맵 -->
+<div class="section">
+  <h2>구분 x 라벨 히트맵</h2>
+  <div class="heatmap-grid">
+    <div class="heatmap-header"></div>
+    <div class="heatmap-header">EXTERNAL<br>TRADE</div>
+    <div class="heatmap-header">INAPPROP<br>CONTENT</div>
+    <div class="heatmap-header">FRAUD</div>
+    <div class="heatmap-header">PRODUCT<br>SELLING</div>
+    <div class="heatmap-header">OTHER</div>
+
+    <div class="heatmap-row-label">감지 (Live)</div>
+    <div class="heatmap-cell heat-4">1,066</div>
+    <div class="heatmap-cell heat-5">2,556</div>
+    <div class="heatmap-cell heat-0">-</div>
+    <div class="heatmap-cell heat-0">-</div>
+    <div class="heatmap-cell heat-1">39</div>
+
+    <div class="heatmap-row-label">감지 (DM)</div>
+    <div class="heatmap-cell heat-2" style="background:rgba(202,138,4,0.1); color:var(--yellow)">?</div>
+    <div class="heatmap-cell heat-1" style="background:rgba(202,138,4,0.06); color:var(--yellow)">?</div>
+    <div class="heatmap-cell heat-1" style="background:rgba(202,138,4,0.06); color:var(--yellow)">?</div>
+    <div class="heatmap-cell heat-0">-</div>
+    <div class="heatmap-cell heat-2" style="background:rgba(202,138,4,0.1); color:var(--yellow)">?</div>
+
+    <div class="heatmap-row-label">신고</div>
+    <div class="heatmap-cell heat-3">495</div>
+    <div class="heatmap-cell heat-4">833</div>
+    <div class="heatmap-cell heat-0">-</div>
+    <div class="heatmap-cell heat-0">-</div>
+    <div class="heatmap-cell heat-3">684</div>
+
+    <div class="heatmap-row-label">경고</div>
+    <div class="heatmap-cell heat-3">51</div>
+    <div class="heatmap-cell heat-0">-</div>
+    <div class="heatmap-cell heat-2">21</div>
+    <div class="heatmap-cell heat-0">-</div>
+    <div class="heatmap-cell heat-1">4</div>
+
+    <div class="heatmap-row-label">제재</div>
+    <div class="heatmap-cell heat-2">24</div>
+    <div class="heatmap-cell heat-0">-</div>
+    <div class="heatmap-cell heat-2">14</div>
+    <div class="heatmap-cell heat-0">-</div>
+    <div class="heatmap-cell heat-2">28</div>
+  </div>
+</div>
+
+<!-- 구분별 예시 -->
+<div class="section">
+  <h2>구분별 라벨 예시</h2>
+
+  <h3 style="font-size:1rem; margin: 1.5rem 0 0.75rem; color:var(--muted)">감지 (DM Patrol) — 미라벨링, 키워드 분류 필요</h3>
+  <table>
+    <thead><tr><th>추정 라벨</th><th>트리거 대화</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-ext">EXTERNAL_TRADE</span></td>
+        <td class="example"><em>"010구구칠팔06삼공"</em> / <em>"수고비 정두?"</em> / <em>"입근드린다했어여"</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-fraud">FRAUD</span></td>
+        <td class="example"><em>"개인정보 어쩌고 하시는 분이 프본??"</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-other">OTHER</span></td>
+        <td class="example"><em>"Psa10보내지말라구!?"</em> / <em>"택배다뺏당"</em> (false positive)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:1rem; margin: 1.5rem 0 0.75rem; color:var(--muted)">감지 (Live Chat Patrol) — 봇 자동분류</h3>
+  <table>
+    <thead><tr><th>라벨</th><th>봇 위반유형</th><th>감지 메시지</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-inap">INAPPROPRIATE</span></td>
+        <td>부적절한 언어</td>
+        <td class="example"><em>"얘 바보아니자나?!?!"</em> / <em>"똥손들이라니ㅋㄱ"</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-inap">INAPPROPRIATE</span></td>
+        <td>딜러/컬렉터 공격</td>
+        <td class="example"><em>"다 갬깍하셔요?"</em> / <em>"짝퉁이누…"</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-ext">EXTERNAL_TRADE</span></td>
+        <td>시세/가격 언급</td>
+        <td class="example"><em>"0.5콩 찾음"</em> / <em>"3천?"</em> / <em>"0.71"</em></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:1rem; margin: 1.5rem 0 0.75rem; color:var(--muted)">신고 — 유저 신고 (2,012건, 최근 3개월)</h3>
+  <table>
+    <thead><tr><th>라벨</th><th>건수</th><th>신고 사유</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-inap">INAPPROPRIATE</span></td>
+        <td class="num">833</td>
+        <td class="example"><em>"욕설·반말 등 불쾌감을 주는 언행"</em> / <em>"와이스 및 커뮤니티에 대한 부정적 언행"</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-ext">EXTERNAL_TRADE</span></td>
+        <td class="num">495</td>
+        <td class="example"><em>"외부 거래 및 외부 결제 유도"</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-other">OTHER</span></td>
+        <td class="num">684</td>
+        <td class="example"><em>"시세 및 가격 언급"</em> / <em>"구매를 방해하는 행위"</em> / <em>"딜러/컬렉터에 대한 언급"</em></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:1rem; margin: 1.5rem 0 0.75rem; color:var(--muted)">경고 (ADMIN DM) — 템플릿 3종</h3>
+  <table>
+    <thead><tr><th>라벨</th><th>건수</th><th>메시지 템플릿</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-ext">EXTERNAL_TRADE</span></td>
+        <td class="num">33</td>
+        <td class="example"><em>"외부 거래로 의심될 수 있는 활동이 AI를 통해 감지되었어요..."</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-ext">EXTERNAL_TRADE</span></td>
+        <td class="num">18</td>
+        <td class="example"><em>"외부 채널 및 링크 공유가 AI를 통해 감지되었어요..."</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-fraud">FRAUD</span></td>
+        <td class="num">21</td>
+        <td class="example"><em>"불필요한 개인 정보 노출이 AI를 통해 감지되었어요..."</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-other">OTHER</span></td>
+        <td class="num">4</td>
+        <td class="example">배송 안내 / 딜러 소통 요청 등 커스텀</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:1rem; margin: 1.5rem 0 0.75rem; color:var(--muted)">제재 — 수동 제재 조치</h3>
+  <table>
+    <thead><tr><th>라벨</th><th>건수</th><th>제재 사유</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-ext">EXTERNAL_TRADE</span></td>
+        <td class="num">24</td>
+        <td class="example"><em>"운영정책 제2조 3항 ① 외부 거래 행위"</em> / <em>"반복 외부소통/외부거래 유도 적발"</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-fraud">FRAUD</span></td>
+        <td class="num">14</td>
+        <td class="example"><em>"헬릭스 부계정"</em> / <em>"나나씨 부계정"</em> / <em>"더피규어 부계정"</em></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-other">OTHER</span></td>
+        <td class="num">28</td>
+        <td class="example"><em>"음란성 카드 판매 반복 3회차 적발"</em> / (사유 미기입)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 인사이트 -->
+<div class="section">
+  <h2>핵심 인사이트</h2>
+  <ul class="insight-list">
+    <li><strong>INAPPROPRIATE_CONTENT가 58%로 최다</strong> — Live Chat 감지 + 신고에서 대부분. 단, 경고·제재로 이어지는 건은 0건</li>
+    <li><strong>EXTERNAL_TRADE 28%로 전 단계 관통</strong> — 감지·신고·경고·제재 모두에서 등장하는 유일한 라벨. 추적 1순위</li>
+    <li><strong>OTHER 13%는 신고에서 집중</strong> — "시세/가격 언급", "구매방해", "딜러 언급" 등이 기존 라벨에 미매핑. 라벨 세분화 검토 필요</li>
+    <li><strong>FRAUD는 경고·제재에서만 출현</strong> — 부계정은 별도 시스템(<code>#alert_user_abusing</code>)에서 탐지</li>
+    <li><strong>PRODUCT_SELLING은 현재 0건</strong> — <code>#alert_auto_patrol_product</code> 연동 시 채워질 영역</li>
+    <li><strong>DM Patrol이 라벨링 핵심 과제</strong> — 1,817건, 키워드 기반 자동 분류 후 어드민 검토 필요</li>
+  </ul>
+</div>
+
+<!-- DM 라벨링 기준안 -->
+<div class="section">
+  <h2>DM Patrol 키워드 라벨링 기준안</h2>
+  <table>
+    <thead><tr><th>라벨</th><th>키워드 (OR 조건)</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-ext">EXTERNAL_TRADE</span></td>
+        <td>
+          <span class="keyword-tag">카톡</span>
+          <span class="keyword-tag">카카오</span>
+          <span class="keyword-tag">010</span>
+          <span class="keyword-tag">계좌</span>
+          <span class="keyword-tag">입금</span>
+          <span class="keyword-tag">수고비</span>
+          <span class="keyword-tag">직거래</span>
+          <span class="keyword-tag">연락처</span>
+          <span class="keyword-tag">전화</span>
+          <span class="keyword-tag">은행</span>
+          <span class="keyword-tag">이체</span>
+        </td>
+        <td>1개 이상 매칭 시</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-fraud">FRAUD</span></td>
+        <td>
+          <span class="keyword-tag">주민</span>
+          <span class="keyword-tag">신분증</span>
+          <span class="keyword-tag">개인정보</span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-other">OTHER</span></td>
+        <td>위 키워드 없음</td>
+        <td>false positive 가능성 → 어드민 검토</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="text-align:center; color:var(--muted); font-size:0.8rem; margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);">
+  Generated from Slack data &nbsp;|&nbsp; 감지 DM 1,817건 + Live 3,661건 + 신고 2,012건 + 경고 76건 + 제재 66건 = 총 7,632건
+</div>
+
+</body>
+</html>
