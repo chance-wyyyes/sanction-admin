@@ -23,8 +23,9 @@ import MemoModal from './components/MemoModal';
 import Pagination from './components/Pagination';
 import FieldDefinitions from './components/FieldDefinitions';
 import LabelingGuide from './components/LabelingGuide';
+import LogView from './components/LogView';
 
-type Tab = 'main' | 'definitions' | 'labeling';
+type Tab = 'main' | 'log' | 'definitions' | 'labeling';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -204,6 +205,16 @@ function App() {
               제재 관리
             </button>
             <button
+              onClick={() => setActiveTab('log')}
+              className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
+                activeTab === 'log'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              로그
+            </button>
+            <button
               onClick={() => setActiveTab('definitions')}
               className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
                 activeTab === 'definitions'
@@ -226,7 +237,11 @@ function App() {
           </div>
         </div>
 
-        {activeTab === 'definitions' ? (
+        {activeTab === 'log' ? (
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <LogView />
+          </div>
+        ) : activeTab === 'definitions' ? (
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <FieldDefinitions />
           </div>
