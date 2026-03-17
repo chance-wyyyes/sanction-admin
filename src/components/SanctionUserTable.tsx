@@ -26,7 +26,7 @@ const COLUMNS: ColumnDef[] = [
   { field: 'validCount', label: '유효', sortable: true, emphasis: 'strong' },
   { field: 'warningCount', label: '경고', sortable: true, emphasis: 'strong' },
   { field: 'sanctionCount', label: '제재', sortable: true, emphasis: 'strong' },
-  { field: 'cumulativeSanctionCount', label: '누적 제재', sortable: true, emphasis: 'strong' },
+  { field: 'lastValidAt', label: '유효일', sortable: true, emphasis: 'strong' },
 ];
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -47,6 +47,12 @@ function CountCell({ value, emphasis, color }: { value: number; emphasis?: 'mute
     return <span className="text-gray-400">{value}</span>;
   }
   return <span className="text-gray-800 font-semibold">{value}</span>;
+}
+
+function formatShortDate(dateStr: string | null) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr);
+  return `${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 }
 
 export default function SanctionUserTable({
@@ -106,74 +112,58 @@ export default function SanctionUserTable({
                 key={user.userId}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
-                {/* 닉네임 */}
                 <td className="py-3 px-2">
                   <button className="text-blue-600 hover:text-blue-800 hover:underline font-medium text-left">
                     {user.nickname}
                   </button>
                 </td>
-                {/* 카테고리 */}
                 <td className="py-3 px-2">
                   {user.lastCategory ? (
-                    <span
-                      className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        CATEGORY_COLORS[user.lastCategory]
-                      }`}
-                    >
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${CATEGORY_COLORS[user.lastCategory]}`}>
                       {CATEGORY_TEXT[user.lastCategory]}
                     </span>
                   ) : (
                     <span className="text-gray-300">-</span>
                   )}
                 </td>
-                {/* 상태 */}
                 <td className="py-3 px-2">
                   {user.status === 'SANCTIONED' ? (
-                    <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">
-                      제재중
-                    </span>
+                    <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">제재중</span>
                   ) : (
                     <span className="text-gray-300">-</span>
                   )}
                 </td>
-                {/* 태그 */}
                 <td className="py-3 px-2">
                   <div className="flex flex-wrap gap-1">
                     {user.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded"
-                      >
+                      <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">
                         {LABEL_TEXT[tag]}
                       </span>
                     ))}
                   </div>
                 </td>
-                {/* 신고 (muted) */}
                 <td className="py-3 px-2 text-center">
                   <CountCell value={user.reportCount} emphasis="muted" />
                 </td>
-                {/* 감지 (muted) */}
                 <td className="py-3 px-2 text-center">
                   <CountCell value={user.detectionCount} emphasis="muted" />
                 </td>
-                {/* 유효 (strong) */}
                 <td className="py-3 px-2 text-center">
                   <CountCell value={user.validCount} emphasis="strong" color={user.validCount > 0 ? 'text-blue-600' : undefined} />
                 </td>
-                {/* 경고 (strong) */}
                 <td className="py-3 px-2 text-center">
                   <CountCell value={user.warningCount} emphasis="strong" color={user.warningCount > 0 ? 'text-orange-600' : undefined} />
                 </td>
-                {/* 제재 (strong) */}
                 <td className="py-3 px-2 text-center">
                   <CountCell value={user.sanctionCount} emphasis="strong" color={user.sanctionCount > 0 ? 'text-red-600' : undefined} />
                 </td>
-                {/* 누적 제재 (strong) */}
-                <td className="py-3 px-2 text-center">
-                  <CountCell value={user.cumulativeSanctionCount} emphasis="strong" color={user.cumulativeSanctionCount > 0 ? 'text-red-800' : undefined} />
+                <td className="py-3 px-2 text-center text-xs">
+                  {user.lastValidAt ? (
+                    <span className="text-gray-700 font-medium">{formatShortDate(user.lastValidAt)}</span>
+                  ) : (
+                    <span className="text-gray-300">-</span>
+                  )}
                 </td>
-                {/* 메모 */}
                 <td className="py-3 px-1">
                   <button
                     onClick={() => onMemoClick(user.userId)}
@@ -183,7 +173,6 @@ export default function SanctionUserTable({
                     메모
                   </button>
                 </td>
-                {/* 상세 */}
                 <td className="py-3 px-1">
                   <button
                     onClick={() => onDetailClick(user.userId)}

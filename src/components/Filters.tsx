@@ -1,11 +1,7 @@
-import type { PeriodFilter, UserType, Category } from '../types';
+import type { UserType, Category } from '../types';
 import { CATEGORY_TEXT } from '../types';
 
 interface FiltersProps {
-  period: PeriodFilter;
-  onPeriodChange: (period: PeriodFilter) => void;
-  customDateRange: { start: string; end: string };
-  onCustomDateChange: (range: { start: string; end: string }) => void;
   userTypeFilter: UserType | 'ALL';
   onUserTypeFilterChange: (type: UserType | 'ALL') => void;
   categoryFilter: Category | 'ALL';
@@ -16,19 +12,7 @@ interface FiltersProps {
   onSearchQueryChange: (query: string) => void;
 }
 
-const PERIOD_OPTIONS: { value: PeriodFilter; label: string }[] = [
-  { value: '24h', label: '24시간' },
-  { value: '7d', label: '일주일' },
-  { value: '30d', label: '한달' },
-  { value: 'all', label: '누적' },
-  { value: 'custom', label: '직접입력' },
-];
-
 export default function Filters({
-  period,
-  onPeriodChange,
-  customDateRange,
-  onCustomDateChange,
   userTypeFilter,
   onUserTypeFilterChange,
   categoryFilter,
@@ -42,43 +26,6 @@ export default function Filters({
     <div className="space-y-3">
       {/* 상단 필터 행 */}
       <div className="flex items-center gap-3 flex-wrap">
-        {/* 기간 필터 */}
-        <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-600">기간:</label>
-          <select
-            value={period}
-            onChange={(e) => onPeriodChange(e.target.value as PeriodFilter)}
-            className="border border-gray-300 rounded px-3 py-1.5 text-sm bg-white"
-          >
-            {PERIOD_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-          {period === 'custom' && (
-            <div className="flex items-center gap-1">
-              <input
-                type="date"
-                value={customDateRange.start}
-                onChange={(e) =>
-                  onCustomDateChange({ ...customDateRange, start: e.target.value })
-                }
-                className="border border-gray-300 rounded px-2 py-1.5 text-sm"
-              />
-              <span className="text-gray-400">~</span>
-              <input
-                type="date"
-                value={customDateRange.end}
-                onChange={(e) =>
-                  onCustomDateChange({ ...customDateRange, end: e.target.value })
-                }
-                className="border border-gray-300 rounded px-2 py-1.5 text-sm"
-              />
-            </div>
-          )}
-        </div>
-
         {/* 구분 필터 */}
         <div className="flex items-center gap-2">
           <label className="text-sm font-medium text-gray-600">구분:</label>

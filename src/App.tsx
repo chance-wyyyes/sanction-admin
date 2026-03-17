@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import type {
-  PeriodFilter,
   UserType,
   Category,
   SortConfig,
@@ -32,11 +31,6 @@ function App() {
   const [activeTab, setActiveTab] = useState<Tab>('main');
 
   // 필터 상태
-  const [period, setPeriod] = useState<PeriodFilter>('all');
-  const [customDateRange, setCustomDateRange] = useState({
-    start: '2026-01-01',
-    end: '2026-03-11',
-  });
   const [userTypeFilter, setUserTypeFilter] = useState<UserType | 'ALL'>('ALL');
   const [categoryFilter, setCategoryFilter] = useState<Category | 'ALL'>('ALL');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'SANCTIONED' | 'NONE'>(
@@ -44,9 +38,9 @@ function App() {
   );
   const [searchQuery, setSearchQuery] = useState('');
 
-  // 정렬 상태 (기본: 누적 제재 내림차순)
+  // 정렬 상태 (기본: 마지막 유효일 내림차순)
   const [sortConfig, setSortConfig] = useState<SortConfig>({
-    field: 'cumulativeSanctionCount',
+    field: 'lastValidAt',
     direction: 'desc',
   });
 
@@ -64,24 +58,20 @@ function App() {
   const filteredUsers = useMemo(() => {
     let result = [...mockUsers];
 
-    // 구분 필터
     if (userTypeFilter !== 'ALL') {
       result = result.filter((u) => u.userType === userTypeFilter);
     }
 
-    // 카테고리 필터
     if (categoryFilter !== 'ALL') {
       result = result.filter((u) => u.lastCategory === categoryFilter);
     }
 
-    // 상태 필터
     if (statusFilter === 'SANCTIONED') {
       result = result.filter((u) => u.status === 'SANCTIONED');
     } else if (statusFilter === 'NONE') {
       result = result.filter((u) => u.status === null);
     }
 
-    // 검색
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
       result = result.filter((u) => u.nickname.toLowerCase().includes(q));
@@ -168,10 +158,6 @@ function App() {
   };
 
   // 필터 변경 시 1페이지로 리셋
-  const handlePeriodChange = (p: PeriodFilter) => {
-    setPeriod(p);
-    setCurrentPage(1);
-  };
   const handleUserTypeChange = (t: UserType | 'ALL') => {
     setUserTypeFilter(t);
     setCurrentPage(1);
@@ -252,10 +238,6 @@ function App() {
         {/* 필터 */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
           <Filters
-            period={period}
-            onPeriodChange={handlePeriodChange}
-            customDateRange={customDateRange}
-            onCustomDateChange={setCustomDateRange}
             userTypeFilter={userTypeFilter}
             onUserTypeFilterChange={handleUserTypeChange}
             categoryFilter={categoryFilter}
@@ -270,8 +252,7 @@ function App() {
         {/* 테이블 */}
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="text-xs text-gray-400 mb-2">
-            총 {sortedUsers.length}명 | 신고/감지/경고/제재 숫자 = 선택한 기간 내
-            카운트 | 누적 제재 = 전체 기간 고정
+            총 {sortedUsers.length}명 | 전체 누적 기준 | 기본 정렬: 마지막 유효일
           </div>
 
           <SanctionUserTable

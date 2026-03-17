@@ -40,9 +40,6 @@ export const CATEGORY_TEXT: Record<Category, string> = {
 // 제재 상태
 export type SanctionStatus = 'SANCTIONED' | null;
 
-// 기간 필터
-export type PeriodFilter = '24h' | '7d' | '30d' | 'all' | 'custom';
-
 // 메인 테이블 집계 뷰
 export interface SanctionUserSummary {
   userId: string;
@@ -55,7 +52,7 @@ export interface SanctionUserSummary {
   validCount: number; // 유효 (어드민이 확인한 유효 건수)
   warningCount: number;
   sanctionCount: number;
-  cumulativeSanctionCount: number; // 누적 제재 (기간 무관 고정값)
+  lastValidAt: string | null; // 마지막 유효 처리 일자
   lastCategory: Category | null; // 마지막 판매 시도 카테고리 (딜러만)
   joinedAt: string; // 가입일
   enteredAt: string | null; // 입점일 (딜러만)
@@ -134,7 +131,7 @@ export type SortField =
   | 'validCount'
   | 'warningCount'
   | 'sanctionCount'
-  | 'cumulativeSanctionCount';
+  | 'lastValidAt';
 
 export type SortDirection = 'asc' | 'desc';
 
