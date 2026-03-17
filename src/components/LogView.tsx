@@ -6,6 +6,7 @@ type PeriodOption = '24h' | '3d' | 'custom';
 
 interface DmLog {
   type: 'dm';
+  id: string;
   targetUserId: string;
   targetNickname: string;
   triggerMessage: string;
@@ -23,6 +24,7 @@ interface LiveViolation {
 
 interface LiveLog {
   type: 'live';
+  id: string;
   targetUserId: string;
   targetNickname: string;
   liveId: string;
@@ -34,6 +36,7 @@ interface LiveLog {
 
 interface OpenChatLog {
   type: 'openchat';
+  id: string;
   targetUserId: string;
   targetNickname: string;
   roomName: string;
@@ -44,6 +47,7 @@ interface OpenChatLog {
 
 interface ReportLog {
   type: 'report';
+  id: string;
   targetUserId: string;
   targetNickname: string;
   reporterNickname: string;
@@ -59,7 +63,6 @@ type LogEntry = DmLog | LiveLog | OpenChatLog | ReportLog;
 function randItem<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
 function randBetween(a: number, b: number) { return Math.floor(Math.random() * (b - a)) + a; }
 function pad(n: number) { return String(n).padStart(2, '0'); }
-
 function randomTimestamp(daysAgo: number): string {
   const now = new Date('2026-03-18T12:00:00');
   const ms = now.getTime() - Math.random() * daysAgo * 86400000;
@@ -67,30 +70,19 @@ function randomTimestamp(daysAgo: number): string {
   return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
-const NICKS = ['라큐럭키','김몽순','진격의드볼아빠','예니예니','레몬팜','사라지는옥수수540','나우아임영','포켓몬매니아','키드다은','머빈','고세구','한달50콩','주연진','카드초보','원피스팬','드래곤볼러','디지몬킹','부푸는탄제로','소아즈','첨선생','아사미','킬모기','행동하는대파','비타오빠','유저123','빵덕후','라부부잡이','징냥','네미','키티쥬','블랙카우','혜헤','하이냠냠이','피규어사냥꾼','son77','미난','돈없는미나리','몽키D루피','데오임다'];
+const NICKS = ['라큐럭키','김몽순','진격의드볼아빠','예니예니','레몬팜','사라지는옥수수540','나우아임영','포켓몬매니아','키드다은','머빈','고세구','한달50콩','주연진','카드초보','원피스팬','드래곤볼러','디지몬킹','부푸는탄제로','소아즈','첨선생','아사미','킬모기','행동하는대파','비타오빠','빵덕후','라부부잡이','징냥','네미','키티쥬','블랙카우','혜헤','하이냠냠이','피규어사냥꾼','미난','돈없는미나리','몽키D루피','데오임다'];
 
-// --- DM ---
 const DM_TRIGGERS: { msg: string; type: string }[] = [
-  { msg: '카톡으로 거래하자', type: 'EXTERNAL_CHANNEL' },
-  { msg: '계좌이체 해주세요', type: 'EXTERNAL_TRADE' },
-  { msg: '010구구칠팔06삼공', type: 'EXTERNAL_TRADE' },
-  { msg: '수고비 정두?', type: 'EXTERNAL_TRADE' },
-  { msg: '입근드린다했어여', type: 'EXTERNAL_TRADE' },
-  { msg: 'open.kakao.com/o/gauWtLRh', type: 'EXTERNAL_CHANNEL' },
-  { msg: '직거래 ㄱㄱ', type: 'EXTERNAL_TRADE' },
-  { msg: '밴드로 와', type: 'EXTERNAL_CHANNEL' },
-  { msg: '디스코드 링크 보내줄게', type: 'EXTERNAL_CHANNEL' },
-  { msg: '현금으로 보내줘', type: 'EXTERNAL_TRADE' },
-  { msg: '네이버페이로 보내줘', type: 'EXTERNAL_TRADE' },
-  { msg: '안전번호 알려드릴게요', type: 'SUSPICIOUS_CONTACT' },
-  { msg: '라고할 뻔', type: 'INAPPROPRIATE_LANGUAGE' },
-  { msg: '바보', type: 'INAPPROPRIATE_LANGUAGE' },
-  { msg: 'Psa10보내지말라구!?', type: 'SUSPICIOUS_CONTACT' },
-  { msg: '* 흔들지 그랬음', type: 'INAPPROPRIATE_LANGUAGE' },
-  { msg: '연락처 보내드림', type: 'EXTERNAL_TRADE' },
-  { msg: '오픈채팅 들어와', type: 'EXTERNAL_CHANNEL' },
-  { msg: '텔레그램으로 연락해', type: 'EXTERNAL_CHANNEL' },
-  { msg: '송금 완료했어요', type: 'EXTERNAL_TRADE' },
+  { msg: '카톡으로 거래하자', type: 'EXTERNAL_CHANNEL' },{ msg: '계좌이체 해주세요', type: 'EXTERNAL_TRADE' },
+  { msg: '010구구칠팔06삼공', type: 'EXTERNAL_TRADE' },{ msg: '수고비 정두?', type: 'EXTERNAL_TRADE' },
+  { msg: 'open.kakao.com/o/gauWtLRh', type: 'EXTERNAL_CHANNEL' },{ msg: '직거래 ㄱㄱ', type: 'EXTERNAL_TRADE' },
+  { msg: '밴드로 와', type: 'EXTERNAL_CHANNEL' },{ msg: '디스코드 링크 보내줄게', type: 'EXTERNAL_CHANNEL' },
+  { msg: '현금으로 보내줘', type: 'EXTERNAL_TRADE' },{ msg: '네이버페이로 보내줘', type: 'EXTERNAL_TRADE' },
+  { msg: '안전번호 알려드릴게요', type: 'SUSPICIOUS_CONTACT' },{ msg: '라고할 뻔', type: 'INAPPROPRIATE_LANGUAGE' },
+  { msg: '바보', type: 'INAPPROPRIATE_LANGUAGE' },{ msg: '* 흔들지 그랬음', type: 'INAPPROPRIATE_LANGUAGE' },
+  { msg: '연락처 보내드림', type: 'EXTERNAL_TRADE' },{ msg: '텔레그램으로 연락해', type: 'EXTERNAL_CHANNEL' },
+  { msg: '송금 완료했어요', type: 'EXTERNAL_TRADE' },{ msg: '입근드린다했어여', type: 'EXTERNAL_TRADE' },
+  { msg: '오픈채팅 들어와', type: 'EXTERNAL_CHANNEL' },{ msg: 'Psa10보내지말라구!?', type: 'SUSPICIOUS_CONTACT' },
 ];
 const DM_CHATS = [
   '{nick} - {msg}\n상대방 - 네 알겠습니다\n{nick} - 빨리 해주세요',
@@ -100,34 +92,9 @@ const DM_CHATS = [
   '{nick} - 사진을 보냈습니다.\n{nick} - {msg}\n상대방 - 확인했어요',
 ];
 
-function genDmLogs(count: number): DmLog[] {
-  const logs: DmLog[] = [];
-  const uniqueCount = Math.floor(count * 0.55);
-  const bases: { uid: string; nick: string; trigger: { msg: string; type: string } }[] = [];
-  for (let i = 0; i < uniqueCount; i++) {
-    bases.push({ uid: `u_dm_${i}`, nick: randItem(NICKS), trigger: randItem(DM_TRIGGERS) });
-  }
-  for (let i = 0; i < count; i++) {
-    const b = randItem(bases);
-    const tpl = randItem(DM_CHATS);
-    logs.push({
-      type: 'dm',
-      targetUserId: b.uid,
-      targetNickname: b.nick,
-      triggerMessage: b.trigger.msg,
-      violationType: b.trigger.type,
-      chatContent: tpl.replace(/\{nick\}/g, b.nick).replace(/\{msg\}/g, b.trigger.msg),
-      dmLink: '#',
-      timestamp: randomTimestamp(7),
-    });
-  }
-  return logs;
-}
-
-// --- Live ---
 const LIVE_NAMES = ['놀이터?아니면 공사판','포켓몬 카드 경매','원피스 카드 라이브','피규어 언박싱','TCG 대전','아트토이 소개','스포츠카드 개봉','랜덤박스 오픈','가챠 라이브','컬렉션 쇼케이스','심야 카드 개봉','주말 특가 라이브'];
 const DEALERS = ['띤동','카드왕','시금치다요','피규어맨','토이마스터','컬렉터킴','딜러박','스타딜러','라이브킹','보물사냥꾼'];
-const LIVE_V_POOL: LiveViolation[] = [
+const LIVE_V: LiveViolation[] = [
   { flaggedMessage: '그건 빙신아냐?', violationType: '부적절한 언어', violationReason: '경멸적 표현 사용' },
   { flaggedMessage: '다 갬깍하셔요?', violationType: '딜러/컬렉터 공격', violationReason: '딜러 상품 비하' },
   { flaggedMessage: '라고할 뻔', violationType: '부적절한 언어', violationReason: '부적절한 표현' },
@@ -137,242 +104,223 @@ const LIVE_V_POOL: LiveViolation[] = [
   { flaggedMessage: '짝퉁이누…', violationType: '딜러/컬렉터 공격', violationReason: '상품 진정성 비하' },
   { flaggedMessage: '에이씨!!!', violationType: '부적절한 언어', violationReason: '욕설 약자' },
   { flaggedMessage: '보내주겠띠', violationType: '외부 거래 유도', violationReason: '연락처 공유 암시' },
-  { flaggedMessage: '내번호 모르잖띠!!!', violationType: '외부 거래 유도', violationReason: '개인 연락처 공유 암시' },
   { flaggedMessage: '미쳐띠???', violationType: '부적절한 언어', violationReason: '경멸적 표현' },
   { flaggedMessage: '근뎉저런여자랑', violationType: '부적절한 언어', violationReason: '차별 표현' },
-  { flaggedMessage: '아파트 팔아야해', violationType: '시세/가격 언급', violationReason: '금전적 의사표현' },
   { flaggedMessage: '구매 방해하지 마', violationType: '구매 방해', violationReason: '구매 행위 방해' },
   { flaggedMessage: '똥손들이라니ㅋ', violationType: '딜러/컬렉터 공격', violationReason: '딜러 능력 비하' },
 ];
 
-function genLiveLogs(count: number): LiveLog[] {
-  return Array.from({ length: count }, (_, i) => {
-    const vCount = randBetween(1, 4);
-    const vs: LiveViolation[] = [];
-    for (let j = 0; j < vCount; j++) vs.push(randItem(LIVE_V_POOL));
-    return {
-      type: 'live' as const,
-      targetUserId: `u_live_${i}`,
-      targetNickname: randItem(NICKS),
-      liveId: `live_${randBetween(10000, 99999)}`,
-      liveName: randItem(LIVE_NAMES),
-      dealerName: randItem(DEALERS),
-      violations: vs,
-      timestamp: randomTimestamp(7),
-    };
-  });
-}
-
-// --- OpenChat (위반 유형 없음) ---
 const OC_ROOMS = ['피규어 잡담방','카드 거래 오픈챗','원피스 팬 모임','아트토이 수다방','TCG 정보 공유','스포츠카드 톡방','컬렉터 모임','초보 질문방','리뷰 채널','자유 채팅','포켓몬 교환방','한정판 알림방'];
 const OC_FLAGS = ['카톡으로 연락주세요','시세 얼마에요?','직거래 하실분','에이 씻','개깍이네','밴드로 오세요','계좌번호 알려드림','ㅅㅂ 이게 뭐야','가품 아니에요?','010-xxxx-xxxx','오리파 팝니다','수제팩 3만원'];
 
-function genOpenChatLogs(count: number): OpenChatLog[] {
+const RPT_REASONS = ['욕설·반말 등 불쾌감을 주는 언행','구매를 방해하는 행위','외부 거래 및 외부 결제 유도','시세 및 가격 언급','딜러/컬렉터에 대한 언급·지적','와이스 및 커뮤니티에 대한 부정적 언행','기타 사유','허가되지 않은 상품 판매','불쾌한 메시지','사기 의심'];
+const TARGET_MSGS = ['ㅅㅂ 뭐야 이게','갬깍 아니에요?','시세 3천 아닌가요','직거래 하자','밴드로 와요','개싸게 파는데?','짝퉁인데 뭐','계좌 보내드림','카톡으로 연락해','얘 바보아니냐',null,null,null];
+
+// 생성
+function genDm(count: number): DmLog[] {
+  const logs: DmLog[] = [];
+  const bases: { uid: string; nick: string; t: typeof DM_TRIGGERS[0] }[] = [];
+  for (let i = 0; i < Math.floor(count * 0.55); i++) bases.push({ uid: `dm_${i}`, nick: randItem(NICKS), t: randItem(DM_TRIGGERS) });
+  for (let i = 0; i < count; i++) {
+    const b = randItem(bases);
+    logs.push({ type: 'dm', id: `dm_${i}`, targetUserId: b.uid, targetNickname: b.nick, triggerMessage: b.t.msg, violationType: b.t.type, chatContent: randItem(DM_CHATS).replace(/\{nick\}/g, b.nick).replace(/\{msg\}/g, b.t.msg), dmLink: '#', timestamp: randomTimestamp(7) });
+  }
+  return logs;
+}
+function genLive(count: number): LiveLog[] {
   return Array.from({ length: count }, (_, i) => {
-    const nick = randItem(NICKS);
-    const flagged = randItem(OC_FLAGS);
-    return {
-      type: 'openchat' as const,
-      targetUserId: `u_oc_${i}`,
-      targetNickname: nick,
-      roomName: randItem(OC_ROOMS),
-      flaggedMessage: flagged,
-      chatContext: `유저A - 안녕하세요~\n유저B - 오 반가워요\n${nick} - ${flagged}\n유저A - ??`,
-      timestamp: randomTimestamp(7),
-    };
+    const vs: LiveViolation[] = Array.from({ length: randBetween(1, 4) }, () => randItem(LIVE_V));
+    return { type: 'live' as const, id: `live_${i}`, targetUserId: `lv_${i}`, targetNickname: randItem(NICKS), liveId: `l_${randBetween(10000, 99999)}`, liveName: randItem(LIVE_NAMES), dealerName: randItem(DEALERS), violations: vs, timestamp: randomTimestamp(7) };
   });
 }
-
-// --- Report (라이브명 + 대상자 발언) ---
-const REPORT_REASONS = ['욕설·반말 등 불쾌감을 주는 언행','구매를 방해하는 행위','외부 거래 및 외부 결제 유도','시세 및 가격 언급','딜러/컬렉터에 대한 언급·지적','와이스 및 커뮤니티에 대한 부정적 언행','기타 사유','허가되지 않은 상품 판매','불쾌한 메시지','사기 의심'];
-const TARGET_MSGS = ['ㅅㅂ 뭐야 이게','갬깍 아니에요?','시세 3천 아닌가요','직거래 하자','밴드로 와요','개싸게 파는데?','짝퉁인데 뭐','계좌 보내드림',null,'카톡으로 연락해',null,'뭔 소리야 ㅋㅋ',null,'얘 바보아니냐'];
-
-function genReportLogs(count: number): ReportLog[] {
+function genOc(count: number): OpenChatLog[] {
   return Array.from({ length: count }, (_, i) => {
-    const hasLive = Math.random() > 0.3;
-    return {
-      type: 'report' as const,
-      targetUserId: `u_rpt_${i}`,
-      targetNickname: randItem(NICKS),
-      reporterNickname: randItem(NICKS),
-      reason: randItem(REPORT_REASONS),
-      liveName: hasLive ? randItem(LIVE_NAMES) : null,
-      targetMessage: Math.random() > 0.4 ? randItem(TARGET_MSGS) : null,
-      timestamp: randomTimestamp(7),
-    };
+    const nick = randItem(NICKS), flag = randItem(OC_FLAGS);
+    return { type: 'openchat' as const, id: `oc_${i}`, targetUserId: `oc_${i}`, targetNickname: nick, roomName: randItem(OC_ROOMS), flaggedMessage: flag, chatContext: `유저A - 안녕하세요~\n유저B - 오 반가워요\n${nick} - ${flag}\n유저A - ??\n유저C - ㅋㅋ`, timestamp: randomTimestamp(7) };
   });
 }
+function genRpt(count: number): ReportLog[] {
+  return Array.from({ length: count }, (_, i) => ({ type: 'report' as const, id: `rpt_${i}`, targetUserId: `rpt_${i}`, targetNickname: randItem(NICKS), reporterNickname: randItem(NICKS), reason: randItem(RPT_REASONS), liveName: Math.random() > 0.3 ? randItem(LIVE_NAMES) : null, targetMessage: randItem(TARGET_MSGS), timestamp: randomTimestamp(7) }));
+}
 
-// 전체 생성
-const ALL_LOGS: LogEntry[] = [
-  ...genDmLogs(80),
-  ...genLiveLogs(60),
-  ...genOpenChatLogs(55),
-  ...genReportLogs(55),
-].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+const ALL: LogEntry[] = [...genDm(80), ...genLive(60), ...genOc(55), ...genRpt(55)].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
 // ===== 유틸 =====
-function formatTs(ts: string) {
-  const d = new Date(ts);
-  return `${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+function formatTs(ts: string) { const d = new Date(ts); return `${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+
+interface DmGroup { key: string; latest: DmLog; count: number; earliest: string; }
+function groupDm(logs: DmLog[]): DmGroup[] {
+  const m = new Map<string, DmLog[]>();
+  for (const l of logs) { const k = `${l.targetUserId}::${l.triggerMessage}`; (m.get(k) ?? (m.set(k, []), m.get(k)!)).push(l); }
+  return Array.from(m.entries()).map(([key, items]) => { items.sort((a, b) => +new Date(b.timestamp) - +new Date(a.timestamp)); return { key, latest: items[0], count: items.length, earliest: items[items.length - 1].timestamp }; }).sort((a, b) => +new Date(b.latest.timestamp) - +new Date(a.latest.timestamp));
 }
 
-interface DmGroup {
-  key: string;
-  latest: DmLog;
-  count: number;
-  earliest: string;
-}
-
-function groupDmLogs(logs: DmLog[]): DmGroup[] {
-  const map = new Map<string, DmLog[]>();
-  for (const log of logs) {
-    const key = `${log.targetUserId}::${log.triggerMessage}`;
-    (map.get(key) ?? (map.set(key, []), map.get(key)!)).push(log);
-  }
-  return Array.from(map.entries()).map(([key, items]) => {
-    items.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-    return { key, latest: items[0], count: items.length, earliest: items[items.length - 1].timestamp };
-  }).sort((a, b) => new Date(b.latest.timestamp).getTime() - new Date(a.latest.timestamp).getTime());
-}
-
-function filterByPeriod(logs: LogEntry[], period: PeriodOption, customRange: { start: string; end: string }): LogEntry[] {
+function filterPeriod(logs: LogEntry[], p: PeriodOption, cr: { start: string; end: string }): LogEntry[] {
   const now = new Date('2026-03-18T23:59:59');
-  if (period === '24h') {
-    const cutoff = new Date(now.getTime() - 86400000);
-    return logs.filter((l) => new Date(l.timestamp) >= cutoff);
-  }
-  if (period === '3d') {
-    const cutoff = new Date(now.getTime() - 3 * 86400000);
-    return logs.filter((l) => new Date(l.timestamp) >= cutoff);
-  }
-  const start = new Date(customRange.start + 'T00:00:00');
-  const end = new Date(customRange.end + 'T23:59:59');
-  return logs.filter((l) => { const d = new Date(l.timestamp); return d >= start && d <= end; });
+  if (p === '24h') { const c = new Date(now.getTime() - 86400000); return logs.filter(l => new Date(l.timestamp) >= c); }
+  if (p === '3d') { const c = new Date(now.getTime() - 3 * 86400000); return logs.filter(l => new Date(l.timestamp) >= c); }
+  const s = new Date(cr.start + 'T00:00:00'), e = new Date(cr.end + 'T23:59:59');
+  return logs.filter(l => { const d = new Date(l.timestamp); return d >= s && d <= e; });
 }
 
-// ===== 카드 =====
-
-function DmCard({ group }: { group: DmGroup }) {
-  const [expanded, setExpanded] = useState(false);
-  const log = group.latest;
-  const lines = log.chatContent.split('\n');
+// ===== 상세 패널 =====
+function DetailPanel({ entry, onClose }: { entry: LogEntry; onClose: () => void }) {
   return (
-    <div className="border border-gray-200 rounded-lg p-3">
-      <div className="flex items-center justify-between mb-1.5">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold text-sm">{log.targetNickname}</span>
-          {group.count > 1 && <span className="text-xs text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">{group.count}회</span>}
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <div className="absolute inset-0 bg-black/20" onClick={onClose} />
+      <div className="relative w-[480px] bg-white h-full shadow-xl overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 z-10 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="font-bold">{entry.targetNickname}</span>
+            <span className="text-xs text-gray-400">{formatTs(entry.timestamp)}</span>
+          </div>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
         </div>
-        <span className="text-xs text-gray-400">{formatTs(log.timestamp)}</span>
-      </div>
-      <div className="text-sm text-gray-800 mb-1">
-        {log.targetNickname}: <span className="text-red-600 font-medium">{log.triggerMessage}</span>
-      </div>
-      <div className="text-xs text-purple-600 mb-1">위반 유형: [{log.violationType}]</div>
-      <button onClick={() => setExpanded(!expanded)} className="text-xs text-blue-500 hover:text-blue-700">
-        {expanded ? '접기' : '대화 보기'}
-      </button>
-      {expanded && (
-        <div className="bg-gray-50 border-l-2 border-gray-300 pl-3 py-2 mt-1 space-y-0.5">
-          {lines.map((line, i) => (
-            <div key={i} className={`text-xs ${line.includes(log.triggerMessage) ? 'text-red-600 font-semibold' : 'text-gray-500'}`}>
-              {line.replace(/^\*|\*$/g, '')}
-            </div>
-          ))}
+        <div className="p-4 space-y-4">
+          {entry.type === 'dm' && <DmDetail log={entry} />}
+          {entry.type === 'live' && <LiveDetail log={entry} />}
+          {entry.type === 'openchat' && <OcDetail log={entry} />}
+          {entry.type === 'report' && <RptDetail log={entry} />}
         </div>
-      )}
-      {group.count > 1 && <div className="text-xs text-gray-400 mt-1">최초 {formatTs(group.earliest)} ~ 최근 {formatTs(log.timestamp)}</div>}
+      </div>
     </div>
   );
 }
 
-function LiveCard({ log }: { log: LiveLog }) {
+function ChatBlock({ content, highlight }: { content: string; highlight?: string }) {
   return (
-    <div className="border border-gray-200 rounded-lg p-3">
-      <div className="flex items-center justify-between mb-1.5">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold text-sm">{log.targetNickname}</span>
-          <span className="text-xs text-gray-400">{log.liveName} · {log.dealerName}</span>
+    <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 space-y-0.5">
+      {content.split('\n').map((line, i) => (
+        <div key={i} className={`text-xs ${highlight && line.includes(highlight) ? 'text-red-600 font-semibold' : 'text-gray-500'}`}>
+          {line.replace(/^\*|\*$/g, '')}
         </div>
-        <span className="text-xs text-gray-400">{formatTs(log.timestamp)}</span>
-      </div>
-      <div className="space-y-1.5">
+      ))}
+    </div>
+  );
+}
+
+function DmDetail({ log }: { log: DmLog }) {
+  return (<>
+    <div>
+      <div className="text-xs text-gray-400 mb-1">감지 메시지</div>
+      <div className="text-sm font-medium text-red-600">{log.triggerMessage}</div>
+    </div>
+    <div>
+      <div className="text-xs text-gray-400 mb-1">위반 유형</div>
+      <span className="text-xs bg-purple-50 text-purple-600 px-2 py-0.5 rounded">{log.violationType}</span>
+    </div>
+    <div>
+      <div className="text-xs text-gray-400 mb-2">대화 내용</div>
+      <ChatBlock content={log.chatContent} highlight={log.triggerMessage} />
+    </div>
+  </>);
+}
+
+function LiveDetail({ log }: { log: LiveLog }) {
+  return (<>
+    <div className="flex gap-4 text-xs text-gray-500">
+      <span>라이브: <strong className="text-gray-700">{log.liveName}</strong></span>
+      <span>딜러: <strong className="text-gray-700">{log.dealerName}</strong></span>
+    </div>
+    <div>
+      <div className="text-xs text-gray-400 mb-2">위반 내역 ({log.violations.length}건)</div>
+      <div className="space-y-2">
         {log.violations.map((v, i) => (
-          <div key={i} className="bg-gray-50 rounded p-2">
-            <div className="text-sm text-gray-800">{log.targetNickname}: <span className="text-red-600 font-medium">{v.flaggedMessage}</span></div>
-            <div className="text-xs text-purple-600 mt-0.5">위반 유형: [{v.violationType}]</div>
-            <div className="text-xs text-gray-400">{v.violationReason}</div>
+          <div key={i} className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+            <div className="text-sm">{log.targetNickname}: <span className="text-red-600 font-medium">{v.flaggedMessage}</span></div>
+            <div className="text-xs text-purple-600 mt-1">[{v.violationType}]</div>
+            <div className="text-xs text-gray-400 mt-0.5">{v.violationReason}</div>
           </div>
         ))}
       </div>
     </div>
+  </>);
+}
+
+function OcDetail({ log }: { log: OpenChatLog }) {
+  return (<>
+    <div>
+      <div className="text-xs text-gray-400 mb-1">오픈챗방</div>
+      <div className="text-sm font-medium">{log.roomName}</div>
+    </div>
+    <div>
+      <div className="text-xs text-gray-400 mb-1">감지 메시지</div>
+      <div className="text-sm font-medium text-red-600">{log.flaggedMessage}</div>
+    </div>
+    <div>
+      <div className="text-xs text-gray-400 mb-2">대화 내용</div>
+      <ChatBlock content={log.chatContext} highlight={log.flaggedMessage} />
+    </div>
+  </>);
+}
+
+function RptDetail({ log }: { log: ReportLog }) {
+  return (<>
+    {log.liveName && <div><div className="text-xs text-gray-400 mb-1">라이브</div><div className="text-sm font-medium">{log.liveName}</div></div>}
+    <div><div className="text-xs text-gray-400 mb-1">신고 사유</div><div className="text-sm">{log.reason}</div></div>
+    {log.targetMessage && <div><div className="text-xs text-gray-400 mb-1">대상자 발언</div><div className="text-sm text-red-600 font-medium">{log.targetMessage}</div></div>}
+    <div><div className="text-xs text-gray-400 mb-1">신고자</div><div className="text-sm">{log.reporterNickname}</div></div>
+  </>);
+}
+
+// ===== 테이블 행 =====
+function TrDm({ g, onClick }: { g: DmGroup; onClick: () => void }) {
+  const l = g.latest;
+  return (
+    <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={onClick}>
+      <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
+      <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
+      <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[240px]">{l.triggerMessage}</td>
+      <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{l.violationType}</span></td>
+      <td className="py-2 px-2 text-xs text-gray-400 text-center">{g.count > 1 ? `${g.count}회` : ''}</td>
+    </tr>
   );
 }
 
-function OpenChatCard({ log }: { log: OpenChatLog }) {
-  const [expanded, setExpanded] = useState(false);
-  const lines = log.chatContext.split('\n');
+function TrLive({ l, onClick }: { l: LiveLog; onClick: () => void }) {
+  const first = l.violations[0];
   return (
-    <div className="border border-gray-200 rounded-lg p-3">
-      <div className="flex items-center justify-between mb-1.5">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold text-sm">{log.targetNickname}</span>
-          <span className="text-xs text-gray-400">{log.roomName}</span>
-        </div>
-        <span className="text-xs text-gray-400">{formatTs(log.timestamp)}</span>
-      </div>
-      <div className="text-sm text-gray-800">
-        {log.targetNickname}: <span className="text-red-600 font-medium">{log.flaggedMessage}</span>
-      </div>
-      <button onClick={() => setExpanded(!expanded)} className="text-xs text-blue-500 hover:text-blue-700 mt-1">
-        {expanded ? '접기' : '대화 보기'}
-      </button>
-      {expanded && (
-        <div className="bg-gray-50 border-l-2 border-gray-300 pl-3 py-2 mt-1 space-y-0.5">
-          {lines.map((line, i) => (
-            <div key={i} className={`text-xs ${line.includes(log.flaggedMessage) ? 'text-red-600 font-semibold' : 'text-gray-500'}`}>{line}</div>
-          ))}
-        </div>
-      )}
-    </div>
+    <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={onClick}>
+      <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
+      <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
+      <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.liveName}</td>
+      <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[200px]">{first?.flaggedMessage}</td>
+      <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{first?.violationType}</span></td>
+      <td className="py-2 px-2 text-xs text-gray-400 text-center">{l.violations.length > 1 ? `${l.violations.length}건` : ''}</td>
+    </tr>
   );
 }
 
-function ReportCard({ log }: { log: ReportLog }) {
+function TrOc({ l, onClick }: { l: OpenChatLog; onClick: () => void }) {
   return (
-    <div className="border border-gray-200 rounded-lg p-3">
-      <div className="flex items-center justify-between mb-1.5">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold text-sm">{log.targetNickname}</span>
-          {log.liveName && <span className="text-xs text-gray-400">{log.liveName}</span>}
-        </div>
-        <span className="text-xs text-gray-400">{formatTs(log.timestamp)}</span>
-      </div>
-      <div className="text-sm text-gray-700 mb-1">{log.reason}</div>
-      {log.targetMessage && (
-        <div className="bg-gray-50 border-l-2 border-red-200 pl-3 py-1.5 mb-1">
-          <span className="text-xs text-gray-500">{log.targetNickname}:</span>{' '}
-          <span className="text-xs text-red-600 font-medium">{log.targetMessage}</span>
-        </div>
-      )}
-      <div className="text-xs text-gray-400">신고자: {log.reporterNickname}</div>
-    </div>
+    <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={onClick}>
+      <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
+      <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
+      <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.roomName}</td>
+      <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[280px]">{l.flaggedMessage}</td>
+    </tr>
+  );
+}
+
+function TrRpt({ l, onClick }: { l: ReportLog; onClick: () => void }) {
+  return (
+    <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={onClick}>
+      <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
+      <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
+      <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.liveName ?? '-'}</td>
+      <td className="py-2 px-2 text-sm text-gray-700 truncate max-w-[200px]">{l.reason}</td>
+      <td className="py-2 px-2 text-xs text-red-600 truncate max-w-[160px]">{l.targetMessage ?? ''}</td>
+      <td className="py-2 px-2 text-xs text-gray-400">{l.reporterNickname}</td>
+    </tr>
   );
 }
 
 // ===== 메인 =====
-const SOURCE_OPTIONS: { value: LogSource; label: string }[] = [
-  { value: 'DM', label: 'DM' },
-  { value: 'OPENCHAT', label: '오픈챗' },
-  { value: 'LIVE', label: '라이브챗' },
-  { value: 'REPORT', label: '신고' },
+const SRC_OPTS: { value: LogSource; label: string }[] = [
+  { value: 'DM', label: 'DM' },{ value: 'OPENCHAT', label: '오픈챗' },{ value: 'LIVE', label: '라이브챗' },{ value: 'REPORT', label: '신고' },
 ];
-
-const PERIOD_OPTIONS: { value: PeriodOption; label: string }[] = [
-  { value: '24h', label: '24시간' },
-  { value: '3d', label: '3일' },
-  { value: 'custom', label: '기간 설정' },
+const PER_OPTS: { value: PeriodOption; label: string }[] = [
+  { value: '24h', label: '24시간' },{ value: '3d', label: '3일' },{ value: 'custom', label: '기간 설정' },
 ];
 
 export default function LogView() {
@@ -380,67 +328,110 @@ export default function LogView() {
   const [period, setPeriod] = useState<PeriodOption>('24h');
   const [customRange, setCustomRange] = useState({ start: '2026-03-15', end: '2026-03-18' });
   const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState<LogEntry | DmGroup | null>(null);
 
-  const bySource = useMemo(() => {
-    if (source === 'DM') return ALL_LOGS.filter((l) => l.type === 'dm');
-    if (source === 'OPENCHAT') return ALL_LOGS.filter((l) => l.type === 'openchat');
-    if (source === 'LIVE') return ALL_LOGS.filter((l) => l.type === 'live');
-    return ALL_LOGS.filter((l) => l.type === 'report');
-  }, [source]);
-
-  const byPeriod = useMemo(() => filterByPeriod(bySource, period, customRange), [bySource, period, customRange]);
-
+  const bySource = useMemo(() => ALL.filter(l => l.type === (source === 'OPENCHAT' ? 'openchat' : source === 'LIVE' ? 'live' : source === 'REPORT' ? 'report' : 'dm')), [source]);
+  const byPeriod = useMemo(() => filterPeriod(bySource, period, customRange), [bySource, period, customRange]);
   const filtered = useMemo(() => {
     if (!search.trim()) return byPeriod;
     const q = search.trim().toLowerCase();
-    return byPeriod.filter((l) => l.targetNickname.toLowerCase().includes(q));
+    return byPeriod.filter(l => l.targetNickname.toLowerCase().includes(q));
   }, [byPeriod, search]);
 
-  const dmGroups = useMemo(() => {
-    if (source !== 'DM') return [];
-    return groupDmLogs(filtered as DmLog[]);
-  }, [source, filtered]);
+  const dmGroups = useMemo(() => source === 'DM' ? groupDm(filtered as DmLog[]) : [], [source, filtered]);
+  const count = source === 'DM' ? dmGroups.length : filtered.length;
 
-  const displayCount = source === 'DM' ? dmGroups.length : filtered.length;
+  // 패널에 보여줄 실제 LogEntry
+  const panelEntry: LogEntry | null = selected
+    ? ('latest' in selected ? (selected as DmGroup).latest : selected as LogEntry)
+    : null;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
+      {/* 필터 */}
       <div className="flex items-center gap-3 flex-wrap">
         <div className="flex items-center gap-2">
           <label className="text-sm font-medium text-gray-600">구분:</label>
-          <select value={source} onChange={(e) => setSource(e.target.value as LogSource)} className="border border-gray-300 rounded px-3 py-1.5 text-sm bg-white">
-            {SOURCE_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+          <select value={source} onChange={e => { setSource(e.target.value as LogSource); setSelected(null); }} className="border border-gray-300 rounded px-3 py-1.5 text-sm bg-white">
+            {SRC_OPTS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div className="flex items-center gap-2">
           <label className="text-sm font-medium text-gray-600">기간:</label>
-          <select value={period} onChange={(e) => setPeriod(e.target.value as PeriodOption)} className="border border-gray-300 rounded px-3 py-1.5 text-sm bg-white">
-            {PERIOD_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+          <select value={period} onChange={e => setPeriod(e.target.value as PeriodOption)} className="border border-gray-300 rounded px-3 py-1.5 text-sm bg-white">
+            {PER_OPTS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           {period === 'custom' && (
             <div className="flex items-center gap-1">
-              <input type="date" value={customRange.start} onChange={(e) => setCustomRange((r) => ({ ...r, start: e.target.value }))} className="border border-gray-300 rounded px-2 py-1.5 text-sm" />
+              <input type="date" value={customRange.start} onChange={e => setCustomRange(r => ({ ...r, start: e.target.value }))} className="border border-gray-300 rounded px-2 py-1.5 text-sm" />
               <span className="text-gray-400">~</span>
-              <input type="date" value={customRange.end} onChange={(e) => setCustomRange((r) => ({ ...r, end: e.target.value }))} className="border border-gray-300 rounded px-2 py-1.5 text-sm" />
+              <input type="date" value={customRange.end} onChange={e => setCustomRange(r => ({ ...r, end: e.target.value }))} className="border border-gray-300 rounded px-2 py-1.5 text-sm" />
             </div>
           )}
         </div>
-        <div className="flex items-center gap-2 ml-auto">
-          <input type="text" placeholder="닉네임 검색" value={search} onChange={(e) => setSearch(e.target.value)} className="border border-gray-300 rounded px-3 py-1.5 text-sm w-48" />
+        <div className="ml-auto">
+          <input type="text" placeholder="닉네임 검색" value={search} onChange={e => setSearch(e.target.value)} className="border border-gray-300 rounded px-3 py-1.5 text-sm w-44" />
         </div>
       </div>
 
-      <div className="text-xs text-gray-400">
-        {displayCount}건{source === 'DM' ? ' (동일 유저+메시지 그룹핑)' : ''}
+      <div className="text-xs text-gray-400">{count}건{source === 'DM' ? ' (그룹핑)' : ''}</div>
+
+      {/* 테이블 */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            {source === 'DM' && (
+              <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
+                <th className="py-2 px-2 font-medium w-[90px]">시간</th>
+                <th className="py-2 px-2 font-medium">닉네임</th>
+                <th className="py-2 px-2 font-medium">감지 메시지</th>
+                <th className="py-2 px-2 font-medium">위반 유형</th>
+                <th className="py-2 px-2 font-medium w-[50px] text-center">반복</th>
+              </tr>
+            )}
+            {source === 'LIVE' && (
+              <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
+                <th className="py-2 px-2 font-medium w-[90px]">시간</th>
+                <th className="py-2 px-2 font-medium">닉네임</th>
+                <th className="py-2 px-2 font-medium">라이브</th>
+                <th className="py-2 px-2 font-medium">감지 메시지</th>
+                <th className="py-2 px-2 font-medium">위반 유형</th>
+                <th className="py-2 px-2 font-medium w-[50px] text-center">건수</th>
+              </tr>
+            )}
+            {source === 'OPENCHAT' && (
+              <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
+                <th className="py-2 px-2 font-medium w-[90px]">시간</th>
+                <th className="py-2 px-2 font-medium">닉네임</th>
+                <th className="py-2 px-2 font-medium">오픈챗방</th>
+                <th className="py-2 px-2 font-medium">감지 메시지</th>
+              </tr>
+            )}
+            {source === 'REPORT' && (
+              <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
+                <th className="py-2 px-2 font-medium w-[90px]">시간</th>
+                <th className="py-2 px-2 font-medium">대상자</th>
+                <th className="py-2 px-2 font-medium">라이브</th>
+                <th className="py-2 px-2 font-medium">사유</th>
+                <th className="py-2 px-2 font-medium">대상자 발언</th>
+                <th className="py-2 px-2 font-medium">신고자</th>
+              </tr>
+            )}
+          </thead>
+          <tbody>
+            {count === 0 && (
+              <tr><td colSpan={6} className="py-12 text-center text-gray-400">해당 기간에 로그가 없습니다.</td></tr>
+            )}
+            {source === 'DM' && dmGroups.map(g => <TrDm key={g.key} g={g} onClick={() => setSelected(g)} />)}
+            {source === 'LIVE' && (filtered as LiveLog[]).map(l => <TrLive key={l.id} l={l} onClick={() => setSelected(l)} />)}
+            {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map(l => <TrOc key={l.id} l={l} onClick={() => setSelected(l)} />)}
+            {source === 'REPORT' && (filtered as ReportLog[]).map(l => <TrRpt key={l.id} l={l} onClick={() => setSelected(l)} />)}
+          </tbody>
+        </table>
       </div>
 
-      <div className="space-y-2">
-        {displayCount === 0 && <div className="py-12 text-center text-gray-400 text-sm">해당 기간에 로그가 없습니다.</div>}
-        {source === 'DM' && dmGroups.map((g) => <DmCard key={g.key} group={g} />)}
-        {source === 'LIVE' && (filtered as LiveLog[]).map((l, i) => <LiveCard key={i} log={l} />)}
-        {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map((l, i) => <OpenChatCard key={i} log={l} />)}
-        {source === 'REPORT' && (filtered as ReportLog[]).map((l, i) => <ReportCard key={i} log={l} />)}
-      </div>
+      {/* 상세 패널 */}
+      {panelEntry && <DetailPanel entry={panelEntry} onClose={() => setSelected(null)} />}
     </div>
   );
 }
