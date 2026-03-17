@@ -1,16 +1,20 @@
-// 라벨 체계
+// 라벨 체계 (6+1)
 export type Label =
   | 'EXTERNAL_TRADE'
+  | 'COMMUNITY_VIOLATION'
   | 'PRODUCT_SELLING'
-  | 'INAPPROPRIATE_CONTENT'
-  | 'FRAUD'
+  | 'LIVE_VIOLATION'
+  | 'DEAL_ISSUE'
+  | 'ACCOUNT_ABUSE'
   | 'OTHER';
 
 export const LABEL_TEXT: Record<Label, string> = {
   EXTERNAL_TRADE: '외부거래',
-  PRODUCT_SELLING: '상품판매',
-  INAPPROPRIATE_CONTENT: '부적절 콘텐츠',
-  FRAUD: '사기',
+  COMMUNITY_VIOLATION: '커뮤니티 위반',
+  PRODUCT_SELLING: '판매 위반',
+  LIVE_VIOLATION: '라이브 위반',
+  DEAL_ISSUE: '거래 이슈',
+  ACCOUNT_ABUSE: '계정 어뷰징',
   OTHER: '기타',
 };
 

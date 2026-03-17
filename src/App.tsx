@@ -22,8 +22,9 @@ import SanctionDetailPanel from './components/SanctionDetailPanel';
 import MemoModal from './components/MemoModal';
 import Pagination from './components/Pagination';
 import FieldDefinitions from './components/FieldDefinitions';
+import LabelingGuide from './components/LabelingGuide';
 
-type Tab = 'main' | 'definitions';
+type Tab = 'main' | 'definitions' | 'labeling';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -225,12 +226,26 @@ function App() {
             >
               필드 정의서
             </button>
+            <button
+              onClick={() => setActiveTab('labeling')}
+              className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
+                activeTab === 'labeling'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              라벨링
+            </button>
           </div>
         </div>
 
         {activeTab === 'definitions' ? (
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <FieldDefinitions />
+          </div>
+        ) : activeTab === 'labeling' ? (
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <LabelingGuide />
           </div>
         ) : (
         <>
