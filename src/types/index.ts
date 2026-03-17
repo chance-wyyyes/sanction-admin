@@ -103,6 +103,18 @@ export interface Sanction {
   createdAt: string;
 }
 
+// 유효 확인
+export interface Validation {
+  id: string;
+  targetUserId: string;
+  adminUserId: string;
+  adminNickname: string;
+  label: Label;
+  note: string;
+  relatedDetectionId?: string;
+  createdAt: string;
+}
+
 // 어드민 메모
 export interface AdminMemo {
   id: string;

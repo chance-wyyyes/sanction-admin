@@ -12,6 +12,7 @@ import {
   mockSanctions,
   mockWarnings,
   mockDetections,
+  mockValidations,
   mockReports,
   mockMemos,
 } from './data/mock';
@@ -280,6 +281,7 @@ function App() {
           sanctions={mockSanctions[selectedUser.userId] ?? []}
           warnings={mockWarnings[selectedUser.userId] ?? []}
           detections={mockDetections[selectedUser.userId] ?? []}
+          validations={mockValidations[selectedUser.userId] ?? []}
           reports={mockReports[selectedUser.userId] ?? []}
           memos={memoStore[selectedUser.userId] ?? []}
           onClose={handleCloseDetail}

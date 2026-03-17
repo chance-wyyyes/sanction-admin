@@ -167,10 +167,10 @@ export default function SanctionUserTable({
                 <td className="py-3 px-1">
                   <button
                     onClick={() => onMemoClick(user.userId)}
-                    className="text-gray-400 hover:text-amber-600 text-sm px-1.5 py-0.5 rounded hover:bg-amber-50 transition-colors"
-                    title="메모 작성"
+                    className="text-blue-500 hover:text-blue-700 text-xs font-medium px-2 py-1 rounded border border-blue-200 hover:bg-blue-50 transition-colors"
+                    title="유효 처리"
                   >
-                    메모
+                    유효
                   </button>
                 </td>
                 <td className="py-3 px-1">
