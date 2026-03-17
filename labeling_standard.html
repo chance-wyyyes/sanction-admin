@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>제재 유저 라벨링 기준서 v2</title>
+<title>제재 유저 라벨링 기준서 v4</title>
 <style>
   :root {
     --bg: #ffffff;
@@ -14,23 +14,30 @@
     --accent: #4f46e5;
     --red: #dc2626;
     --orange: #ea580c;
-    --yellow: #ca8a04;
     --green: #16a34a;
     --blue: #2563eb;
     --purple: #7c3aed;
+    --violet: #6d28d9;
+    --sky: #0284c7;
+    --teal: #0d9488;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 2rem; line-height: 1.6; max-width: 1100px; margin: 0 auto; }
   .header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--border); }
   .header h1 { font-size: 1.6rem; font-weight: 700; }
   .header p { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; }
+  .header .version-badge { display: inline-block; background: var(--accent); color: #fff; padding: 0.2rem 0.6rem; border-radius: 5px; font-size: 0.7rem; font-weight: 700; margin-bottom: 0.5rem; }
   .section { margin-bottom: 2.5rem; }
   .section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; padding: 0.6rem 1rem; border-radius: 8px; display: flex; align-items: center; gap: 0.5rem; }
+  .section-title .sub { font-size: 0.8rem; font-weight: 400; color: var(--muted); margin-left: auto; }
   .section-title.ext { background: rgba(234,88,12,0.08); color: var(--orange); }
-  .section-title.inap { background: rgba(220,38,38,0.08); color: var(--red); }
-  .section-title.fraud { background: rgba(124,58,237,0.08); color: var(--purple); }
+  .section-title.comm { background: rgba(109,40,217,0.08); color: var(--violet); }
   .section-title.prod { background: rgba(22,163,74,0.08); color: var(--green); }
+  .section-title.live { background: rgba(2,132,199,0.08); color: var(--sky); }
+  .section-title.deal { background: rgba(13,148,136,0.08); color: var(--teal); }
+  .section-title.acct { background: rgba(124,58,237,0.08); color: var(--purple); }
   h3 { font-size: 0.95rem; font-weight: 600; margin: 1.2rem 0 0.5rem; color: var(--text); }
+  h3 .channel { font-size: 0.7rem; font-weight: 500; color: var(--blue); background: rgba(37,99,235,0.06); padding: 0.15rem 0.5rem; border-radius: 4px; margin-left: 0.5rem; }
   .desc { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
   .keywords { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.75rem; }
   .kw { display: inline-block; padding: 0.15rem 0.5rem; background: #f3f4f6; border: 1px solid var(--border); border-radius: 4px; font-size: 0.75rem; font-family: monospace; }
@@ -45,241 +52,270 @@
   tr:hover td { background: rgba(0,0,0,0.015); }
   .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 5px; font-size: 0.7rem; font-weight: 600; }
   .b-ext { background: rgba(234,88,12,0.1); color: var(--orange); }
-  .b-inap { background: rgba(220,38,38,0.1); color: var(--red); }
-  .b-fraud { background: rgba(124,58,237,0.1); color: var(--purple); }
+  .b-comm { background: rgba(109,40,217,0.1); color: var(--violet); }
   .b-prod { background: rgba(22,163,74,0.1); color: var(--green); }
+  .b-live { background: rgba(2,132,199,0.1); color: var(--sky); }
+  .b-deal { background: rgba(13,148,136,0.1); color: var(--teal); }
+  .b-acct { background: rgba(124,58,237,0.1); color: var(--purple); }
   .b-other { background: rgba(107,114,128,0.1); color: var(--muted); }
-  .num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
-  .bar-row { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin-bottom: 0.4rem; }
-  .bar-seg { display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; color: #fff; min-width: 24px; }
   .note { background: rgba(79,70,229,0.04); border: 1px solid rgba(79,70,229,0.12); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.82rem; color: var(--muted); margin-top: 0.75rem; }
+  .note strong { color: var(--text); }
+  .diff-box { background: rgba(234,88,12,0.04); border: 1px solid rgba(234,88,12,0.15); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.82rem; margin-bottom: 1rem; }
+  .diff-box strong { color: var(--orange); }
   .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
   @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
   .footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .detail-list { list-style: disc; padding-left: 1.2rem; font-size: 0.85rem; color: #374151; margin-bottom: 0.5rem; }
+  .detail-list li { margin-bottom: 0.2rem; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>제재 유저 라벨링 기준서 v2</h1>
-  <p>Slack 수집 데이터 기반 | 제재 185건 + 감지 5,478건 + 신고 2,012건 + 경고 76건 | 2026-03-16</p>
+  <div class="version-badge">v4 — 6+1 조치 라벨 체계</div>
+  <h1>제재 유저 라벨링 기준서</h1>
+  <p>유효·경고·제재 전용 대분류 | INAPPROPRIATE_CONTENT→COMMUNITY_VIOLATION 흡수 | TRANSACTION_ISSUE→DEAL_ISSUE | 2026-03-18</p>
 </div>
 
-<!-- ===== 제재 185건 분포 요약 ===== -->
+<!-- ===== 변경 요약 ===== -->
 <div class="section">
-  <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">제재 185건 라벨 분포</h2>
-  <div class="bar-row">
-    <div class="bar-seg" style="width:37.3%; background:var(--purple);">FRAUD 69</div>
-    <div class="bar-seg" style="width:26.5%; background:#9ca3af;">OTHER 49</div>
-    <div class="bar-seg" style="width:15.1%; background:var(--orange);">EXT_채널 28</div>
-    <div class="bar-seg" style="width:9.2%; background:#f97316;">EXT_실거래 17</div>
-    <div class="bar-seg" style="width:8.6%; background:var(--green);">PRODUCT 16</div>
-    <div class="bar-seg" style="width:3.2%; background:var(--red);">6</div>
+  <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">v3 → v4 주요 변경점</h2>
+  <div class="diff-box">
+    <strong>적용 범위 변경</strong>: 전 채널 통합 → 조치(유효/경고/제재) 전용 대분류로 전환<br>
+    <strong>INAPPROPRIATE_CONTENT 제거</strong> → <code>COMMUNITY_VIOLATION</code>으로 흡수 (조치 단계에서 구분 실익 없음)<br>
+    <strong>COMMUNITY_DISRUPTION 명칭 변경</strong> → <code>COMMUNITY_VIOLATION</code> (통합 취지 반영)<br>
+    <strong>TRANSACTION_ISSUE 명칭 변경</strong> → <code>DEAL_ISSUE</code> (개인간 거래 뉘앙스)<br>
+    <strong>정산 계좌 오류</strong> 라벨링 대상에서 제외
   </div>
-  <div style="display:flex; gap:1rem; flex-wrap:wrap; font-size:0.75rem; color:var(--muted);">
-    <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--purple);margin-right:3px;"></span>FRAUD 37.3%</span>
-    <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#9ca3af;margin-right:3px;"></span>OTHER 26.5%</span>
-    <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--orange);margin-right:3px;"></span>EXT_채널 15.1%</span>
-    <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#f97316;margin-right:3px;"></span>EXT_실거래 9.2%</span>
-    <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--green);margin-right:3px;"></span>PRODUCT 8.6%</span>
-    <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--red);margin-right:3px;"></span>INAPPROP 3.2%</span>
-  </div>
-  <div class="note">OTHER 49건 중 대리가챠 4건, 부정거래 5건+, 계정대여 2건 추가 세분화 가능</div>
+</div>
+
+<!-- ===== 상위 라벨 체계 ===== -->
+<div class="section">
+  <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">상위 라벨 6+1 체계</h2>
+  <table>
+    <thead><tr><th>No</th><th>코드</th><th>표시명</th><th>핵심의미</th><th>대응 프리셋</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><span class="badge b-ext">EXTERNAL_TRADE</span></td><td>외부거래</td><td>플랫폼 밖 거래/채널 유도</td><td>외부 거래, 외부 채널 홍보</td></tr>
+      <tr><td>2</td><td><span class="badge b-comm">COMMUNITY_VIOLATION</span></td><td>커뮤니티 위반</td><td>문제 채팅·비방·담합 등 커뮤니티 질서 파괴</td><td>문제성 채팅, 서비스·타인 비방, 담합·친목</td></tr>
+      <tr><td>3</td><td><span class="badge b-prod">PRODUCT_SELLING</span></td><td>판매 위반</td><td>금지/문제성 상품 판매</td><td>문제성 판매(커스텀팩), 거래 금지 품목</td></tr>
+      <tr><td>4</td><td><span class="badge b-live">LIVE_VIOLATION</span></td><td>라이브 위반</td><td>라이브 송출 관련 위반</td><td>문제성 라이브, 비효율 라이브</td></tr>
+      <tr><td>5</td><td><span class="badge b-deal">DEAL_ISSUE</span></td><td>거래 이슈</td><td>개인간 거래 이행 문제 (배송/파기)</td><td>배송 문제, 거래 파기</td></tr>
+      <tr><td>6</td><td><span class="badge b-acct">ACCOUNT_ABUSE</span></td><td>계정 어뷰징</td><td>계정 악용 (부계정/대여/닉네임)</td><td>계정 어뷰징, 닉네임/이미지</td></tr>
+      <tr><td>+1</td><td><span class="badge b-other">OTHER</span></td><td>기타</td><td>미분류</td><td>-</td></tr>
+    </tbody>
+  </table>
 </div>
 
 <hr class="divider">
 
 <!-- ===== 1. EXTERNAL_TRADE ===== -->
 <div class="section">
-  <div class="section-title ext">1. 외부거래 (EXTERNAL_TRADE) — 제재 45건</div>
+  <div class="section-title ext">1. 외부거래 (EXTERNAL_TRADE) <span class="sub">프리셋: 외부 거래, 외부 채널 홍보</span></div>
 
-  <h3>1-1. 외부거래 (실제 거래) — 17건</h3>
+  <h3>1-1. 외부 거래 <span class="channel">유효, 경고, 제재</span></h3>
   <p class="desc">플랫폼 외부에서 실제 금전 거래를 시도/유도. 운영정책 제2조 3항 ①</p>
-  <div class="keywords"><span class="kw">이체</span><span class="kw">거래</span><span class="kw">계좌</span><span class="kw">입금</span><span class="kw">수고비</span><span class="kw">송금</span><span class="kw">현금</span></div>
-  <div class="grid-2">
-    <div class="example-box">
-      <div class="source">제재</div>
-      <div class="quote">제2조 3항 ① 외부거래 — 적발 내역: <em>"이체로 드려야죠, 현금 송 투 더 금"</em></div>
-      <div class="user">유저: 윤하아빠 | admin: 장성진</div>
-    </div>
-    <div class="example-box">
-      <div class="source">감지 DM</div>
-      <div class="quote"><em>"수고비 정두?"</em> / <em>"입근드린다했어여"</em></div>
-      <div class="user">유저: 사라지는옥수수540</div>
-    </div>
-  </div>
-
-  <h3>1-2. 외부채널 유도 — 28건</h3>
-  <p class="desc">네이버 밴드, 카카오 오픈채팅방, 디스코드 등 외부 플랫폼으로 유도. 운영정책 제2조 1항 ③</p>
-  <div class="keywords"><span class="kw">카톡</span><span class="kw">카카오</span><span class="kw">오픈채팅</span><span class="kw">밴드</span><span class="kw">ㅂㄷ</span><span class="kw">디스코드</span><span class="kw">외부 플랫폼</span></div>
-  <div class="grid-2">
-    <div class="example-box">
-      <div class="source">제재</div>
-      <div class="quote">제2조 1항 ③ 외부 플랫폼 유도 — 적발: <em>"open.kakao*/o/gauWtLRh"</em></div>
-      <div class="user">유저: 레몬팜 | admin: 장성진</div>
-    </div>
-    <div class="example-box">
-      <div class="source">경고 (ADMIN DM)</div>
-      <div class="quote"><em>"외부 채널 및 링크 공유가 AI를 통해 감지되었어요..."</em></div>
-      <div class="user">18건 발송</div>
-    </div>
-  </div>
-
-  <h3>1-3. 의심 소통 — 경고 33건</h3>
-  <p class="desc">맥락 부족한 연락처 전달 / 택배비·자체 환불 이슈. 제재까지 가지 않는 경우가 많음.</p>
-  <div class="keywords"><span class="kw">연락처</span><span class="kw">전화</span><span class="kw">번호</span><span class="kw">010</span><span class="kw">택배비</span><span class="kw">환불</span><span class="kw">안전번호</span></div>
-  <div class="grid-2">
-    <div class="example-box">
-      <div class="source">경고 (ADMIN DM)</div>
-      <div class="quote"><em>"외부 거래로 의심될 수 있는 활동이 AI를 통해 감지되었어요..."</em></div>
-      <div class="user">33건 발송</div>
-    </div>
-    <div class="example-box">
-      <div class="source">감지 DM (false positive 가능)</div>
-      <div class="quote"><em>"010구구칠팔06삼공"</em> / <em>"안전번호우로 보내겠습니다!!"</em></div>
-      <div class="user">유저: 진격의드볼아빠 / 예니예니</div>
-    </div>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- ===== 2. INAPPROPRIATE ===== -->
-<div class="section">
-  <div class="section-title inap">2. 부적절 콘텐츠 (INAPPROPRIATE_CONTENT) — 제재 6건</div>
-
-  <h3>2-1. 타인비방 — 딜러/컬렉터 공격</h3>
-  <p class="desc">딜러/컬렉터를 직접 언급하며 공격, 신뢰 저해. Live Chat 봇 위반유형: "딜러/컬렉터 공격"</p>
-  <div class="grid-2">
-    <div class="example-box">
-      <div class="source">감지 Live Chat</div>
-      <div class="quote"><em>"다 갬깍하셔요?"</em> — 딜러/컬렉터 공격</div>
-      <div class="user">판매자 신뢰 저해 표현</div>
-    </div>
-    <div class="example-box">
-      <div class="source">감지 Live Chat</div>
-      <div class="quote"><em>"짝퉁이누…"</em> / <em>"똥손들이라니ㅋㄱ"</em></div>
-      <div class="user">가품 비난 / 능력 비하</div>
-    </div>
-  </div>
-
-  <h3>2-2. 기타 부적절 — 욕설/폭력/음란</h3>
-  <p class="desc">딜러 특정 없는 일반 부적절 발언. 운영정책 제2조 2항 ⑤</p>
-  <div class="grid-2">
-    <div class="example-box">
-      <div class="source">감지 Live Chat</div>
-      <div class="quote"><em>"얘 바보아니자나?!?!"</em> / <em>"에이씨!!!"</em></div>
-      <div class="user">부적절한 언어</div>
-    </div>
-    <div class="example-box">
-      <div class="source">제재</div>
-      <div class="quote">제2조 2항 ⑤ — <em>음란물, 범죄, 잔인, 폭력 등 부적합한 내용이 포함된 채팅/이미지</em></div>
-      <div class="user">유저: 고세구 | admin: 장성진</div>
-    </div>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- ===== 3. FRAUD ===== -->
-<div class="section">
-  <div class="section-title fraud">3. 사기/부정 (FRAUD) — 제재 69건</div>
-
-  <h3>부계정 — 69건 (전부 permBan)</h3>
-  <p class="desc">별도 시스템(#alert_user_abusing)에서 탐지. 감지·신고 단계에서는 잡히지 않음.</p>
-
-  <table>
-    <thead><tr><th>패턴</th><th>사유 형식</th><th>blocked</th><th>비고</th></tr></thead>
-    <tbody>
-      <tr><td><span class="badge b-fraud">부계정</span></td><td><code>"OOO 부계정"</code></td><td>permBan (영구)</td><td>유저 해제 불가</td></tr>
-    </tbody>
-  </table>
-
-  <div class="example-box">
-    <div class="source">제재 예시 (14건 → 추가 수집 후 69건)</div>
-    <div class="quote">
-      날씨요정 → <em>"소은소은 부계정"</em><br>
-      부푸는탄제로05 → <em>"추진하는라즈베리430(한상민) 부계정"</em><br>
-      sojin → <em>"택시(홍소진) 부계정"</em>
-    </div>
-    <div class="user">2026-02 대량 일괄 정리 (~20건, admin: 장성진)</div>
-  </div>
-
-  <div class="note">향후 "사기 거래", "허위 상품" 등 실제 사기 케이스는 별도 세분화 필요. 현재는 부계정만 해당.</div>
-</div>
-
-<hr class="divider">
-
-<!-- ===== 4. PRODUCT_SELLING ===== -->
-<div class="section">
-  <div class="section-title prod">4. 상품판매 (PRODUCT_SELLING) — 제재 16건 + 대리가챠 4건</div>
-
-  <h3>4-1. 수제팩 — 10건+</h3>
-  <p class="desc">자체 제작 랜덤박스 (오리파/수제팩). 운영정책 제2조 2항 ⑧</p>
-  <div class="keywords"><span class="kw">수제</span><span class="kw">랜덤박스</span><span class="kw">오리파</span><span class="kw">수제팩</span><span class="kw">재포장</span><span class="kw">재구성</span></div>
+  <div class="keywords"><span class="kw">이체</span><span class="kw">계좌</span><span class="kw">입금</span><span class="kw">수고비</span><span class="kw">송금</span><span class="kw">현금</span></div>
   <div class="example-box">
     <div class="source">제재</div>
-    <div class="quote">제2조 2항 ⑧ — <em>자체 제작 랜덤박스(오리파/수제팩 등 포함): 딜러가 보유 중인 상품을 자체적으로 재포장, 재구성하여 가치가 변형된 팩 또는 박스 상품의 판매</em></div>
-    <div class="user">유저: 네미, 내사라기, 한글, 키티쥬, 가조쿠, 굿럭, SoDa, 내일의식빵, STH, 치키쩜</div>
+    <div class="quote">제2조 3항 ① 외부거래 — 적발: <em>"이체로 드려야죠, 현금 송 투 더 금"</em></div>
+    <div class="user">유저: 윤하아빠</div>
   </div>
 
-  <h3>4-2. 비현물 — 0건</h3>
-  <p class="desc">현재 확보되지 않은 예약 상품 등의 판매. 수집 기간 내 미검출.</p>
-  <div class="keywords"><span class="kw">비현물</span><span class="kw">예약</span><span class="kw">미입고</span><span class="kw">선주문</span></div>
-
-  <h3>4-3. 대리가챠 — 4건</h3>
-  <p class="desc">본인 소유가 아닌 가챠 기계를 활용한 대리 가챠 진행. 운영정책 제2조 3항 ③</p>
-  <div class="keywords"><span class="kw">대리가챠</span><span class="kw">대리 가쳐</span><span class="kw">가쳐 기계</span></div>
+  <h3>1-2. 외부 채널 홍보 <span class="channel">유효, 경고, 제재</span></h3>
+  <p class="desc">카카오/밴드/디스코드 등 외부 플랫폼 유도. 운영정책 제2조 1항 ③</p>
+  <div class="keywords"><span class="kw">카톡</span><span class="kw">카카오</span><span class="kw">오픈채팅</span><span class="kw">밴드</span><span class="kw">ㅂㄷ</span><span class="kw">디스코드</span><span class="kw">텔레그램</span></div>
   <div class="example-box">
     <div class="source">제재</div>
-    <div class="quote">제2조 3항 ③ — <em>"본인 소유가 아닌 가쳐 기계를 활용한 대리 가쳐는 진행이 불가합니다."</em></div>
+    <div class="quote">제2조 1항 ③ — 적발: <em>"open.kakao*/o/gauWtLRh"</em></div>
+    <div class="user">유저: 레몬팜, 블랙카우</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 2. COMMUNITY_VIOLATION ===== -->
+<div class="section">
+  <div class="section-title comm">2. 커뮤니티 위반 (COMMUNITY_VIOLATION) <span class="sub">프리셋: 문제성 채팅, 서비스·타인 비방, 담합·친목</span></div>
+  <div class="note" style="margin-bottom:1rem;"><strong>기존 INAPPROPRIATE_CONTENT + COMMUNITY_DISRUPTION 통합.</strong> 조치 단계에서는 "커뮤니티 질서 파괴"로 일원화.</div>
+
+  <h3>2-1. 문제성 채팅 <span class="channel">경고, 제재</span></h3>
+  <p class="desc">욕설·음란·폭력 등 부적절한 채팅. 운영정책 제2조 2항 ⑤</p>
+  <ul class="detail-list">
+    <li>오픈채팅방, 라이브 채팅으로 욕설, 음란성 등 라이브 진행 방해 또는 미풍양속을 저해하는 채팅</li>
+    <li>과도한 가격 할인 요구 등</li>
+  </ul>
+  <div class="example-box">
+    <div class="source">제재</div>
+    <div class="quote">제2조 2항 ⑤ — <em>"음란물, 범죄, 잔인, 폭력 등 부적합한 내용"</em></div>
+    <div class="user">유저: 고세구</div>
+  </div>
+
+  <h3>2-2. 서비스·타인 비방 <span class="channel">유효, 경고, 제재</span></h3>
+  <p class="desc">다른 회원 또는 회사를 비방, 커뮤니티 질서 훼손</p>
+  <ul class="detail-list">
+    <li>다른 회원 또는 회사를 비방하는 행위</li>
+    <li>서비스 내 분쟁 상황, 제재 사실 등을 화제로 삼아 혼란을 조장하는 행위</li>
+  </ul>
+
+  <h3>2-3. 담합·친목 <span class="channel">제재</span></h3>
+  <p class="desc">집단 담합, 과도한 친목</p>
+  <ul class="detail-list">
+    <li>일부 회원 간 과도한 친목으로 다른 회원에게 소외감 또는 심리적 압박을 주는 행위</li>
+    <li>집단적으로 담합하여 라이브 시간대를 조율하거나 이를 시도하는 행위</li>
+  </ul>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 3. PRODUCT_SELLING ===== -->
+<div class="section">
+  <div class="section-title prod">3. 판매 위반 (PRODUCT_SELLING) <span class="sub">프리셋: 문제성 판매(커스텀팩), 거래 금지 품목</span></div>
+
+  <h3>3-1. 문제성 판매 (커스텀팩) <span class="channel">제재</span></h3>
+  <p class="desc">자체 제작 랜덤박스, 미승인 이벤트. 운영정책 제2조 2항 ⑧</p>
+  <div class="keywords"><span class="kw">수제</span><span class="kw">랜덤박스</span><span class="kw">오리파</span><span class="kw">수제팩</span><span class="kw">재포장</span></div>
+  <ul class="detail-list">
+    <li>회사의 사전 승인 없이 일반 진행이 제한된 콘텐츠를 송출하는 경우</li>
+    <li>주로 추가 경품 설정, 차등 무료나눔 시 적용, 자체 이벤트 등</li>
+  </ul>
+  <div class="example-box">
+    <div class="source">제재</div>
+    <div class="quote">제2조 2항 ⑧ — <em>"자체 제작 랜덤박스(오리파/수제팩 등 포함)"</em></div>
+    <div class="user">유저: 네미, 내사라기, 한글, 키티쥬</div>
+  </div>
+
+  <h3>3-2. 거래 금지 품목 <span class="channel">제재</span></h3>
+  <p class="desc">가품·비라이센스·대리가챠·비현물 등 판매 불가 상품</p>
+  <div class="keywords"><span class="kw">가품</span><span class="kw">비라이센스</span><span class="kw">거래 금지</span><span class="kw">음란성 카드</span><span class="kw">대리가챠</span><span class="kw">비현물</span></div>
+  <ul class="detail-list">
+    <li>서비스 이용약관상 판매 불가 상품 (가품, 비라이센스 판매)</li>
+    <li>존재하지 않거나 확보되지 않은 허위 매물의 판매</li>
+    <li>예약 상품, 비현물, 대리 가챠, 자전거래 등</li>
+  </ul>
+  <div class="example-box">
+    <div class="source">제재</div>
+    <div class="quote">제2조 3항 ③ — <em>"본인 소유가 아닌 가쳐 기계를 활용한 대리 가쳐"</em></div>
     <div class="user">유저: 징냥(2건), 리앨, 라부부잡이쫑이</div>
   </div>
-  <div class="note">Slack에서 "가챠"가 아닌 <strong>"가쳐"</strong>로 표기됨 — 키워드 매칭 시 주의</div>
-
-  <h3>4-4. 기타 상품판매 위반</h3>
-  <p class="desc">경품, 무료나눔, 음란성 카드, 상품 이상 등</p>
-  <div class="keywords"><span class="kw">콘텐츠</span><span class="kw">무료나눔</span><span class="kw">룰렛</span><span class="kw">경품</span><span class="kw">경품 활용</span><span class="kw">경품 증정</span><span class="kw">소명</span></div>
-  <div class="grid-2">
-    <div class="example-box">
-      <div class="source">제재</div>
-      <div class="quote"><em>"일반 진행이 허용되지 않은 콘텐츠(무료나눔, 룰렛 포함)를 별도 승인 없이 진행"</em></div>
-      <div class="user">유저: 만물상</div>
-    </div>
-    <div class="example-box">
-      <div class="source">제재</div>
-      <div class="quote"><em>"입찰 과열 또는 분쟁을 유발할 가능성이 있는 방식의 경품 활용"</em></div>
-      <div class="user">유저: 치키쩜, 퉁퉁부인, 다이호, 테이크</div>
-    </div>
-  </div>
+  <div class="note">Slack에서 "가챠"가 아닌 <strong>"가쳐"</strong>로 표기됨</div>
 </div>
 
 <hr class="divider">
 
-<!-- ===== 매핑 요약 ===== -->
+<!-- ===== 4. LIVE_VIOLATION ===== -->
 <div class="section">
-  <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">라벨 → 세부분류 매핑 요약</h2>
+  <div class="section-title live">4. 라이브 위반 (LIVE_VIOLATION) <span class="sub">프리셋: 문제성 라이브, 비효율 라이브</span></div>
+
+  <h3>4-1. 문제성 라이브 <span class="channel">제재</span></h3>
+  <p class="desc">부적절 콘텐츠 송출. 운영정책 제2조 2항 ⑥</p>
+  <ul class="detail-list">
+    <li>음주, 흡연 등 미성년자에게 부적절한 행위가 포함된 라이브 송출</li>
+    <li>다른 딜러의 라이브 또는 외부 서비스를 노출하거나 중계하는 행위</li>
+  </ul>
+
+  <h3>4-2. 비효율 라이브 <span class="channel">제재</span></h3>
+  <p class="desc">서비스 성격에 부합하지 않는 비효율 진행</p>
+  <ul class="detail-list">
+    <li>과도한 비효율 라이브 진행자</li>
+  </ul>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 5. DEAL_ISSUE ===== -->
+<div class="section">
+  <div class="section-title deal">5. 거래 이슈 (DEAL_ISSUE) <span class="sub">프리셋: 배송 문제, 거래 파기</span></div>
+
+  <h3>5-1. 배송 문제 <span class="channel">경고, 제재</span></h3>
+  <p class="desc">장기 미발송, 허위 발송, 오배송. 운영정책 제2조 2항 ⑤</p>
+  <ul class="detail-list">
+    <li>장기 미발송, 허위 발송 외 상품이 사전 고지된 내용과 상이한 등의 경우가 반복적으로 발생하는 경우</li>
+    <li>배송정보를 잘못 입력하거나, 오기재로 인해 상품이 오배송되는 경우</li>
+  </ul>
+
+  <h3>5-2. 거래 파기 <span class="channel">제재</span></h3>
+  <p class="desc">일방적 취소, 단순 변심 환불 반복</p>
+  <ul class="detail-list">
+    <li>사전 고지된 내용을 정당한 사유 없이 일방적으로 변경·취소하여 구매자를 기만하는 행위</li>
+    <li>타당한 사유를 확인할 수 없는 반품 및 환불이 지속되는 경우</li>
+  </ul>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 6. ACCOUNT_ABUSE ===== -->
+<div class="section">
+  <div class="section-title acct">6. 계정 어뷰징 (ACCOUNT_ABUSE) <span class="sub">프리셋: 계정 어뷰징, 닉네임/이미지</span></div>
+
+  <h3>6-1. 계정 어뷰징 <span class="channel">제재</span></h3>
+  <p class="desc">부계정 생성/사용, 계정 대여</p>
+  <div class="keywords"><span class="kw">부계정</span><span class="kw">계정 대여</span><span class="kw">타인 계정</span><span class="kw">permBan</span></div>
+  <ul class="detail-list">
+    <li>부계정 생성/사용 (permBan). 별도 탐지: <code>#alert_user_abusing</code></li>
+    <li>권한 없는 제3자에게 계정을 유·무상으로 대여</li>
+  </ul>
+
+  <h3>6-2. 닉네임/이미지 <span class="channel">제재</span></h3>
+  <p class="desc">부적절한 닉네임, 썸네일, 이미지</p>
+  <ul class="detail-list">
+    <li>라이브 제목·썸네일 등에 부적절한 표현 또는 기타 회사에서 금지하는 내용이 포함된 경우</li>
+  </ul>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 프리셋 매핑 ===== -->
+<div class="section">
+  <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">프리셋 매핑 검증표 (13/13 완료)</h2>
   <table>
-    <thead><tr><th>대분류</th><th>세부분류</th><th>제재 키워드/패턴</th><th>건수</th></tr></thead>
+    <thead><tr><th>No</th><th>프리셋 항목</th><th>→ 상위 라벨</th></tr></thead>
     <tbody>
-      <tr><td rowspan="3"><span class="badge b-ext">EXTERNAL_TRADE</span></td><td>외부거래 (실제)</td><td><code>제2조 3항 ①</code>, 이체, 계좌, 입금, 송금</td><td class="num">17</td></tr>
-      <tr><td>외부채널 유도</td><td><code>제2조 1항 ③</code>, 외부 플랫폼, 카카오, 밴드</td><td class="num">28</td></tr>
-      <tr><td>의심 소통</td><td>연락처, 010, 번호, 맥락 부족한 전달</td><td class="num">-</td></tr>
-      <tr><td rowspan="2"><span class="badge b-inap">INAPPROPRIATE</span></td><td>타인비방</td><td>딜러/컬렉터 공격 (Live Chat 봇)</td><td class="num">-</td></tr>
-      <tr><td>기타 부적절</td><td>욕설, 음란물, 폭력, 비방</td><td class="num">6</td></tr>
-      <tr><td><span class="badge b-fraud">FRAUD</span></td><td>부계정</td><td><code>"OOO 부계정"</code> + permBan</td><td class="num">69</td></tr>
-      <tr><td rowspan="4"><span class="badge b-prod">PRODUCT_SELLING</span></td><td>수제팩</td><td>수제, 랜덤박스, 오리파, <code>제2조 2항 ⑧</code></td><td class="num">10+</td></tr>
-      <tr><td>비현물</td><td>비현물, 예약, 미입고</td><td class="num" style="color:var(--muted)">0</td></tr>
-      <tr><td>대리가챠</td><td>대리 가쳐, 가쳐 기계</td><td class="num">4</td></tr>
-      <tr><td>기타</td><td>무료나눔, 룰렛, 경품, 소명</td><td class="num">6+</td></tr>
-      <tr><td><span class="badge b-other">OTHER</span></td><td>미분류</td><td>사유 미기입, 복합 위반 등</td><td class="num">49</td></tr>
+      <tr><td>1</td><td>외부 거래</td><td><span class="badge b-ext">EXTERNAL_TRADE</span></td></tr>
+      <tr><td>2</td><td>외부 채널 홍보</td><td><span class="badge b-ext">EXTERNAL_TRADE</span></td></tr>
+      <tr><td>3</td><td>문제성 채팅</td><td><span class="badge b-comm">COMMUNITY_VIOLATION</span></td></tr>
+      <tr><td>4</td><td>서비스·타인 비방</td><td><span class="badge b-comm">COMMUNITY_VIOLATION</span></td></tr>
+      <tr><td>5</td><td>담합·친목</td><td><span class="badge b-comm">COMMUNITY_VIOLATION</span></td></tr>
+      <tr><td>6</td><td>문제성 판매 (커스텀팩)</td><td><span class="badge b-prod">PRODUCT_SELLING</span></td></tr>
+      <tr><td>7</td><td>거래 금지 품목</td><td><span class="badge b-prod">PRODUCT_SELLING</span></td></tr>
+      <tr><td>8</td><td>문제성 라이브</td><td><span class="badge b-live">LIVE_VIOLATION</span></td></tr>
+      <tr><td>9</td><td>비효율 라이브</td><td><span class="badge b-live">LIVE_VIOLATION</span></td></tr>
+      <tr><td>10</td><td>배송 문제</td><td><span class="badge b-deal">DEAL_ISSUE</span></td></tr>
+      <tr><td>11</td><td>거래 파기</td><td><span class="badge b-deal">DEAL_ISSUE</span></td></tr>
+      <tr><td>12</td><td>계정 어뷰징</td><td><span class="badge b-acct">ACCOUNT_ABUSE</span></td></tr>
+      <tr><td>13</td><td>닉네임, 이미지</td><td><span class="badge b-acct">ACCOUNT_ABUSE</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 상위 → 하위 라벨 전체표 ===== -->
+<div class="section">
+  <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">상위 → 하위 라벨 전체 매핑</h2>
+  <table>
+    <thead><tr><th>상위 라벨</th><th>하위라벨</th><th>채널</th><th>핵심의미</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2"><span class="badge b-ext">EXTERNAL_TRADE</span></td><td>외부 거래</td><td>유효, 경고, 제재</td><td>계좌·이체·입금 실거래</td></tr>
+      <tr><td>외부 채널 홍보</td><td>유효, 경고, 제재</td><td>카카오/밴드/디스코드 유도</td></tr>
+      <tr><td rowspan="3"><span class="badge b-comm">COMMUNITY_VIOLATION</span></td><td>문제성 채팅</td><td>경고, 제재</td><td>욕설·음란·폭력 채팅</td></tr>
+      <tr><td>서비스·타인 비방</td><td>유효, 경고, 제재</td><td>회사·타인 비방</td></tr>
+      <tr><td>담합·친목</td><td>제재</td><td>집단 담합, 과도한 친목</td></tr>
+      <tr><td rowspan="2"><span class="badge b-prod">PRODUCT_SELLING</span></td><td>문제성 판매 (커스텀팩)</td><td>제재</td><td>자체 제작 랜덤박스</td></tr>
+      <tr><td>거래 금지 품목</td><td>제재</td><td>가품·비라이센스·대리가챠</td></tr>
+      <tr><td rowspan="2"><span class="badge b-live">LIVE_VIOLATION</span></td><td>문제성 라이브</td><td>제재</td><td>부적절 콘텐츠 송출</td></tr>
+      <tr><td>비효율 라이브</td><td>제재</td><td>비효율 진행</td></tr>
+      <tr><td rowspan="2"><span class="badge b-deal">DEAL_ISSUE</span></td><td>배송 문제</td><td>경고, 제재</td><td>미발송/허위발송/오배송</td></tr>
+      <tr><td>거래 파기</td><td>제재</td><td>일방 취소/환불 반복</td></tr>
+      <tr><td rowspan="2"><span class="badge b-acct">ACCOUNT_ABUSE</span></td><td>계정 어뷰징</td><td>제재</td><td>부계정/계정 대여 (permBan)</td></tr>
+      <tr><td>닉네임/이미지</td><td>제재</td><td>부적절 닉네임/썸네일</td></tr>
+      <tr><td><span class="badge b-other">OTHER</span></td><td>기타</td><td>전체</td><td>미분류</td></tr>
     </tbody>
   </table>
 </div>
 
 <div class="footer">
-  제재 185건 (기존 66 + 추가 119) + 감지 DM 1,817건 + Live 3,661건 + 신고 2,012건 + 경고 76건 = 총 7,751건 | 2026-03-16
+  라벨링 기준서 v4 | 6+1 조치 라벨 체계 (유효·경고·제재) | 2026-03-18
 </div>
 
 </body>
