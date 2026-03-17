@@ -52,10 +52,10 @@ export interface SanctionUserSummary {
   tags: Label[];
   reportCount: number;
   detectionCount: number;
+  validCount: number; // 유효 (어드민이 확인한 유효 건수)
   warningCount: number;
   sanctionCount: number;
   cumulativeSanctionCount: number; // 누적 제재 (기간 무관 고정값)
-  cumulativeSanctionDays: number; // 누적 제재일수
   lastCategory: Category | null; // 마지막 판매 시도 카테고리 (딜러만)
   joinedAt: string; // 가입일
   enteredAt: string | null; // 입점일 (딜러만)
@@ -131,10 +131,10 @@ export type SortField =
   | 'status'
   | 'reportCount'
   | 'detectionCount'
+  | 'validCount'
   | 'warningCount'
   | 'sanctionCount'
-  | 'cumulativeSanctionCount'
-  | 'cumulativeSanctionDays';
+  | 'cumulativeSanctionCount';
 
 export type SortDirection = 'asc' | 'desc';
 

@@ -9,14 +9,11 @@ interface SanctionUserTableProps {
   onMemoClick: (userId: string) => void;
 }
 
-function formatDays(days: number) {
-  return days.toLocaleString() + '일';
-}
-
 interface ColumnDef {
   field: SortField | '_tag' | '_category';
   label: string;
   sortable: boolean;
+  emphasis?: 'muted' | 'strong';
 }
 
 const COLUMNS: ColumnDef[] = [
@@ -24,12 +21,12 @@ const COLUMNS: ColumnDef[] = [
   { field: '_category', label: '카테고리', sortable: false },
   { field: 'status', label: '상태', sortable: true },
   { field: '_tag', label: '태그', sortable: false },
-  { field: 'reportCount', label: '신고', sortable: true },
-  { field: 'detectionCount', label: '감지', sortable: true },
-  { field: 'warningCount', label: '경고', sortable: true },
-  { field: 'sanctionCount', label: '제재', sortable: true },
-  { field: 'cumulativeSanctionCount', label: '누적 제재', sortable: true },
-  { field: 'cumulativeSanctionDays', label: '제재일수', sortable: true },
+  { field: 'reportCount', label: '신고', sortable: true, emphasis: 'muted' },
+  { field: 'detectionCount', label: '감지', sortable: true, emphasis: 'muted' },
+  { field: 'validCount', label: '유효', sortable: true, emphasis: 'strong' },
+  { field: 'warningCount', label: '경고', sortable: true, emphasis: 'strong' },
+  { field: 'sanctionCount', label: '제재', sortable: true, emphasis: 'strong' },
+  { field: 'cumulativeSanctionCount', label: '누적 제재', sortable: true, emphasis: 'strong' },
 ];
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -38,6 +35,19 @@ const CATEGORY_COLORS: Record<string, string> = {
   SPORTS_CARD: 'bg-green-50 text-green-700',
   TCG: 'bg-cyan-50 text-cyan-700',
 };
+
+function CountCell({ value, emphasis, color }: { value: number; emphasis?: 'muted' | 'strong'; color?: string }) {
+  if (value === 0) {
+    return <span className={emphasis === 'muted' ? 'text-gray-200' : 'text-gray-300'}>0</span>;
+  }
+  if (color) {
+    return <span className={`${color} font-bold`}>{value}</span>;
+  }
+  if (emphasis === 'muted') {
+    return <span className="text-gray-400">{value}</span>;
+  }
+  return <span className="text-gray-800 font-semibold">{value}</span>;
+}
 
 export default function SanctionUserTable({
   users,
@@ -54,13 +64,16 @@ export default function SanctionUserTable({
             {COLUMNS.map((col) => {
               const isSortable = col.sortable && col.field !== '_tag' && col.field !== '_category';
               const isActive = isSortable && sortConfig.field === col.field;
+              const isMuted = col.emphasis === 'muted';
               return (
                 <th
                   key={col.label}
                   className={`py-3 px-2 font-semibold select-none ${
                     isActive
                       ? 'text-gray-900 bg-gray-50'
-                      : 'text-gray-600'
+                      : isMuted
+                        ? 'text-gray-400'
+                        : 'text-gray-600'
                   } ${isSortable ? 'cursor-pointer hover:text-gray-900 hover:bg-gray-50' : ''}`}
                   onClick={() => isSortable && onSort(col.field as SortField)}
                 >
@@ -136,57 +149,29 @@ export default function SanctionUserTable({
                     ))}
                   </div>
                 </td>
-                {/* 신고 */}
-                <td className="py-3 px-2 text-center font-medium">
-                  {user.reportCount > 0 ? (
-                    <span className="text-gray-800">{user.reportCount}</span>
-                  ) : (
-                    <span className="text-gray-300">0</span>
-                  )}
+                {/* 신고 (muted) */}
+                <td className="py-3 px-2 text-center">
+                  <CountCell value={user.reportCount} emphasis="muted" />
                 </td>
-                {/* 감지 */}
-                <td className="py-3 px-2 text-center font-medium">
-                  {user.detectionCount > 0 ? (
-                    <span className="text-gray-800">{user.detectionCount}</span>
-                  ) : (
-                    <span className="text-gray-300">0</span>
-                  )}
+                {/* 감지 (muted) */}
+                <td className="py-3 px-2 text-center">
+                  <CountCell value={user.detectionCount} emphasis="muted" />
                 </td>
-                {/* 경고 */}
-                <td className="py-3 px-2 text-center font-medium">
-                  {user.warningCount > 0 ? (
-                    <span className="text-gray-800">{user.warningCount}</span>
-                  ) : (
-                    <span className="text-gray-300">0</span>
-                  )}
+                {/* 유효 (strong) */}
+                <td className="py-3 px-2 text-center">
+                  <CountCell value={user.validCount} emphasis="strong" color={user.validCount > 0 ? 'text-blue-600' : undefined} />
                 </td>
-                {/* 제재 */}
-                <td className="py-3 px-2 text-center font-medium">
-                  {user.sanctionCount > 0 ? (
-                    <span className="text-red-600">{user.sanctionCount}</span>
-                  ) : (
-                    <span className="text-gray-300">0</span>
-                  )}
+                {/* 경고 (strong) */}
+                <td className="py-3 px-2 text-center">
+                  <CountCell value={user.warningCount} emphasis="strong" color={user.warningCount > 0 ? 'text-orange-600' : undefined} />
                 </td>
-                {/* 누적 제재 */}
-                <td className="py-3 px-2 text-center font-medium">
-                  {user.cumulativeSanctionCount > 0 ? (
-                    <span className="text-red-800 font-bold">
-                      {user.cumulativeSanctionCount}
-                    </span>
-                  ) : (
-                    <span className="text-gray-300">0</span>
-                  )}
+                {/* 제재 (strong) */}
+                <td className="py-3 px-2 text-center">
+                  <CountCell value={user.sanctionCount} emphasis="strong" color={user.sanctionCount > 0 ? 'text-red-600' : undefined} />
                 </td>
-                {/* 제재일수 */}
-                <td className="py-3 px-2 text-center font-medium">
-                  {user.cumulativeSanctionDays > 0 ? (
-                    <span className="text-red-800">
-                      {formatDays(user.cumulativeSanctionDays)}
-                    </span>
-                  ) : (
-                    <span className="text-gray-300">0일</span>
-                  )}
+                {/* 누적 제재 (strong) */}
+                <td className="py-3 px-2 text-center">
+                  <CountCell value={user.cumulativeSanctionCount} emphasis="strong" color={user.cumulativeSanctionCount > 0 ? 'text-red-800' : undefined} />
                 </td>
                 {/* 메모 */}
                 <td className="py-3 px-1">

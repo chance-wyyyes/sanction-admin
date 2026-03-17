@@ -169,14 +169,17 @@ export default function SanctionDetailPanel({
           </div>
           {/* 요약 수치 */}
           <div className="mt-2 flex gap-4 text-xs text-gray-500">
-            <span>
-              신고 <strong className="text-gray-800">{reports.length}</strong>
+            <span className="text-gray-400">
+              신고 <strong className="text-gray-400">{reports.length}</strong>
+            </span>
+            <span className="text-gray-400">
+              감지 <strong className="text-gray-400">{detections.length}</strong>
             </span>
             <span>
-              감지 <strong className="text-gray-800">{detections.length}</strong>
+              유효 <strong className="text-blue-600">{user.validCount}</strong>
             </span>
             <span>
-              경고 <strong className="text-gray-800">{warnings.length}</strong>
+              경고 <strong className="text-orange-600">{warnings.length}</strong>
             </span>
             <span>
               제재 <strong className="text-red-600">{sanctions.length}</strong>
