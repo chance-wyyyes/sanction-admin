@@ -193,7 +193,7 @@ const MOCK_LOGS: LogEntry[] = [
     liveLink: '#',
     timestamp: '2026-03-13 22:05:00',
   },
-].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()) as LogEntry[];
 
 // ===== 유틸 =====
 const SOURCE_OPTIONS: { value: LogSource; label: string; count: number }[] = [
