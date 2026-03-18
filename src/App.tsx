@@ -143,10 +143,6 @@ function App() {
     setValidationUserId(userId);
   };
 
-  const handleMemoClick = (userId: string) => {
-    setMemoUserId(userId);
-  };
-
   const handleMemoSubmit = (content: string) => {
     if (!memoUserId) return;
     const newMemo: AdminMemo = {
