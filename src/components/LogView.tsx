@@ -196,13 +196,13 @@ function TrDm({ g, validated, onValidate }: { g: DmGroup; validated: boolean; on
   const l = g.latest;
   return (
     <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
-      <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
-      <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
-      <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[240px]">{l.triggerMessage}</td>
-      <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{l.violationType}</span></td>
-      <td className="py-2 px-2 text-xs text-gray-400 text-center">{g.count > 1 ? `${g.count}회` : ''}</td>
-      <td className="py-2 px-1"><ValidBtn validated={validated} onClick={() => onValidate(g.key, l.targetNickname)} /></td>
-      <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="DM 대화 바로가기">&rarr;</button></td>
+      <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
+      <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
+      <td className="py-1.5 px-2 text-sm text-red-600 truncate">{l.triggerMessage}</td>
+      <td className="py-1.5 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded whitespace-nowrap">{l.violationType}</span></td>
+      <td className="py-1.5 px-2 text-xs text-gray-400 text-center">{g.count > 1 ? g.count : ''}</td>
+      <td className="py-1.5 px-1"><ValidBtn validated={validated} onClick={() => onValidate(g.key, l.targetNickname)} /></td>
+      <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
   );
 }
@@ -211,14 +211,14 @@ function TrLive({ l, validated, onValidate }: { l: LiveLog; validated: boolean; 
   const first = l.violations[0];
   return (
     <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
-      <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
-      <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
-      <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.liveName}</td>
-      <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[200px]">{first?.flaggedMessage}</td>
-      <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{first?.violationType}</span></td>
-      <td className="py-2 px-2 text-xs text-gray-400 text-center">{l.violations.length > 1 ? `${l.violations.length}건` : ''}</td>
-      <td className="py-2 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
-      <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="라이브 모니터 바로가기">&rarr;</button></td>
+      <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
+      <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
+      <td className="py-1.5 px-2 text-xs text-gray-500 truncate">{l.liveName}</td>
+      <td className="py-1.5 px-2 text-sm text-red-600 truncate">{first?.flaggedMessage}</td>
+      <td className="py-1.5 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded whitespace-nowrap">{first?.violationType}</span></td>
+      <td className="py-1.5 px-2 text-xs text-gray-400 text-center">{l.violations.length > 1 ? l.violations.length : ''}</td>
+      <td className="py-1.5 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
+      <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
   );
 }
@@ -226,12 +226,12 @@ function TrLive({ l, validated, onValidate }: { l: LiveLog; validated: boolean; 
 function TrOc({ l, validated, onValidate }: { l: OpenChatLog; validated: boolean; onValidate: (id: string, nick: string) => void }) {
   return (
     <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
-      <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
-      <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
-      <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.roomName}</td>
-      <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[280px]">{l.flaggedMessage}</td>
-      <td className="py-2 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
-      <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="오픈챗 바로가기">&rarr;</button></td>
+      <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
+      <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
+      <td className="py-1.5 px-2 text-xs text-gray-500 truncate">{l.roomName}</td>
+      <td className="py-1.5 px-2 text-sm text-red-600 truncate">{l.flaggedMessage}</td>
+      <td className="py-1.5 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
+      <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
   );
 }
@@ -239,14 +239,14 @@ function TrOc({ l, validated, onValidate }: { l: OpenChatLog; validated: boolean
 function TrRpt({ l, validated, onValidate }: { l: ReportLog; validated: boolean; onValidate: (id: string, nick: string) => void }) {
   return (
     <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
-      <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
-      <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
-      <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.liveName ?? '-'}</td>
-      <td className="py-2 px-2 text-sm text-gray-700 truncate max-w-[200px]">{l.reason}</td>
-      <td className="py-2 px-2 text-xs text-red-600 truncate max-w-[160px]">{l.targetMessage ?? ''}</td>
-      <td className="py-2 px-2 text-xs text-gray-400">{l.reporterNickname}</td>
-      <td className="py-2 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
-      <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="신고 상세 바로가기">&rarr;</button></td>
+      <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
+      <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
+      <td className="py-1.5 px-2 text-xs text-gray-500 truncate">{l.liveName ?? '-'}</td>
+      <td className="py-1.5 px-2 text-sm text-gray-700 truncate">{l.reason}</td>
+      <td className="py-1.5 px-2 text-xs text-red-600 truncate">{l.targetMessage ?? ''}</td>
+      <td className="py-1.5 px-2 text-xs text-gray-400 truncate">{l.reporterNickname}</td>
+      <td className="py-1.5 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
+      <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
   );
 }
@@ -312,51 +312,51 @@ export default function LogView() {
 
       {/* 테이블 */}
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm table-fixed">
           <thead>
             {source === 'DM' && (
               <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
-                <th className="py-2 px-2 font-medium w-[90px]">시간</th>
-                <th className="py-2 px-2 font-medium">닉네임</th>
+                <th className="py-2 px-2 font-medium" style={{width:76}}>시간</th>
+                <th className="py-2 px-2 font-medium" style={{width:110}}>닉네임</th>
                 <th className="py-2 px-2 font-medium">감지 메시지</th>
-                <th className="py-2 px-2 font-medium">위반 유형</th>
-                <th className="py-2 px-2 font-medium w-[50px] text-center">반복</th>
-                <th className="py-2 px-1 w-[44px]"></th>
-                <th className="py-2 px-1 w-[30px]"></th>
+                <th className="py-2 px-2 font-medium" style={{width:110}}>위반 유형</th>
+                <th className="py-2 px-2 font-medium text-center" style={{width:40}}>반복</th>
+                <th className="py-2 px-1" style={{width:40}}></th>
+                <th className="py-2 px-1" style={{width:28}}></th>
               </tr>
             )}
             {source === 'LIVE' && (
               <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
-                <th className="py-2 px-2 font-medium w-[90px]">시간</th>
-                <th className="py-2 px-2 font-medium">닉네임</th>
-                <th className="py-2 px-2 font-medium">라이브</th>
+                <th className="py-2 px-2 font-medium" style={{width:76}}>시간</th>
+                <th className="py-2 px-2 font-medium" style={{width:110}}>닉네임</th>
+                <th className="py-2 px-2 font-medium" style={{width:130}}>라이브</th>
                 <th className="py-2 px-2 font-medium">감지 메시지</th>
-                <th className="py-2 px-2 font-medium">위반 유형</th>
-                <th className="py-2 px-2 font-medium w-[50px] text-center">건수</th>
-                <th className="py-2 px-1 w-[44px]"></th>
-                <th className="py-2 px-1 w-[30px]"></th>
+                <th className="py-2 px-2 font-medium" style={{width:100}}>위반 유형</th>
+                <th className="py-2 px-2 font-medium text-center" style={{width:36}}>건수</th>
+                <th className="py-2 px-1" style={{width:40}}></th>
+                <th className="py-2 px-1" style={{width:28}}></th>
               </tr>
             )}
             {source === 'OPENCHAT' && (
               <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
-                <th className="py-2 px-2 font-medium w-[90px]">시간</th>
-                <th className="py-2 px-2 font-medium">닉네임</th>
-                <th className="py-2 px-2 font-medium">오픈챗방</th>
+                <th className="py-2 px-2 font-medium" style={{width:76}}>시간</th>
+                <th className="py-2 px-2 font-medium" style={{width:110}}>닉네임</th>
+                <th className="py-2 px-2 font-medium" style={{width:130}}>오픈챗방</th>
                 <th className="py-2 px-2 font-medium">감지 메시지</th>
-                <th className="py-2 px-1 w-[44px]"></th>
-                <th className="py-2 px-1 w-[30px]"></th>
+                <th className="py-2 px-1" style={{width:40}}></th>
+                <th className="py-2 px-1" style={{width:28}}></th>
               </tr>
             )}
             {source === 'REPORT' && (
               <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
-                <th className="py-2 px-2 font-medium w-[90px]">시간</th>
-                <th className="py-2 px-2 font-medium">대상자</th>
-                <th className="py-2 px-2 font-medium">라이브</th>
+                <th className="py-2 px-2 font-medium" style={{width:76}}>시간</th>
+                <th className="py-2 px-2 font-medium" style={{width:110}}>대상자</th>
+                <th className="py-2 px-2 font-medium" style={{width:130}}>라이브</th>
                 <th className="py-2 px-2 font-medium">사유</th>
-                <th className="py-2 px-2 font-medium">대상자 발언</th>
-                <th className="py-2 px-2 font-medium">신고자</th>
-                <th className="py-2 px-1 w-[44px]"></th>
-                <th className="py-2 px-1 w-[30px]"></th>
+                <th className="py-2 px-2 font-medium" style={{width:130}}>대상자 발언</th>
+                <th className="py-2 px-2 font-medium" style={{width:90}}>신고자</th>
+                <th className="py-2 px-1" style={{width:40}}></th>
+                <th className="py-2 px-1" style={{width:28}}></th>
               </tr>
             )}
           </thead>
