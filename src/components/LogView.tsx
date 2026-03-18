@@ -184,65 +184,68 @@ function handleNavigate(entry: LogEntry) {
 }
 
 // ===== 유효 버튼 =====
-function ValidBtn({ onClick }: { onClick: () => void }) {
+function ValidBtn({ validated, onClick }: { validated: boolean; onClick: () => void }) {
+  if (validated) {
+    return <span className="text-green-600 text-xs font-medium px-2 py-1" title="유효 처리됨">&#10003;</span>;
+  }
   return <button onClick={onClick} className="text-blue-500 hover:text-blue-700 text-xs font-medium px-2 py-1 rounded border border-blue-200 hover:bg-blue-50">유효</button>;
 }
 
 // ===== 테이블 행 =====
-function TrDm({ g, onValidate }: { g: DmGroup; onValidate: (nick: string) => void }) {
+function TrDm({ g, validated, onValidate }: { g: DmGroup; validated: boolean; onValidate: (id: string, nick: string) => void }) {
   const l = g.latest;
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
       <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
       <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[240px]">{l.triggerMessage}</td>
       <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{l.violationType}</span></td>
       <td className="py-2 px-2 text-xs text-gray-400 text-center">{g.count > 1 ? `${g.count}회` : ''}</td>
-      <td className="py-2 px-1"><ValidBtn onClick={() => onValidate(l.targetNickname)} /></td>
+      <td className="py-2 px-1"><ValidBtn validated={validated} onClick={() => onValidate(g.key, l.targetNickname)} /></td>
       <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="DM 대화 바로가기">&rarr;</button></td>
     </tr>
   );
 }
 
-function TrLive({ l, onValidate }: { l: LiveLog; onValidate: (nick: string) => void }) {
+function TrLive({ l, validated, onValidate }: { l: LiveLog; validated: boolean; onValidate: (id: string, nick: string) => void }) {
   const first = l.violations[0];
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
       <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
       <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.liveName}</td>
       <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[200px]">{first?.flaggedMessage}</td>
       <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{first?.violationType}</span></td>
       <td className="py-2 px-2 text-xs text-gray-400 text-center">{l.violations.length > 1 ? `${l.violations.length}건` : ''}</td>
-      <td className="py-2 px-1"><ValidBtn onClick={() => onValidate(l.targetNickname)} /></td>
+      <td className="py-2 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
       <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="라이브 모니터 바로가기">&rarr;</button></td>
     </tr>
   );
 }
 
-function TrOc({ l, onValidate }: { l: OpenChatLog; onValidate: (nick: string) => void }) {
+function TrOc({ l, validated, onValidate }: { l: OpenChatLog; validated: boolean; onValidate: (id: string, nick: string) => void }) {
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
       <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
       <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.roomName}</td>
       <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[280px]">{l.flaggedMessage}</td>
-      <td className="py-2 px-1"><ValidBtn onClick={() => onValidate(l.targetNickname)} /></td>
+      <td className="py-2 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
       <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="오픈챗 바로가기">&rarr;</button></td>
     </tr>
   );
 }
 
-function TrRpt({ l, onValidate }: { l: ReportLog; onValidate: (nick: string) => void }) {
+function TrRpt({ l, validated, onValidate }: { l: ReportLog; validated: boolean; onValidate: (id: string, nick: string) => void }) {
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
       <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
       <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.liveName ?? '-'}</td>
       <td className="py-2 px-2 text-sm text-gray-700 truncate max-w-[200px]">{l.reason}</td>
       <td className="py-2 px-2 text-xs text-red-600 truncate max-w-[160px]">{l.targetMessage ?? ''}</td>
       <td className="py-2 px-2 text-xs text-gray-400">{l.reporterNickname}</td>
-      <td className="py-2 px-1"><ValidBtn onClick={() => onValidate(l.targetNickname)} /></td>
+      <td className="py-2 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
       <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="신고 상세 바로가기">&rarr;</button></td>
     </tr>
   );
@@ -261,7 +264,8 @@ export default function LogView() {
   const [period, setPeriod] = useState<PeriodOption>('24h');
   const [customRange, setCustomRange] = useState({ start: '2026-03-15', end: '2026-03-18' });
   const [search, setSearch] = useState('');
-  const [validationNick, setValidationNick] = useState<string | null>(null);
+  const [validationTarget, setValidationTarget] = useState<{ id: string; nick: string } | null>(null);
+  const [validatedIds, setValidatedIds] = useState<Set<string>>(new Set());
 
   const bySource = useMemo(() => ALL.filter(l => l.type === (source === 'OPENCHAT' ? 'openchat' : source === 'LIVE' ? 'live' : source === 'REPORT' ? 'report' : 'dm')), [source]);
   const byPeriod = useMemo(() => filterPeriod(bySource, period, customRange), [bySource, period, customRange]);
@@ -273,6 +277,8 @@ export default function LogView() {
 
   const dmGroups = useMemo(() => source === 'DM' ? groupDm(filtered as DmLog[]) : [], [source, filtered]);
   const count = source === 'DM' ? dmGroups.length : filtered.length;
+
+  const handleOpenValidation = (id: string, nick: string) => setValidationTarget({ id, nick });
 
   return (
     <div className="space-y-3">
@@ -358,22 +364,22 @@ export default function LogView() {
             {count === 0 && (
               <tr><td colSpan={6} className="py-12 text-center text-gray-400">해당 기간에 로그가 없습니다.</td></tr>
             )}
-            {source === 'DM' && dmGroups.map(g => <TrDm key={g.key} g={g} onValidate={setValidationNick} />)}
-            {source === 'LIVE' && (filtered as LiveLog[]).map(l => <TrLive key={l.id} l={l} onValidate={setValidationNick} />)}
-            {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map(l => <TrOc key={l.id} l={l} onValidate={setValidationNick} />)}
-            {source === 'REPORT' && (filtered as ReportLog[]).map(l => <TrRpt key={l.id} l={l} onValidate={setValidationNick} />)}
+            {source === 'DM' && dmGroups.map(g => <TrDm key={g.key} g={g} validated={validatedIds.has(g.key)} onValidate={handleOpenValidation} />)}
+            {source === 'LIVE' && (filtered as LiveLog[]).map(l => <TrLive key={l.id} l={l} validated={validatedIds.has(l.id)} onValidate={handleOpenValidation} />)}
+            {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map(l => <TrOc key={l.id} l={l} validated={validatedIds.has(l.id)} onValidate={handleOpenValidation} />)}
+            {source === 'REPORT' && (filtered as ReportLog[]).map(l => <TrRpt key={l.id} l={l} validated={validatedIds.has(l.id)} onValidate={handleOpenValidation} />)}
           </tbody>
         </table>
       </div>
 
       {/* 유효 모달 */}
-      {validationNick && (
+      {validationTarget && (
         <ValidationModal
-          nickname={validationNick}
-          onSubmit={(data) => {
-            alert(`유효 처리 완료\n유저: ${validationNick}\n채널: ${data.channel}\n라벨: ${data.label}\n메모: ${data.memo || '(없음)'}`);
+          nickname={validationTarget.nick}
+          onSubmit={() => {
+            setValidatedIds(prev => new Set(prev).add(validationTarget.id));
           }}
-          onClose={() => setValidationNick(null)}
+          onClose={() => setValidationTarget(null)}
         />
       )}
     </div>
