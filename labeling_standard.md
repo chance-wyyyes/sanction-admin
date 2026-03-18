@@ -39,7 +39,7 @@
 
 운영정책: **제2조 1항 ③**, **제2조 3항 ①**
 
-### 1-1. 외부 거래
+### 1-1. 외부 거래 (`EXTERNAL_DEAL`)
 
 > 플랫폼 외부에서 실제 금전 거래를 시도/유도
 > 채널: 유효, 경고, 제재
@@ -53,7 +53,7 @@
 — 유저: 윤하아빠
 ```
 
-### 1-2. 외부 채널 홍보
+### 1-2. 외부 채널 홍보 (`EXTERNAL_CHANNEL_PROMO`)
 
 > 외부 플랫폼/커뮤니티로 유저를 유도
 > 채널: 유효, 경고, 제재
@@ -73,7 +73,7 @@
 > 문제성 채팅 + 비방 + 담합 등 커뮤니티 질서 파괴 행위 통합
 > 기존 INAPPROPRIATE_CONTENT + COMMUNITY_DISRUPTION 통합
 
-### 2-1. 문제성 채팅
+### 2-1. 문제성 채팅 (`INAPPROPRIATE_CHAT`)
 
 > 욕설·음란·폭력 등 부적절한 채팅
 > 채널: 경고, 제재
@@ -89,7 +89,7 @@
 — 유저: 고세구
 ```
 
-### 2-2. 서비스·타인 비방
+### 2-2. 서비스·타인 비방 (`HARASSMENT`)
 
 > 다른 회원 또는 회사를 비방, 커뮤니티 질서 훼손
 > 채널: 유효, 경고, 제재
@@ -97,7 +97,7 @@
 - 다른 회원 또는 회사를 비방하는 행위
 - 서비스 내 분쟁 상황, 제재 사실 등을 화제로 삼아 혼란을 조장하는 행위
 
-### 2-3. 담합·친목
+### 2-3. 담합·친목 (`GROUP_ABUSE`)
 
 > 일부 회원 간 과도한 친목, 집단 담합
 > 채널: 제재
@@ -111,7 +111,7 @@
 
 운영정책: **제2조 2항 ⑧**, **제2조 3항 ⑧**
 
-### 3-1. 문제성 판매 (커스텀팩)
+### 3-1. 문제성 판매 (`PROBLEMATIC_SALE`)
 
 > 자체 제작 랜덤박스, 미승인 이벤트 등
 > 채널: 제재
@@ -127,7 +127,7 @@
 — 유저: 네미, 내사라기, 한글, 키티쥬
 ```
 
-### 3-2. 거래 금지 품목
+### 3-2. 거래 금지 품목 (`PROHIBITED_ITEM`)
 
 > 가품, 비라이센스, 대리가챠, 비현물 등 판매 불가 상품
 > 채널: 제재
@@ -146,11 +146,18 @@
 
 > 주의: Slack에서 "가챠"가 아닌 **"가쳐"**로 표기됨
 
+### 3-3. 허위·부정 거래 (`FRAUDULENT_DEAL`)
+
+> 허위 매물 등록 또는 부정 거래 행위
+> 채널: 제재
+
+- 허위 매물 등록 또는 부정 거래 행위
+
 ---
 
 ## 4. 라이브 위반 (LIVE_VIOLATION)
 
-### 4-1. 문제성 라이브
+### 4-1. 문제성 라이브 (`INAPPROPRIATE_LIVE`)
 
 > 부적절 콘텐츠 송출 (음주/흡연/외부 서비스 중계)
 > 채널: 제재
@@ -160,7 +167,7 @@
 - 음주, 흡연 등 미성년자에게 부적절한 행위가 포함된 라이브 송출 등
 - 다른 딜러의 라이브 또는 외부 서비스를 노출하거나 중계하는 행위
 
-### 4-2. 비효율 라이브
+### 4-2. 비효율 라이브 (`INEFFICIENT_LIVE`)
 
 > 서비스 성격에 부합하지 않는 비효율 진행
 > 채널: 제재
@@ -171,7 +178,7 @@
 
 ## 5. 거래 이슈 (DEAL_ISSUE)
 
-### 5-1. 배송 문제
+### 5-1. 배송 문제 (`DELIVERY_ISSUE`)
 
 > 장기 미발송, 허위 발송, 오배송
 > 채널: 경고, 제재
@@ -181,7 +188,7 @@
 - 장기 미발송, 허위 발송 외 상품이 사전 고지된 내용과 상이한 등의 경우가 반복적으로 발생하는 경우
 - 배송정보를 잘못 입력하거나, 오기재로 인해 상품이 오배송되는 경우
 
-### 5-2. 거래 파기
+### 5-2. 거래 파기 (`DEAL_CANCELLATION`)
 
 > 일방적 취소, 단순 변심 환불 반복
 > 채널: 제재
@@ -193,7 +200,7 @@
 
 ## 6. 계정 어뷰징 (ACCOUNT_ABUSE)
 
-### 6-1. 계정 어뷰징
+### 6-1. 계정 어뷰징 (`ACCOUNT_MISUSE`)
 
 > 부계정 생성/사용, 계정 대여
 > 채널: 제재
@@ -203,7 +210,7 @@
 - 부계정 생성/사용 (permBan). 별도 탐지: `#alert_user_abusing`
 - 권한 없는 제3자에게 계정을 유·무상으로 대여하거나, 딜러 본인의 관여 없이 라이브 진행 또는 기타 서비스 이용을 허용하는 경우
 
-### 6-2. 닉네임/이미지
+### 6-2. 닉네임/이미지 (`INAPPROPRIATE_PROFILE`)
 
 > 부적절한 닉네임, 썸네일, 이미지
 > 채널: 제재
@@ -214,20 +221,21 @@
 
 ## 프리셋 매핑 검증표
 
-제재 프리셋 13종 전부 상위라벨에 매핑 완료:
+제재 프리셋 14종 전부 상위라벨에 매핑 완료:
 
-| No | 프리셋 항목 | → 상위 라벨 |
-|----|-----------|-----------|
-| 1 | 외부 거래 | EXTERNAL_TRADE |
-| 2 | 외부 채널 홍보 | EXTERNAL_TRADE |
-| 3 | 문제성 채팅 | COMMUNITY_VIOLATION |
-| 4 | 서비스·타인 비방 | COMMUNITY_VIOLATION |
-| 5 | 담합·친목 | COMMUNITY_VIOLATION |
-| 6 | 문제성 판매 (커스텀팩) | PRODUCT_SELLING |
-| 7 | 거래 금지 품목 | PRODUCT_SELLING |
-| 8 | 문제성 라이브 | LIVE_VIOLATION |
-| 9 | 비효율 라이브 | LIVE_VIOLATION |
-| 10 | 배송 문제 | DEAL_ISSUE |
-| 11 | 거래 파기 | DEAL_ISSUE |
-| 12 | 계정 어뷰징 | ACCOUNT_ABUSE |
-| 13 | 닉네임, 이미지 | ACCOUNT_ABUSE |
+| No | 프리셋 항목 | → 상위 라벨 | → 하위 라벨 |
+|----|-----------|-----------|-----------|
+| 1 | 외부 거래 | EXTERNAL_TRADE | `EXTERNAL_DEAL` |
+| 2 | 외부 채널 홍보 | EXTERNAL_TRADE | `EXTERNAL_CHANNEL_PROMO` |
+| 3 | 문제성 채팅 | COMMUNITY_VIOLATION | `INAPPROPRIATE_CHAT` |
+| 4 | 서비스·타인 비방 | COMMUNITY_VIOLATION | `HARASSMENT` |
+| 5 | 담합·친목 | COMMUNITY_VIOLATION | `GROUP_ABUSE` |
+| 6 | 문제성 판매 | PRODUCT_SELLING | `PROBLEMATIC_SALE` |
+| 7 | 거래 금지 품목 | PRODUCT_SELLING | `PROHIBITED_ITEM` |
+| 8 | 허위·부정 거래 | PRODUCT_SELLING | `FRAUDULENT_DEAL` |
+| 9 | 문제성 라이브 | LIVE_VIOLATION | `INAPPROPRIATE_LIVE` |
+| 10 | 비효율 라이브 | LIVE_VIOLATION | `INEFFICIENT_LIVE` |
+| 11 | 배송 문제 | DEAL_ISSUE | `DELIVERY_ISSUE` |
+| 12 | 거래 파기 | DEAL_ISSUE | `DEAL_CANCELLATION` |
+| 13 | 계정 어뷰징 | ACCOUNT_ABUSE | `ACCOUNT_MISUSE` |
+| 14 | 닉네임/이미지 | ACCOUNT_ABUSE | `INAPPROPRIATE_PROFILE` |
