@@ -20,6 +20,7 @@ import Filters from './components/Filters';
 import SanctionUserTable from './components/SanctionUserTable';
 import SanctionDetailPanel from './components/SanctionDetailPanel';
 import MemoModal from './components/MemoModal';
+import ValidationModal from './components/ValidationModal';
 import Pagination from './components/Pagination';
 import FieldDefinitions from './components/FieldDefinitions';
 import LabelingGuide from './components/LabelingGuide';
@@ -52,7 +53,10 @@ function App() {
   // 상세 패널
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
-  // 메모 모달
+  // 유효 모달
+  const [validationUserId, setValidationUserId] = useState<string | null>(null);
+
+  // 메모 모달 (상세 패널 내)
   const [memoUserId, setMemoUserId] = useState<string | null>(null);
   const [memoStore, setMemoStore] = useState<Record<string, AdminMemo[]>>(mockMemos);
 
@@ -135,6 +139,10 @@ function App() {
     setSelectedUserId(null);
   };
 
+  const handleValidationClick = (userId: string) => {
+    setValidationUserId(userId);
+  };
+
   const handleMemoClick = (userId: string) => {
     setMemoUserId(userId);
   };
@@ -180,6 +188,11 @@ function App() {
   // 상세 패널용 데이터
   const selectedUser = selectedUserId
     ? mockUsers.find((u) => u.userId === selectedUserId) ?? null
+    : null;
+
+  // 유효 모달용 데이터
+  const validationUser = validationUserId
+    ? mockUsers.find((u) => u.userId === validationUserId) ?? null
     : null;
 
   // 메모 모달용 데이터
@@ -276,7 +289,7 @@ function App() {
             sortConfig={sortConfig}
             onSort={handleSort}
             onDetailClick={handleDetailClick}
-            onMemoClick={handleMemoClick}
+            onMemoClick={handleValidationClick}
           />
 
           <Pagination
@@ -300,6 +313,18 @@ function App() {
           reports={mockReports[selectedUser.userId] ?? []}
           memos={memoStore[selectedUser.userId] ?? []}
           onClose={handleCloseDetail}
+        />
+      )}
+
+      {/* 유효 모달 */}
+      {validationUser && (
+        <ValidationModal
+          nickname={validationUser.nickname}
+          onSubmit={(data) => {
+            console.log('유효 저장:', validationUser.nickname, data);
+            alert(`유효 처리 완료\n유저: ${validationUser.nickname}\n채널: ${data.channel}\n라벨: ${data.label}\n메모: ${data.memo || '(없음)'}`);
+          }}
+          onClose={() => setValidationUserId(null)}
         />
       )}
 
