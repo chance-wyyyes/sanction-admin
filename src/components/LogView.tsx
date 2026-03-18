@@ -198,7 +198,7 @@ function TrDm({ g, validated, onValidate }: { g: DmGroup; validated: boolean; on
     <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
       <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
-      <td className="py-1.5 px-2 text-sm text-red-600 truncate">{l.triggerMessage}</td>
+      <td className="py-1.5 px-2 text-sm text-red-600 break-words">{l.triggerMessage}</td>
       <td className="py-1.5 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded whitespace-nowrap">{l.violationType}</span></td>
       <td className="py-1.5 px-2 text-xs text-gray-400 text-center">{g.count > 1 ? g.count : ''}</td>
       <td className="py-1.5 px-1"><ValidBtn validated={validated} onClick={() => onValidate(g.key, l.targetNickname)} /></td>
@@ -229,7 +229,7 @@ function TrOc({ l, validated, onValidate }: { l: OpenChatLog; validated: boolean
       <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
       <td className="py-1.5 px-2 text-xs text-gray-500 truncate">{l.roomName}</td>
-      <td className="py-1.5 px-2 text-sm text-red-600 truncate">{l.flaggedMessage}</td>
+      <td className="py-1.5 px-2 text-sm text-red-600 break-words">{l.flaggedMessage}</td>
       <td className="py-1.5 px-1"><ValidBtn validated={validated} onClick={() => onValidate(l.id, l.targetNickname)} /></td>
       <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
@@ -314,9 +314,9 @@ export default function LogView() {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <colgroup>
-            {source === 'DM' && <><col style={{width:78}} /><col style={{width:120}} /><col /><col style={{width:130}} /><col style={{width:38}} /><col style={{width:42}} /><col style={{width:28}} /></>}
+            {source === 'DM' && <><col style={{width:78}} /><col style={{width:120}} /><col style={{width:200}} /><col style={{width:130}} /><col style={{width:38}} /><col style={{width:42}} /><col style={{width:28}} /></>}
             {source === 'LIVE' && <><col style={{width:78}} /><col style={{width:120}} /><col style={{width:150}} /><col /><col style={{width:120}} /><col style={{width:38}} /><col style={{width:42}} /><col style={{width:28}} /></>}
-            {source === 'OPENCHAT' && <><col style={{width:78}} /><col style={{width:120}} /><col style={{width:150}} /><col /><col style={{width:42}} /><col style={{width:28}} /></>}
+            {source === 'OPENCHAT' && <><col style={{width:78}} /><col style={{width:120}} /><col style={{width:150}} /><col style={{width:220}} /><col style={{width:42}} /><col style={{width:28}} /></>}
             {source === 'REPORT' && <><col style={{width:78}} /><col style={{width:110}} /><col style={{width:140}} /><col /><col style={{width:140}} /><col style={{width:90}} /><col style={{width:42}} /><col style={{width:28}} /></>}
           </colgroup>
           <thead>
