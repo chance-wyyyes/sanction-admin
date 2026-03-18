@@ -269,7 +269,7 @@ export default function LogView() {
       <div className="flex items-center gap-3 flex-wrap">
         <div className="flex items-center gap-2">
           <label className="text-sm font-medium text-gray-600">구분:</label>
-          <select value={source} onChange={e => { setSource(e.target.value as LogSource); setSelected(null); }} className="border border-gray-300 rounded px-3 py-1.5 text-sm bg-white">
+          <select value={source} onChange={e => setSource(e.target.value as LogSource)} className="border border-gray-300 rounded px-3 py-1.5 text-sm bg-white">
             {SRC_OPTS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
