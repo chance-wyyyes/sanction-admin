@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import ValidationModal from './ValidationModal';
 
 // ===== 타입 =====
 type LogSource = 'DM' | 'OPENCHAT' | 'LIVE' | 'REPORT';
@@ -182,8 +183,13 @@ function handleNavigate(entry: LogEntry) {
   }
 }
 
+// ===== 유효 버튼 =====
+function ValidBtn({ onClick }: { onClick: () => void }) {
+  return <button onClick={onClick} className="text-blue-500 hover:text-blue-700 text-xs font-medium px-2 py-1 rounded border border-blue-200 hover:bg-blue-50">유효</button>;
+}
+
 // ===== 테이블 행 =====
-function TrDm({ g }: { g: DmGroup }) {
+function TrDm({ g, onValidate }: { g: DmGroup; onValidate: (nick: string) => void }) {
   const l = g.latest;
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
@@ -192,12 +198,13 @@ function TrDm({ g }: { g: DmGroup }) {
       <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[240px]">{l.triggerMessage}</td>
       <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{l.violationType}</span></td>
       <td className="py-2 px-2 text-xs text-gray-400 text-center">{g.count > 1 ? `${g.count}회` : ''}</td>
+      <td className="py-2 px-1"><ValidBtn onClick={() => onValidate(l.targetNickname)} /></td>
       <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="DM 대화 바로가기">&rarr;</button></td>
     </tr>
   );
 }
 
-function TrLive({ l }: { l: LiveLog }) {
+function TrLive({ l, onValidate }: { l: LiveLog; onValidate: (nick: string) => void }) {
   const first = l.violations[0];
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
@@ -207,24 +214,26 @@ function TrLive({ l }: { l: LiveLog }) {
       <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[200px]">{first?.flaggedMessage}</td>
       <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{first?.violationType}</span></td>
       <td className="py-2 px-2 text-xs text-gray-400 text-center">{l.violations.length > 1 ? `${l.violations.length}건` : ''}</td>
+      <td className="py-2 px-1"><ValidBtn onClick={() => onValidate(l.targetNickname)} /></td>
       <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="라이브 모니터 바로가기">&rarr;</button></td>
     </tr>
   );
 }
 
-function TrOc({ l }: { l: OpenChatLog }) {
+function TrOc({ l, onValidate }: { l: OpenChatLog; onValidate: (nick: string) => void }) {
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
       <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
       <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.roomName}</td>
       <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[280px]">{l.flaggedMessage}</td>
+      <td className="py-2 px-1"><ValidBtn onClick={() => onValidate(l.targetNickname)} /></td>
       <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="오픈챗 바로가기">&rarr;</button></td>
     </tr>
   );
 }
 
-function TrRpt({ l }: { l: ReportLog }) {
+function TrRpt({ l, onValidate }: { l: ReportLog; onValidate: (nick: string) => void }) {
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
       <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
@@ -233,6 +242,7 @@ function TrRpt({ l }: { l: ReportLog }) {
       <td className="py-2 px-2 text-sm text-gray-700 truncate max-w-[200px]">{l.reason}</td>
       <td className="py-2 px-2 text-xs text-red-600 truncate max-w-[160px]">{l.targetMessage ?? ''}</td>
       <td className="py-2 px-2 text-xs text-gray-400">{l.reporterNickname}</td>
+      <td className="py-2 px-1"><ValidBtn onClick={() => onValidate(l.targetNickname)} /></td>
       <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="신고 상세 바로가기">&rarr;</button></td>
     </tr>
   );
@@ -251,6 +261,7 @@ export default function LogView() {
   const [period, setPeriod] = useState<PeriodOption>('24h');
   const [customRange, setCustomRange] = useState({ start: '2026-03-15', end: '2026-03-18' });
   const [search, setSearch] = useState('');
+  const [validationNick, setValidationNick] = useState<string | null>(null);
 
   const bySource = useMemo(() => ALL.filter(l => l.type === (source === 'OPENCHAT' ? 'openchat' : source === 'LIVE' ? 'live' : source === 'REPORT' ? 'report' : 'dm')), [source]);
   const byPeriod = useMemo(() => filterPeriod(bySource, period, customRange), [bySource, period, customRange]);
@@ -304,6 +315,7 @@ export default function LogView() {
                 <th className="py-2 px-2 font-medium">감지 메시지</th>
                 <th className="py-2 px-2 font-medium">위반 유형</th>
                 <th className="py-2 px-2 font-medium w-[50px] text-center">반복</th>
+                <th className="py-2 px-1 w-[44px]"></th>
                 <th className="py-2 px-1 w-[30px]"></th>
               </tr>
             )}
@@ -315,6 +327,7 @@ export default function LogView() {
                 <th className="py-2 px-2 font-medium">감지 메시지</th>
                 <th className="py-2 px-2 font-medium">위반 유형</th>
                 <th className="py-2 px-2 font-medium w-[50px] text-center">건수</th>
+                <th className="py-2 px-1 w-[44px]"></th>
                 <th className="py-2 px-1 w-[30px]"></th>
               </tr>
             )}
@@ -324,6 +337,7 @@ export default function LogView() {
                 <th className="py-2 px-2 font-medium">닉네임</th>
                 <th className="py-2 px-2 font-medium">오픈챗방</th>
                 <th className="py-2 px-2 font-medium">감지 메시지</th>
+                <th className="py-2 px-1 w-[44px]"></th>
                 <th className="py-2 px-1 w-[30px]"></th>
               </tr>
             )}
@@ -335,6 +349,7 @@ export default function LogView() {
                 <th className="py-2 px-2 font-medium">사유</th>
                 <th className="py-2 px-2 font-medium">대상자 발언</th>
                 <th className="py-2 px-2 font-medium">신고자</th>
+                <th className="py-2 px-1 w-[44px]"></th>
                 <th className="py-2 px-1 w-[30px]"></th>
               </tr>
             )}
@@ -343,14 +358,24 @@ export default function LogView() {
             {count === 0 && (
               <tr><td colSpan={6} className="py-12 text-center text-gray-400">해당 기간에 로그가 없습니다.</td></tr>
             )}
-            {source === 'DM' && dmGroups.map(g => <TrDm key={g.key} g={g} />)}
-            {source === 'LIVE' && (filtered as LiveLog[]).map(l => <TrLive key={l.id} l={l} />)}
-            {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map(l => <TrOc key={l.id} l={l} />)}
-            {source === 'REPORT' && (filtered as ReportLog[]).map(l => <TrRpt key={l.id} l={l} />)}
+            {source === 'DM' && dmGroups.map(g => <TrDm key={g.key} g={g} onValidate={setValidationNick} />)}
+            {source === 'LIVE' && (filtered as LiveLog[]).map(l => <TrLive key={l.id} l={l} onValidate={setValidationNick} />)}
+            {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map(l => <TrOc key={l.id} l={l} onValidate={setValidationNick} />)}
+            {source === 'REPORT' && (filtered as ReportLog[]).map(l => <TrRpt key={l.id} l={l} onValidate={setValidationNick} />)}
           </tbody>
         </table>
       </div>
 
+      {/* 유효 모달 */}
+      {validationNick && (
+        <ValidationModal
+          nickname={validationNick}
+          onSubmit={(data) => {
+            alert(`유효 처리 완료\n유저: ${validationNick}\n채널: ${data.channel}\n라벨: ${data.label}\n메모: ${data.memo || '(없음)'}`);
+          }}
+          onClose={() => setValidationNick(null)}
+        />
+      )}
     </div>
   );
 }
