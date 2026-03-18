@@ -163,108 +163,27 @@ function filterPeriod(logs: LogEntry[], p: PeriodOption, cr: { start: string; en
   return logs.filter(l => { const d = new Date(l.timestamp); return d >= s && d <= e; });
 }
 
-// ===== 상세 패널 =====
-function DetailPanel({ entry, onClose }: { entry: LogEntry; onClose: () => void }) {
-  return (
-    <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="absolute inset-0 bg-black/20" onClick={onClose} />
-      <div className="relative w-[480px] bg-white h-full shadow-xl overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 z-10 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="font-bold">{entry.targetNickname}</span>
-            <span className="text-xs text-gray-400">{formatTs(entry.timestamp)}</span>
-          </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
-        </div>
-        <div className="p-4 space-y-4">
-          {entry.type === 'dm' && <DmDetail log={entry} />}
-          {entry.type === 'live' && <LiveDetail log={entry} />}
-          {entry.type === 'openchat' && <OcDetail log={entry} />}
-          {entry.type === 'report' && <RptDetail log={entry} />}
-        </div>
-      </div>
-    </div>
-  );
+// → 클릭 시 해당 원본으로 바로가기
+function getLink(entry: LogEntry): string {
+  if (entry.type === 'dm') return entry.dmLink;
+  if (entry.type === 'live') return `#live/${entry.liveId}`;
+  if (entry.type === 'openchat') return '#openchat';
+  return '#report';
 }
 
-function ChatBlock({ content, highlight }: { content: string; highlight?: string }) {
-  return (
-    <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 space-y-0.5">
-      {content.split('\n').map((line, i) => (
-        <div key={i} className={`text-xs ${highlight && line.includes(highlight) ? 'text-red-600 font-semibold' : 'text-gray-500'}`}>
-          {line.replace(/^\*|\*$/g, '')}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function DmDetail({ log }: { log: DmLog }) {
-  return (<>
-    <div>
-      <div className="text-xs text-gray-400 mb-1">감지 메시지</div>
-      <div className="text-sm font-medium text-red-600">{log.triggerMessage}</div>
-    </div>
-    <div>
-      <div className="text-xs text-gray-400 mb-1">위반 유형</div>
-      <span className="text-xs bg-purple-50 text-purple-600 px-2 py-0.5 rounded">{log.violationType}</span>
-    </div>
-    <div>
-      <div className="text-xs text-gray-400 mb-2">대화 내용</div>
-      <ChatBlock content={log.chatContent} highlight={log.triggerMessage} />
-    </div>
-  </>);
-}
-
-function LiveDetail({ log }: { log: LiveLog }) {
-  return (<>
-    <div className="flex gap-4 text-xs text-gray-500">
-      <span>라이브: <strong className="text-gray-700">{log.liveName}</strong></span>
-      <span>딜러: <strong className="text-gray-700">{log.dealerName}</strong></span>
-    </div>
-    <div>
-      <div className="text-xs text-gray-400 mb-2">위반 내역 ({log.violations.length}건)</div>
-      <div className="space-y-2">
-        {log.violations.map((v, i) => (
-          <div key={i} className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-            <div className="text-sm">{log.targetNickname}: <span className="text-red-600 font-medium">{v.flaggedMessage}</span></div>
-            <div className="text-xs text-purple-600 mt-1">[{v.violationType}]</div>
-            <div className="text-xs text-gray-400 mt-0.5">{v.violationReason}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </>);
-}
-
-function OcDetail({ log }: { log: OpenChatLog }) {
-  return (<>
-    <div>
-      <div className="text-xs text-gray-400 mb-1">오픈챗방</div>
-      <div className="text-sm font-medium">{log.roomName}</div>
-    </div>
-    <div>
-      <div className="text-xs text-gray-400 mb-1">감지 메시지</div>
-      <div className="text-sm font-medium text-red-600">{log.flaggedMessage}</div>
-    </div>
-    <div>
-      <div className="text-xs text-gray-400 mb-2">대화 내용</div>
-      <ChatBlock content={log.chatContext} highlight={log.flaggedMessage} />
-    </div>
-  </>);
-}
-
-function RptDetail({ log }: { log: ReportLog }) {
-  return (<>
-    {log.liveName && <div><div className="text-xs text-gray-400 mb-1">라이브</div><div className="text-sm font-medium">{log.liveName}</div></div>}
-    <div><div className="text-xs text-gray-400 mb-1">신고 사유</div><div className="text-sm">{log.reason}</div></div>
-    {log.targetMessage && <div><div className="text-xs text-gray-400 mb-1">대상자 발언</div><div className="text-sm text-red-600 font-medium">{log.targetMessage}</div></div>}
-    <div><div className="text-xs text-gray-400 mb-1">신고자</div><div className="text-sm">{log.reporterNickname}</div></div>
-  </>);
+function handleNavigate(entry: LogEntry) {
+  const url = getLink(entry);
+  if (url && url !== '#') {
+    window.open(url, '_blank');
+  } else {
+    // mock에서는 alert으로 표시
+    const labels: Record<string, string> = { dm: 'DM 대화 모니터', live: '라이브 모니터', openchat: '오픈챗 모니터', report: '신고 상세' };
+    alert(`${labels[entry.type]} 바로가기\n→ ${entry.targetNickname} (${formatTs(entry.timestamp)})`);
+  }
 }
 
 // ===== 테이블 행 =====
-function TrDm({ g, onClick }: { g: DmGroup; onClick: () => void }) {
+function TrDm({ g }: { g: DmGroup }) {
   const l = g.latest;
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
@@ -273,12 +192,12 @@ function TrDm({ g, onClick }: { g: DmGroup; onClick: () => void }) {
       <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[240px]">{l.triggerMessage}</td>
       <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{l.violationType}</span></td>
       <td className="py-2 px-2 text-xs text-gray-400 text-center">{g.count > 1 ? `${g.count}회` : ''}</td>
-      <td className="py-2 px-1"><button onClick={onClick} className="text-gray-400 hover:text-gray-700 text-lg">&rarr;</button></td>
+      <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="DM 대화 바로가기">&rarr;</button></td>
     </tr>
   );
 }
 
-function TrLive({ l, onClick }: { l: LiveLog; onClick: () => void }) {
+function TrLive({ l }: { l: LiveLog }) {
   const first = l.violations[0];
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
@@ -288,24 +207,24 @@ function TrLive({ l, onClick }: { l: LiveLog; onClick: () => void }) {
       <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[200px]">{first?.flaggedMessage}</td>
       <td className="py-2 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">{first?.violationType}</span></td>
       <td className="py-2 px-2 text-xs text-gray-400 text-center">{l.violations.length > 1 ? `${l.violations.length}건` : ''}</td>
-      <td className="py-2 px-1"><button onClick={onClick} className="text-gray-400 hover:text-gray-700 text-lg">&rarr;</button></td>
+      <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="라이브 모니터 바로가기">&rarr;</button></td>
     </tr>
   );
 }
 
-function TrOc({ l, onClick }: { l: OpenChatLog; onClick: () => void }) {
+function TrOc({ l }: { l: OpenChatLog }) {
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
       <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-2 px-2 text-sm font-medium">{l.targetNickname}</td>
       <td className="py-2 px-2 text-xs text-gray-500 truncate max-w-[140px]">{l.roomName}</td>
       <td className="py-2 px-2 text-sm text-red-600 truncate max-w-[280px]">{l.flaggedMessage}</td>
-      <td className="py-2 px-1"><button onClick={onClick} className="text-gray-400 hover:text-gray-700 text-lg">&rarr;</button></td>
+      <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="오픈챗 바로가기">&rarr;</button></td>
     </tr>
   );
 }
 
-function TrRpt({ l, onClick }: { l: ReportLog; onClick: () => void }) {
+function TrRpt({ l }: { l: ReportLog }) {
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-50">
       <td className="py-2 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
@@ -314,7 +233,7 @@ function TrRpt({ l, onClick }: { l: ReportLog; onClick: () => void }) {
       <td className="py-2 px-2 text-sm text-gray-700 truncate max-w-[200px]">{l.reason}</td>
       <td className="py-2 px-2 text-xs text-red-600 truncate max-w-[160px]">{l.targetMessage ?? ''}</td>
       <td className="py-2 px-2 text-xs text-gray-400">{l.reporterNickname}</td>
-      <td className="py-2 px-1"><button onClick={onClick} className="text-gray-400 hover:text-gray-700 text-lg">&rarr;</button></td>
+      <td className="py-2 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600 text-lg" title="신고 상세 바로가기">&rarr;</button></td>
     </tr>
   );
 }
@@ -332,7 +251,6 @@ export default function LogView() {
   const [period, setPeriod] = useState<PeriodOption>('24h');
   const [customRange, setCustomRange] = useState({ start: '2026-03-15', end: '2026-03-18' });
   const [search, setSearch] = useState('');
-  const [selected, setSelected] = useState<LogEntry | DmGroup | null>(null);
 
   const bySource = useMemo(() => ALL.filter(l => l.type === (source === 'OPENCHAT' ? 'openchat' : source === 'LIVE' ? 'live' : source === 'REPORT' ? 'report' : 'dm')), [source]);
   const byPeriod = useMemo(() => filterPeriod(bySource, period, customRange), [bySource, period, customRange]);
@@ -344,11 +262,6 @@ export default function LogView() {
 
   const dmGroups = useMemo(() => source === 'DM' ? groupDm(filtered as DmLog[]) : [], [source, filtered]);
   const count = source === 'DM' ? dmGroups.length : filtered.length;
-
-  // 패널에 보여줄 실제 LogEntry
-  const panelEntry: LogEntry | null = selected
-    ? ('latest' in selected ? (selected as DmGroup).latest : selected as LogEntry)
-    : null;
 
   return (
     <div className="space-y-3">
@@ -430,16 +343,14 @@ export default function LogView() {
             {count === 0 && (
               <tr><td colSpan={6} className="py-12 text-center text-gray-400">해당 기간에 로그가 없습니다.</td></tr>
             )}
-            {source === 'DM' && dmGroups.map(g => <TrDm key={g.key} g={g} onClick={() => setSelected(g)} />)}
-            {source === 'LIVE' && (filtered as LiveLog[]).map(l => <TrLive key={l.id} l={l} onClick={() => setSelected(l)} />)}
-            {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map(l => <TrOc key={l.id} l={l} onClick={() => setSelected(l)} />)}
-            {source === 'REPORT' && (filtered as ReportLog[]).map(l => <TrRpt key={l.id} l={l} onClick={() => setSelected(l)} />)}
+            {source === 'DM' && dmGroups.map(g => <TrDm key={g.key} g={g} />)}
+            {source === 'LIVE' && (filtered as LiveLog[]).map(l => <TrLive key={l.id} l={l} />)}
+            {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map(l => <TrOc key={l.id} l={l} />)}
+            {source === 'REPORT' && (filtered as ReportLog[]).map(l => <TrRpt key={l.id} l={l} />)}
           </tbody>
         </table>
       </div>
 
-      {/* 상세 패널 */}
-      {panelEntry && <DetailPanel entry={panelEntry} onClose={() => setSelected(null)} />}
     </div>
   );
 }
