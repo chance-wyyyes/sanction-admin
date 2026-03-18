@@ -312,51 +312,57 @@ export default function LogView() {
 
       {/* 테이블 */}
       <div className="overflow-x-auto">
-        <table className="w-full text-sm table-fixed">
+        <table className="w-full text-sm">
+          <colgroup>
+            {source === 'DM' && <><col style={{width:78}} /><col style={{width:120}} /><col /><col style={{width:130}} /><col style={{width:38}} /><col style={{width:42}} /><col style={{width:28}} /></>}
+            {source === 'LIVE' && <><col style={{width:78}} /><col style={{width:120}} /><col style={{width:150}} /><col /><col style={{width:120}} /><col style={{width:38}} /><col style={{width:42}} /><col style={{width:28}} /></>}
+            {source === 'OPENCHAT' && <><col style={{width:78}} /><col style={{width:120}} /><col style={{width:150}} /><col /><col style={{width:42}} /><col style={{width:28}} /></>}
+            {source === 'REPORT' && <><col style={{width:78}} /><col style={{width:110}} /><col style={{width:140}} /><col /><col style={{width:140}} /><col style={{width:90}} /><col style={{width:42}} /><col style={{width:28}} /></>}
+          </colgroup>
           <thead>
             {source === 'DM' && (
               <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
-                <th className="py-2 px-2 font-medium" style={{width:76}}>시간</th>
-                <th className="py-2 px-2 font-medium" style={{width:110}}>닉네임</th>
+                <th className="py-2 px-2 font-medium">시간</th>
+                <th className="py-2 px-2 font-medium">닉네임</th>
                 <th className="py-2 px-2 font-medium">감지 메시지</th>
-                <th className="py-2 px-2 font-medium" style={{width:110}}>위반 유형</th>
-                <th className="py-2 px-2 font-medium text-center" style={{width:40}}>반복</th>
-                <th className="py-2 px-1" style={{width:40}}></th>
-                <th className="py-2 px-1" style={{width:28}}></th>
+                <th className="py-2 px-2 font-medium">위반 유형</th>
+                <th className="py-2 px-2 font-medium text-center">반복</th>
+                <th className="py-2 px-1"></th>
+                <th className="py-2 px-1"></th>
               </tr>
             )}
             {source === 'LIVE' && (
               <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
-                <th className="py-2 px-2 font-medium" style={{width:76}}>시간</th>
-                <th className="py-2 px-2 font-medium" style={{width:110}}>닉네임</th>
-                <th className="py-2 px-2 font-medium" style={{width:130}}>라이브</th>
+                <th className="py-2 px-2 font-medium">시간</th>
+                <th className="py-2 px-2 font-medium">닉네임</th>
+                <th className="py-2 px-2 font-medium">라이브</th>
                 <th className="py-2 px-2 font-medium">감지 메시지</th>
-                <th className="py-2 px-2 font-medium" style={{width:100}}>위반 유형</th>
-                <th className="py-2 px-2 font-medium text-center" style={{width:36}}>건수</th>
-                <th className="py-2 px-1" style={{width:40}}></th>
-                <th className="py-2 px-1" style={{width:28}}></th>
+                <th className="py-2 px-2 font-medium">위반 유형</th>
+                <th className="py-2 px-2 font-medium text-center">건수</th>
+                <th className="py-2 px-1"></th>
+                <th className="py-2 px-1"></th>
               </tr>
             )}
             {source === 'OPENCHAT' && (
               <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
-                <th className="py-2 px-2 font-medium" style={{width:76}}>시간</th>
-                <th className="py-2 px-2 font-medium" style={{width:110}}>닉네임</th>
-                <th className="py-2 px-2 font-medium" style={{width:130}}>오픈챗방</th>
+                <th className="py-2 px-2 font-medium">시간</th>
+                <th className="py-2 px-2 font-medium">닉네임</th>
+                <th className="py-2 px-2 font-medium">오픈챗방</th>
                 <th className="py-2 px-2 font-medium">감지 메시지</th>
-                <th className="py-2 px-1" style={{width:40}}></th>
-                <th className="py-2 px-1" style={{width:28}}></th>
+                <th className="py-2 px-1"></th>
+                <th className="py-2 px-1"></th>
               </tr>
             )}
             {source === 'REPORT' && (
               <tr className="border-b-2 border-gray-200 text-left text-gray-500 text-xs">
-                <th className="py-2 px-2 font-medium" style={{width:76}}>시간</th>
-                <th className="py-2 px-2 font-medium" style={{width:110}}>대상자</th>
-                <th className="py-2 px-2 font-medium" style={{width:130}}>라이브</th>
+                <th className="py-2 px-2 font-medium">시간</th>
+                <th className="py-2 px-2 font-medium">대상자</th>
+                <th className="py-2 px-2 font-medium">라이브</th>
                 <th className="py-2 px-2 font-medium">사유</th>
-                <th className="py-2 px-2 font-medium" style={{width:130}}>대상자 발언</th>
-                <th className="py-2 px-2 font-medium" style={{width:90}}>신고자</th>
-                <th className="py-2 px-1" style={{width:40}}></th>
-                <th className="py-2 px-1" style={{width:28}}></th>
+                <th className="py-2 px-2 font-medium">대상자 발언</th>
+                <th className="py-2 px-2 font-medium">신고자</th>
+                <th className="py-2 px-1"></th>
+                <th className="py-2 px-1"></th>
               </tr>
             )}
           </thead>
