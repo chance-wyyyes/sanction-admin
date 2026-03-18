@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import ValidationModal from './ValidationModal';
+import DmValidationModal from './DmValidationModal';
 
 // ===== 타입 =====
 type LogSource = 'DM' | 'OPENCHAT' | 'LIVE' | 'REPORT';
@@ -192,7 +193,7 @@ function ValidBtn({ validated, onClick }: { validated: boolean; onClick: () => v
 }
 
 // ===== 테이블 행 =====
-function TrDm({ g, validated, onValidate }: { g: DmGroup; validated: boolean; onValidate: (id: string, nick: string) => void }) {
+function TrDm({ g, validated, onValidate }: { g: DmGroup; validated: boolean; onValidate: (id: string, log: DmLog) => void }) {
   const l = g.latest;
   return (
     <tr className={`border-b border-gray-100 hover:bg-gray-50 ${validated ? 'bg-green-50/40' : ''}`}>
@@ -201,7 +202,7 @@ function TrDm({ g, validated, onValidate }: { g: DmGroup; validated: boolean; on
       <td className="py-1.5 px-2 text-sm text-red-600 break-words">{l.triggerMessage}</td>
       <td className="py-1.5 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded whitespace-nowrap">{l.violationType}</span></td>
       <td className="py-1.5 px-2 text-xs text-gray-400 text-center">{g.count > 1 ? g.count : ''}</td>
-      <td className="py-1.5 px-1"><ValidBtn validated={validated} onClick={() => onValidate(g.key, l.targetNickname)} /></td>
+      <td className="py-1.5 px-1"><ValidBtn validated={validated} onClick={() => onValidate(g.key, l)} /></td>
       <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
   );
@@ -265,6 +266,7 @@ export default function LogView() {
   const [customRange, setCustomRange] = useState({ start: '2026-03-15', end: '2026-03-18' });
   const [search, setSearch] = useState('');
   const [validationTarget, setValidationTarget] = useState<{ id: string; nick: string } | null>(null);
+  const [dmValidationTarget, setDmValidationTarget] = useState<{ id: string; log: DmLog } | null>(null);
   const [validatedIds, setValidatedIds] = useState<Set<string>>(new Set());
 
   const bySource = useMemo(() => ALL.filter(l => l.type === (source === 'OPENCHAT' ? 'openchat' : source === 'LIVE' ? 'live' : source === 'REPORT' ? 'report' : 'dm')), [source]);
@@ -279,6 +281,7 @@ export default function LogView() {
   const count = source === 'DM' ? dmGroups.length : filtered.length;
 
   const handleOpenValidation = (id: string, nick: string) => setValidationTarget({ id, nick });
+  const handleOpenDmValidation = (id: string, log: DmLog) => setDmValidationTarget({ id, log });
 
   return (
     <div className="space-y-3">
@@ -370,7 +373,7 @@ export default function LogView() {
             {count === 0 && (
               <tr><td colSpan={6} className="py-12 text-center text-gray-400">해당 기간에 로그가 없습니다.</td></tr>
             )}
-            {source === 'DM' && dmGroups.map(g => <TrDm key={g.key} g={g} validated={validatedIds.has(g.key)} onValidate={handleOpenValidation} />)}
+            {source === 'DM' && dmGroups.map(g => <TrDm key={g.key} g={g} validated={validatedIds.has(g.key)} onValidate={handleOpenDmValidation} />)}
             {source === 'LIVE' && (filtered as LiveLog[]).map(l => <TrLive key={l.id} l={l} validated={validatedIds.has(l.id)} onValidate={handleOpenValidation} />)}
             {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map(l => <TrOc key={l.id} l={l} validated={validatedIds.has(l.id)} onValidate={handleOpenValidation} />)}
             {source === 'REPORT' && (filtered as ReportLog[]).map(l => <TrRpt key={l.id} l={l} validated={validatedIds.has(l.id)} onValidate={handleOpenValidation} />)}
@@ -378,7 +381,28 @@ export default function LogView() {
         </table>
       </div>
 
-      {/* 유효 모달 */}
+      {/* DM 유효 모달 */}
+      {dmValidationTarget && (() => {
+        const log = dmValidationTarget.log;
+        const nicks = new Set<string>();
+        log.chatContent.split('\n').forEach(line => {
+          const m = line.replace(/^\*/, '').match(/^(.+?) - /);
+          if (m) nicks.add(m[1].trim());
+        });
+        const participants = Array.from(nicks);
+        return (
+          <DmValidationModal
+            targetNickname={log.targetNickname}
+            participants={participants.length >= 2 ? participants : [log.targetNickname, '상대방']}
+            onSubmit={() => {
+              setValidatedIds(prev => new Set(prev).add(dmValidationTarget.id));
+            }}
+            onClose={() => setDmValidationTarget(null)}
+          />
+        );
+      })()}
+
+      {/* 일반 유효 모달 (라이브/오픈챗/신고) */}
       {validationTarget && (
         <ValidationModal
           nickname={validationTarget.nick}
