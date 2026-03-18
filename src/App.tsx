@@ -215,16 +215,6 @@ function App() {
               로그
             </button>
             <button
-              onClick={() => setActiveTab('definitions')}
-              className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
-                activeTab === 'definitions'
-                  ? 'bg-gray-800 text-white'
-                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
-              }`}
-            >
-              필드 정의서
-            </button>
-            <button
               onClick={() => setActiveTab('labeling')}
               className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
                 activeTab === 'labeling'
@@ -233,6 +223,16 @@ function App() {
               }`}
             >
               라벨링
+            </button>
+            <button
+              onClick={() => setActiveTab('definitions')}
+              className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
+                activeTab === 'definitions'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              필드 정의서
             </button>
           </div>
         </div>
