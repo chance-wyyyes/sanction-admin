@@ -217,9 +217,8 @@ export default function LogView() {
     return byPeriod.filter(l => l.targetNickname.toLowerCase().includes(q));
   }, [byPeriod, search]);
 
-  // 삭제 제외, unread + valid 분리
-  const unreadLogs = useMemo(() => bySearch.filter(l => getStatus(l.id) === 'unread'), [bySearch, statuses]);
-  const validLogs = useMemo(() => bySearch.filter(l => getStatus(l.id) === 'valid'), [bySearch, statuses]);
+  // 삭제 제외 (시간순 유지, unread+valid 섞여서 표시)
+  const visibleLogs = useMemo(() => bySearch.filter(l => getStatus(l.id) !== 'deleted'), [bySearch, statuses]);
 
   // 현황 집계
   const stats = useMemo(() => {
@@ -236,15 +235,15 @@ export default function LogView() {
 
   const colSpan = source === 'REPORT' ? 8 : source === 'LIVE' ? 8 : 6;
 
-  // 행 렌더링 헬퍼
-  const renderRow = (l: LogEntry, dimmed: boolean) => {
-    const cls = dimmed ? 'opacity-40' : '';
-    const validBtn = dimmed ? undefined : () => handleValid(l);
-    const deleteBtn = dimmed ? undefined : () => handleDelete(l.id);
-    if (source === 'DM' && l.type === 'dm') return <TrDm key={l.id} l={l} onValid={validBtn!} onDelete={deleteBtn!} className={cls} dimmed={dimmed} />;
-    if (source === 'LIVE' && l.type === 'live') return <TrLive key={l.id} l={l} onValid={validBtn!} onDelete={deleteBtn!} className={cls} dimmed={dimmed} />;
-    if (source === 'OPENCHAT' && l.type === 'openchat') return <TrOc key={l.id} l={l} onValid={validBtn!} onDelete={deleteBtn!} className={cls} dimmed={dimmed} />;
-    if (source === 'REPORT' && l.type === 'report') return <TrRpt key={l.id} l={l} onValid={validBtn!} onDelete={deleteBtn!} className={cls} dimmed={dimmed} />;
+  const renderRow = (l: LogEntry) => {
+    const isValid = getStatus(l.id) === 'valid';
+    const cls = isValid ? 'opacity-40' : '';
+    const vFn = isValid ? () => {} : () => handleValid(l);
+    const dFn = isValid ? () => {} : () => handleDelete(l.id);
+    if (l.type === 'dm') return <TrDm key={l.id} l={l} onValid={vFn} onDelete={dFn} className={cls} dimmed={isValid} />;
+    if (l.type === 'live') return <TrLive key={l.id} l={l} onValid={vFn} onDelete={dFn} className={cls} dimmed={isValid} />;
+    if (l.type === 'openchat') return <TrOc key={l.id} l={l} onValid={vFn} onDelete={dFn} className={cls} dimmed={isValid} />;
+    if (l.type === 'report') return <TrRpt key={l.id} l={l} onValid={vFn} onDelete={dFn} className={cls} dimmed={isValid} />;
     return null;
   };
 
@@ -311,20 +310,10 @@ export default function LogView() {
             )}
           </thead>
           <tbody>
-            {/* 미처리 */}
-            {unreadLogs.length === 0 && validLogs.length === 0 && (
+            {visibleLogs.length === 0 && (
               <tr><td colSpan={colSpan} className="py-12 text-center text-gray-400">로그가 없습니다</td></tr>
             )}
-            {unreadLogs.length === 0 && validLogs.length > 0 && (
-              <tr><td colSpan={colSpan} className="py-6 text-center text-green-600 text-xs font-medium">미처리 로그 없음</td></tr>
-            )}
-            {unreadLogs.map(l => renderRow(l, false))}
-
-            {/* 구분선 + 유효 처리된 건 */}
-            {validLogs.length > 0 && (
-              <tr><td colSpan={colSpan} className="py-1"><div className="border-t-2 border-dashed border-green-300 my-1 flex items-center"><span className="text-xs text-green-500 bg-white px-2 -mt-3 ml-2">유효 처리 ({validLogs.length}건)</span></div></td></tr>
-            )}
-            {validLogs.map(l => renderRow(l, true))}
+            {visibleLogs.map(l => renderRow(l))}
           </tbody>
         </table>
       </div>
