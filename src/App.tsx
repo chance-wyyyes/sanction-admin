@@ -318,7 +318,7 @@ function App() {
           nickname={validationUser.nickname}
           onSubmit={(data) => {
             console.log('유효 저장:', validationUser.nickname, data);
-            alert(`유효 처리 완료\n유저: ${validationUser.nickname}\n채널: ${data.channel}\n라벨: ${data.label}\n메모: ${data.memo || '(없음)'}`);
+            alert(`유효 처리 완료\n유저: ${validationUser.nickname}\n채널: ${data.channel}\n라벨: ${data.label}\n하위라벨: ${data.subLabel}\n메모: ${data.memo || '(없음)'}`);
           }}
           onClose={() => setValidationUserId(null)}
         />

@@ -132,55 +132,55 @@ function ActionBtns({ onValid, onDelete }: { onValid: () => void; onDelete: () =
   );
 }
 
-function TrDm({ l, onValid, onDelete }: { l: DmLog; onValid: () => void; onDelete: () => void }) {
+function TrDm({ l, onValid, onDelete, className, dimmed }: { l: DmLog; onValid: () => void; onDelete: () => void; className?: string; dimmed?: boolean }) {
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className={`border-b border-gray-100 ${dimmed ? '' : 'hover:bg-gray-50'} ${className ?? ''}`}>
       <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
       <td className="py-1.5 px-2 text-sm text-red-600 break-words">{l.triggerMessage}</td>
       <td className="py-1.5 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded whitespace-nowrap">{l.violationType}</span></td>
-      <td className="py-1.5 px-1"><ActionBtns onValid={onValid} onDelete={onDelete} /></td>
+      <td className="py-1.5 px-1">{dimmed ? <span className="text-green-500 text-xs px-1.5">&#10003;</span> : <ActionBtns onValid={onValid} onDelete={onDelete} />}</td>
       <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
   );
 }
-function TrLive({ l, onValid, onDelete }: { l: LiveLog; onValid: () => void; onDelete: () => void }) {
+function TrLive({ l, onValid, onDelete, className, dimmed }: { l: LiveLog; onValid: () => void; onDelete: () => void; className?: string; dimmed?: boolean }) {
   const first = l.violations[0];
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className={`border-b border-gray-100 ${dimmed ? '' : 'hover:bg-gray-50'} ${className ?? ''}`}>
       <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
       <td className="py-1.5 px-2 text-xs text-gray-500 truncate">{l.liveName}</td>
       <td className="py-1.5 px-2 text-sm text-red-600 truncate">{first?.flaggedMessage}</td>
       <td className="py-1.5 px-2"><span className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded whitespace-nowrap">{first?.violationType}</span></td>
       <td className="py-1.5 px-2 text-xs text-gray-400 text-center">{l.violations.length > 1 ? l.violations.length : ''}</td>
-      <td className="py-1.5 px-1"><ActionBtns onValid={onValid} onDelete={onDelete} /></td>
+      <td className="py-1.5 px-1">{dimmed ? <span className="text-green-500 text-xs px-1.5">&#10003;</span> : <ActionBtns onValid={onValid} onDelete={onDelete} />}</td>
       <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
   );
 }
-function TrOc({ l, onValid, onDelete }: { l: OpenChatLog; onValid: () => void; onDelete: () => void }) {
+function TrOc({ l, onValid, onDelete, className, dimmed }: { l: OpenChatLog; onValid: () => void; onDelete: () => void; className?: string; dimmed?: boolean }) {
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className={`border-b border-gray-100 ${dimmed ? '' : 'hover:bg-gray-50'} ${className ?? ''}`}>
       <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
       <td className="py-1.5 px-2 text-xs text-gray-500 truncate">{l.roomName}</td>
       <td className="py-1.5 px-2 text-sm text-red-600 break-words">{l.flaggedMessage}</td>
-      <td className="py-1.5 px-1"><ActionBtns onValid={onValid} onDelete={onDelete} /></td>
+      <td className="py-1.5 px-1">{dimmed ? <span className="text-green-500 text-xs px-1.5">&#10003;</span> : <ActionBtns onValid={onValid} onDelete={onDelete} />}</td>
       <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
   );
 }
-function TrRpt({ l, onValid, onDelete }: { l: ReportLog; onValid: () => void; onDelete: () => void }) {
+function TrRpt({ l, onValid, onDelete, className, dimmed }: { l: ReportLog; onValid: () => void; onDelete: () => void; className?: string; dimmed?: boolean }) {
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className={`border-b border-gray-100 ${dimmed ? '' : 'hover:bg-gray-50'} ${className ?? ''}`}>
       <td className="py-1.5 px-2 text-xs text-gray-500 whitespace-nowrap">{formatTs(l.timestamp)}</td>
       <td className="py-1.5 px-2 text-sm font-medium truncate">{l.targetNickname}</td>
       <td className="py-1.5 px-2 text-xs text-gray-500 truncate">{l.liveName ?? '-'}</td>
       <td className="py-1.5 px-2 text-sm text-gray-700 truncate">{l.reason}</td>
       <td className="py-1.5 px-2 text-xs text-red-600 truncate">{l.targetMessage ?? ''}</td>
       <td className="py-1.5 px-2 text-xs text-gray-400 truncate">{l.reporterNickname}</td>
-      <td className="py-1.5 px-1"><ActionBtns onValid={onValid} onDelete={onDelete} /></td>
+      <td className="py-1.5 px-1">{dimmed ? <span className="text-green-500 text-xs px-1.5">&#10003;</span> : <ActionBtns onValid={onValid} onDelete={onDelete} />}</td>
       <td className="py-1.5 px-1"><button onClick={() => handleNavigate(l)} className="text-gray-400 hover:text-blue-600">&rarr;</button></td>
     </tr>
   );
@@ -193,14 +193,11 @@ const SRC_OPTS: { value: LogSource; label: string }[] = [
 const PER_OPTS: { value: PeriodOption; label: string }[] = [
   { value: '24h', label: '24시간' },{ value: '3d', label: '3일' },{ value: 'custom', label: '기간 설정' },
 ];
-type StatusFilter = 'unread' | 'valid' | 'deleted';
-
 export default function LogView() {
   const [source, setSource] = useState<LogSource>('DM');
   const [period, setPeriod] = useState<PeriodOption>('24h');
   const [customRange, setCustomRange] = useState({ start: '2026-03-16', end: '2026-03-19' });
   const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('unread');
 
   // 상태 관리: logId → status
   const [statuses, setStatuses] = useState<Record<string, LogStatus>>({});
@@ -220,8 +217,9 @@ export default function LogView() {
     return byPeriod.filter(l => l.targetNickname.toLowerCase().includes(q));
   }, [byPeriod, search]);
 
-  // 상태별 필터
-  const filtered = useMemo(() => bySearch.filter(l => getStatus(l.id) === statusFilter), [bySearch, statusFilter, statuses]);
+  // 삭제 제외, unread + valid 분리
+  const unreadLogs = useMemo(() => bySearch.filter(l => getStatus(l.id) === 'unread'), [bySearch, statuses]);
+  const validLogs = useMemo(() => bySearch.filter(l => getStatus(l.id) === 'valid'), [bySearch, statuses]);
 
   // 현황 집계
   const stats = useMemo(() => {
@@ -235,6 +233,20 @@ export default function LogView() {
     else setValidTarget({ id: entry.id, nick: entry.targetNickname });
   };
   const handleDelete = (id: string) => setLogStatus(id, 'deleted');
+
+  const colSpan = source === 'REPORT' ? 8 : source === 'LIVE' ? 8 : 6;
+
+  // 행 렌더링 헬퍼
+  const renderRow = (l: LogEntry, dimmed: boolean) => {
+    const cls = dimmed ? 'opacity-40' : '';
+    const validBtn = dimmed ? undefined : () => handleValid(l);
+    const deleteBtn = dimmed ? undefined : () => handleDelete(l.id);
+    if (source === 'DM' && l.type === 'dm') return <TrDm key={l.id} l={l} onValid={validBtn!} onDelete={deleteBtn!} className={cls} dimmed={dimmed} />;
+    if (source === 'LIVE' && l.type === 'live') return <TrLive key={l.id} l={l} onValid={validBtn!} onDelete={deleteBtn!} className={cls} dimmed={dimmed} />;
+    if (source === 'OPENCHAT' && l.type === 'openchat') return <TrOc key={l.id} l={l} onValid={validBtn!} onDelete={deleteBtn!} className={cls} dimmed={dimmed} />;
+    if (source === 'REPORT' && l.type === 'report') return <TrRpt key={l.id} l={l} onValid={validBtn!} onDelete={deleteBtn!} className={cls} dimmed={dimmed} />;
+    return null;
+  };
 
   return (
     <div className="space-y-3">
@@ -266,23 +278,6 @@ export default function LogView() {
 
       {/* 현황 바 */}
       <StatsBar total={stats.total} unread={stats.unread} valid={stats.valid} deleted={stats.deleted} />
-
-      {/* 상태 탭 */}
-      <div className="flex items-center gap-1">
-        {([['unread', '안 읽음', stats.unread], ['valid', '유효', stats.valid], ['deleted', '삭제', stats.deleted]] as const).map(([key, label, cnt]) => (
-          <button
-            key={key}
-            onClick={() => setStatusFilter(key)}
-            className={`px-3 py-1 text-sm rounded-full border transition-colors ${
-              statusFilter === key
-                ? 'bg-gray-800 text-white border-gray-800'
-                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
-            }`}
-          >
-            {label} <span className="text-xs opacity-60">{cnt}</span>
-          </button>
-        ))}
-      </div>
 
       {/* 테이블 */}
       <div className="overflow-x-auto">
@@ -316,15 +311,20 @@ export default function LogView() {
             )}
           </thead>
           <tbody>
-            {filtered.length === 0 && (
-              <tr><td colSpan={8} className="py-12 text-center text-gray-400">
-                {statusFilter === 'unread' ? '미처리 로그가 없습니다' : `${statusFilter === 'valid' ? '유효' : '삭제'} 처리된 로그가 없습니다`}
-              </td></tr>
+            {/* 미처리 */}
+            {unreadLogs.length === 0 && validLogs.length === 0 && (
+              <tr><td colSpan={colSpan} className="py-12 text-center text-gray-400">로그가 없습니다</td></tr>
             )}
-            {source === 'DM' && (filtered as DmLog[]).map(l => <TrDm key={l.id} l={l} onValid={() => handleValid(l)} onDelete={() => handleDelete(l.id)} />)}
-            {source === 'LIVE' && (filtered as LiveLog[]).map(l => <TrLive key={l.id} l={l} onValid={() => handleValid(l)} onDelete={() => handleDelete(l.id)} />)}
-            {source === 'OPENCHAT' && (filtered as OpenChatLog[]).map(l => <TrOc key={l.id} l={l} onValid={() => handleValid(l)} onDelete={() => handleDelete(l.id)} />)}
-            {source === 'REPORT' && (filtered as ReportLog[]).map(l => <TrRpt key={l.id} l={l} onValid={() => handleValid(l)} onDelete={() => handleDelete(l.id)} />)}
+            {unreadLogs.length === 0 && validLogs.length > 0 && (
+              <tr><td colSpan={colSpan} className="py-6 text-center text-green-600 text-xs font-medium">미처리 로그 없음</td></tr>
+            )}
+            {unreadLogs.map(l => renderRow(l, false))}
+
+            {/* 구분선 + 유효 처리된 건 */}
+            {validLogs.length > 0 && (
+              <tr><td colSpan={colSpan} className="py-1"><div className="border-t-2 border-dashed border-green-300 my-1 flex items-center"><span className="text-xs text-green-500 bg-white px-2 -mt-3 ml-2">유효 처리 ({validLogs.length}건)</span></div></td></tr>
+            )}
+            {validLogs.map(l => renderRow(l, true))}
           </tbody>
         </table>
       </div>

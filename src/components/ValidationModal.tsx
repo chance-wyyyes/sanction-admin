@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { Label } from '../types';
-import { LABEL_TEXT } from '../types';
+import type { Label, SubLabel } from '../types';
+import { LABEL_TEXT, SUB_LABEL_TEXT, LABEL_TO_SUB_LABELS, SUB_LABEL_TO_LABEL } from '../types';
 
 type Channel = 'LIVE' | 'COMMUNITY' | 'TRADE';
 
@@ -10,32 +10,32 @@ const CHANNELS: { value: Channel; label: string }[] = [
   { value: 'TRADE', label: '거래' },
 ];
 
-const LABELS: Label[] = [
+const PARENT_LABELS: Exclude<Label, 'OTHER'>[] = [
   'EXTERNAL_TRADE',
   'COMMUNITY_VIOLATION',
   'PRODUCT_SELLING',
   'LIVE_VIOLATION',
   'DEAL_ISSUE',
   'ACCOUNT_ABUSE',
-  'OTHER',
 ];
 
 interface ValidationModalProps {
   nickname: string;
-  onSubmit: (data: { channel: Channel; label: Label; memo: string }) => void;
+  onSubmit: (data: { channel: Channel; label: Label; subLabel: SubLabel; memo: string }) => void;
   onClose: () => void;
 }
 
 export default function ValidationModal({ nickname, onSubmit, onClose }: ValidationModalProps) {
   const [channel, setChannel] = useState<Channel | null>(null);
-  const [label, setLabel] = useState<Label | null>(null);
+  const [subLabel, setSubLabel] = useState<SubLabel | null>(null);
   const [memo, setMemo] = useState('');
 
-  const canSubmit = channel && label;
+  const canSubmit = channel && subLabel;
 
   const handleSubmit = () => {
-    if (!channel || !label) return;
-    onSubmit({ channel, label, memo });
+    if (!channel || !subLabel) return;
+    const parentLabel = SUB_LABEL_TO_LABEL[subLabel];
+    onSubmit({ channel, label: parentLabel, subLabel, memo });
     onClose();
   };
 
@@ -73,22 +73,29 @@ export default function ValidationModal({ nickname, onSubmit, onClose }: Validat
             </div>
           </div>
 
-          {/* 라벨 */}
+          {/* 라벨 (하위 라벨 그룹핑) */}
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-2">라벨</label>
-            <div className="flex flex-wrap gap-2">
-              {LABELS.map((lb) => (
-                <button
-                  key={lb}
-                  onClick={() => setLabel(lb)}
-                  className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
-                    label === lb
-                      ? 'bg-blue-600 text-white border-blue-600'
-                      : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
-                  }`}
-                >
-                  {LABEL_TEXT[lb]}
-                </button>
+            <div className="space-y-3">
+              {PARENT_LABELS.map((parent) => (
+                <div key={parent}>
+                  <div className="text-xs text-gray-400 mb-1">{LABEL_TEXT[parent]}</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {LABEL_TO_SUB_LABELS[parent].map((sub) => (
+                      <button
+                        key={sub}
+                        onClick={() => setSubLabel(sub)}
+                        className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
+                          subLabel === sub
+                            ? 'bg-blue-600 text-white border-blue-600'
+                            : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                        }`}
+                      >
+                        {SUB_LABEL_TEXT[sub]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

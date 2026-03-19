@@ -17,7 +17,7 @@ import type {
   Report,
   AdminMemo,
 } from '../types';
-import { USER_TYPE_TEXT, LABEL_TEXT } from '../types';
+import { USER_TYPE_TEXT, LABEL_TEXT, SUB_LABEL_TEXT } from '../types';
 
 interface SanctionDetailPanelProps {
   user: SanctionUserSummary;
@@ -395,7 +395,7 @@ export default function SanctionDetailPanel({
                         </td>
                         <td className="py-2 pr-3">
                           <span className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">
-                            {LABEL_TEXT[v.label]}
+                            {v.subLabel ? SUB_LABEL_TEXT[v.subLabel] : LABEL_TEXT[v.label]}
                           </span>
                         </td>
                         <td className="py-2 pr-3 text-gray-500 text-xs">{v.adminNickname}</td>
