@@ -199,10 +199,16 @@ export default function LogView() {
   const [customRange, setCustomRange] = useState({ start: '2026-03-16', end: '2026-03-19' });
   const [search, setSearch] = useState('');
 
-  // 상태 관리: logId → status
-  const [statuses, setStatuses] = useState<Record<string, LogStatus>>({});
+  // 상태 관리: logId → status (localStorage 저장)
+  const [statuses, setStatuses] = useState<Record<string, LogStatus>>(() => {
+    try { const saved = localStorage.getItem('log-statuses'); return saved ? JSON.parse(saved) : {}; } catch { return {}; }
+  });
   const getStatus = (id: string): LogStatus => statuses[id] ?? 'unread';
-  const setLogStatus = (id: string, s: LogStatus) => setStatuses(prev => ({ ...prev, [id]: s }));
+  const setLogStatus = (id: string, s: LogStatus) => setStatuses(prev => {
+    const next = { ...prev, [id]: s };
+    localStorage.setItem('log-statuses', JSON.stringify(next));
+    return next;
+  });
 
   // 유효 모달
   const [dmValidTarget, setDmValidTarget] = useState<DmLog | null>(null);
