@@ -13,16 +13,18 @@ import type {
   Sanction,
   Warning,
   Detection,
+  Validation,
   Report,
   AdminMemo,
 } from '../types';
-import { USER_TYPE_TEXT, LABEL_TEXT } from '../types';
+import { USER_TYPE_TEXT, LABEL_TEXT, SUB_LABEL_TEXT } from '../types';
 
 interface SanctionDetailPanelProps {
   user: SanctionUserSummary;
   sanctions: Sanction[];
   warnings: Warning[];
   detections: Detection[];
+  validations: Validation[];
   reports: Report[];
   memos: AdminMemo[];
   onClose: () => void;
@@ -37,28 +39,27 @@ function formatDateTime(iso: string) {
   return { date: `${month}.${day}`, time: `${hours}:${minutes}` };
 }
 
-function buildMonthlyChart(reports: Report[], detections: Detection[]) {
-  const months: Record<string, { month: string; 신고: number; 감지: number }> = {};
+function buildMonthlyChart(detections: Detection[], validations: Validation[]) {
+  const months: Record<string, { month: string; 감지: number; 유효: number }> = {};
 
-  // 최근 6개월 기준 빈 슬롯 생성
   const now = new Date();
   for (let i = 5; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
     const label = `${d.getMonth() + 1}월`;
-    months[key] = { month: label, 신고: 0, 감지: 0 };
-  }
-
-  for (const r of reports) {
-    const d = new Date(r.createdAt);
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-    if (months[key]) months[key].신고++;
+    months[key] = { month: label, 감지: 0, 유효: 0 };
   }
 
   for (const det of detections) {
     const d = new Date(det.createdAt);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
     if (months[key]) months[key].감지++;
+  }
+
+  for (const val of validations) {
+    const d = new Date(val.createdAt);
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    if (months[key]) months[key].유효++;
   }
 
   return Object.values(months);
@@ -98,21 +99,46 @@ function CollapsibleList<T extends { id: string }>({
   );
 }
 
+/** 패트롤 감지 내용을 파싱해서 표시 */
+function DetectionContent({ content }: { content: string }) {
+  const lines = content.split('\n');
+  const headline = lines[0] || '';
+  const violationType = lines[1] || '';
+  const context = lines.slice(2).filter((l) => l.trim());
+
+  return (
+    <div className="space-y-1">
+      <div className="font-semibold text-gray-800 text-sm">{headline}</div>
+      {violationType && (
+        <div className="text-xs text-purple-600">{violationType}</div>
+      )}
+      {context.length > 0 && (
+        <div className="bg-gray-50 border-l-2 border-gray-300 pl-3 py-1.5 mt-1 space-y-0.5">
+          {context.map((line, i) => (
+            <div key={i} className="text-xs text-gray-500">{line}</div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function SanctionDetailPanel({
   user,
   sanctions,
   warnings,
   detections,
+  validations,
   reports,
   memos,
   onClose,
 }: SanctionDetailPanelProps) {
   const chartData = useMemo(
-    () => buildMonthlyChart(reports, detections),
-    [reports, detections]
+    () => buildMonthlyChart(detections, validations),
+    [detections, validations]
   );
 
-  const hasChartData = reports.length > 0 || detections.length > 0;
+  const hasChartData = detections.length > 0 || validations.length > 0;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
@@ -150,7 +176,6 @@ export default function SanctionDetailPanel({
               </span>
             ))}
           </div>
-          {/* 가입일 / 입점일 */}
           <div className="mt-2 flex gap-4 text-xs text-gray-500">
             <span>
               가입일{' '}
@@ -167,16 +192,18 @@ export default function SanctionDetailPanel({
               </span>
             )}
           </div>
-          {/* 요약 수치 */}
           <div className="mt-2 flex gap-4 text-xs text-gray-500">
-            <span>
-              신고 <strong className="text-gray-800">{reports.length}</strong>
+            <span className="text-gray-400">
+              신고 <strong className="text-gray-400">{reports.length}</strong>
+            </span>
+            <span className="text-gray-400">
+              감지 <strong className="text-gray-400">{detections.length}</strong>
             </span>
             <span>
-              감지 <strong className="text-gray-800">{detections.length}</strong>
+              유효 <strong className="text-blue-600">{validations.length}</strong>
             </span>
             <span>
-              경고 <strong className="text-gray-800">{warnings.length}</strong>
+              경고 <strong className="text-orange-600">{warnings.length}</strong>
             </span>
             <span>
               제재 <strong className="text-red-600">{sanctions.length}</strong>
@@ -185,10 +212,10 @@ export default function SanctionDetailPanel({
         </div>
 
         <div className="p-5 space-y-6">
-          {/* 신고 + 감지 추이 차트 */}
+          {/* 감지 + 유효 추이 차트 */}
           {hasChartData && (
             <section>
-              <h3 className="font-bold text-sm mb-3">신고 / 감지 추이 (최근 6개월)</h3>
+              <h3 className="font-bold text-sm mb-3">감지 / 유효 추이 (최근 6개월)</h3>
               <div className="bg-gray-50 rounded-lg p-3">
                 <ResponsiveContainer width="100%" height={180}>
                   <BarChart data={chartData}>
@@ -196,8 +223,8 @@ export default function SanctionDetailPanel({
                     <YAxis allowDecimals={false} tick={{ fontSize: 12 }} width={30} />
                     <Tooltip />
                     <Legend iconSize={10} wrapperStyle={{ fontSize: 12 }} />
-                    <Bar dataKey="신고" fill="#93c5fd" radius={[2, 2, 0, 0]} />
-                    <Bar dataKey="감지" fill="#fbbf24" radius={[2, 2, 0, 0]} />
+                    <Bar dataKey="감지" fill="#d1d5db" radius={[2, 2, 0, 0]} />
+                    <Bar dataKey="유효" fill="#3b82f6" radius={[2, 2, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -205,13 +232,11 @@ export default function SanctionDetailPanel({
           )}
 
           {/* 어드민 메모 */}
-          <section>
-            <h3 className="font-bold text-sm mb-2">
-              어드민 메모 ({memos.length}건)
-            </h3>
-            {memos.length === 0 ? (
-              <p className="text-sm text-gray-400">메모 없음</p>
-            ) : (
+          {memos.length > 0 && (
+            <section>
+              <h3 className="font-bold text-sm mb-2">
+                어드민 메모 ({memos.length}건)
+              </h3>
               <div className="space-y-2">
                 {memos.map((m) => {
                   const dt = formatDateTime(m.createdAt);
@@ -233,8 +258,8 @@ export default function SanctionDetailPanel({
                   );
                 })}
               </div>
-            )}
-          </section>
+            </section>
+          )}
 
           {/* 제재 이력 */}
           <section>
@@ -342,12 +367,12 @@ export default function SanctionDetailPanel({
             )}
           </section>
 
-          {/* 감지 이력 */}
+          {/* 유효 이력 */}
           <section>
             <h3 className="font-bold text-sm mb-2">
-              감지 이력 ({detections.length}건)
+              유효 이력 ({validations.length}건)
             </h3>
-            {detections.length === 0 ? (
+            {validations.length === 0 ? (
               <p className="text-sm text-gray-400">이력 없음</p>
             ) : (
               <table className="w-full text-sm">
@@ -355,40 +380,64 @@ export default function SanctionDetailPanel({
                   <tr className="border-b border-gray-200 text-left text-gray-500">
                     <th className="py-2 pr-3 font-medium">일시</th>
                     <th className="py-2 pr-3 font-medium">라벨</th>
-                    <th className="py-2 font-medium">감지 내용</th>
+                    <th className="py-2 pr-3 font-medium">확인자</th>
+                    <th className="py-2 font-medium">메모</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <CollapsibleList
-                    items={detections}
-                    renderItem={(d) => {
-                      const dt = formatDateTime(d.createdAt);
-                      return (
-                        <tr key={d.id} className="border-b border-gray-100">
-                          <td className="py-2 pr-3 whitespace-nowrap text-gray-600">
-                            <div>{dt.date}</div>
-                            <div className="text-xs text-gray-400">{dt.time}</div>
-                          </td>
-                          <td className="py-2 pr-3">
-                            <span className="text-xs bg-yellow-50 text-yellow-700 px-1.5 py-0.5 rounded">
-                              {LABEL_TEXT[d.label]}
-                            </span>
-                          </td>
-                          <td className="py-2 text-gray-600">
-                            {d.source}: {d.content}
-                          </td>
-                        </tr>
-                      );
-                    }}
-                  />
+                  {validations.map((v) => {
+                    const dt = formatDateTime(v.createdAt);
+                    return (
+                      <tr key={v.id} className="border-b border-gray-100">
+                        <td className="py-2 pr-3 whitespace-nowrap text-gray-600">
+                          <div>{dt.date}</div>
+                          <div className="text-xs text-gray-400">{dt.time}</div>
+                        </td>
+                        <td className="py-2 pr-3">
+                          <span className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">
+                            {v.subLabel ? SUB_LABEL_TEXT[v.subLabel] : LABEL_TEXT[v.label]}
+                          </span>
+                        </td>
+                        <td className="py-2 pr-3 text-gray-500 text-xs">{v.adminNickname}</td>
+                        <td className="py-2 text-gray-600">{v.note}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             )}
           </section>
 
-          {/* 신고 이력 */}
+          {/* 감지 이력 (패트롤 형식) */}
           <section>
             <h3 className="font-bold text-sm mb-2">
+              감지 이력 ({detections.length}건)
+            </h3>
+            {detections.length === 0 ? (
+              <p className="text-sm text-gray-400">이력 없음</p>
+            ) : (
+              <div className="space-y-3">
+                {detections.map((d) => {
+                  const dt = formatDateTime(d.createdAt);
+                  return (
+                    <div key={d.id} className="border border-gray-200 rounded-lg p-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs bg-yellow-50 text-yellow-700 px-1.5 py-0.5 rounded">
+                          {LABEL_TEXT[d.label]}
+                        </span>
+                        <span className="text-xs text-gray-400">{dt.date} {dt.time}</span>
+                      </div>
+                      <DetectionContent content={d.content} />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+
+          {/* 신고 이력 */}
+          <section>
+            <h3 className="font-bold text-sm mb-2 text-gray-400">
               신고 이력 ({reports.length}건)
             </h3>
             {reports.length === 0 ? (
@@ -396,7 +445,7 @@ export default function SanctionDetailPanel({
             ) : (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-200 text-left text-gray-500">
+                  <tr className="border-b border-gray-200 text-left text-gray-400">
                     <th className="py-2 pr-3 font-medium">일시</th>
                     <th className="py-2 pr-3 font-medium">신고자</th>
                     <th className="py-2 font-medium">신고 사유</th>
@@ -409,14 +458,14 @@ export default function SanctionDetailPanel({
                       const dt = formatDateTime(r.createdAt);
                       return (
                         <tr key={r.id} className="border-b border-gray-100">
-                          <td className="py-2 pr-3 whitespace-nowrap text-gray-600">
+                          <td className="py-2 pr-3 whitespace-nowrap text-gray-400">
                             <div>{dt.date}</div>
-                            <div className="text-xs text-gray-400">{dt.time}</div>
+                            <div className="text-xs text-gray-300">{dt.time}</div>
                           </td>
-                          <td className="py-2 pr-3 text-gray-600">
+                          <td className="py-2 pr-3 text-gray-400">
                             {r.reporterNickname}
                           </td>
-                          <td className="py-2 text-gray-600">{r.reason}</td>
+                          <td className="py-2 text-gray-400">{r.reason}</td>
                         </tr>
                       );
                     }}

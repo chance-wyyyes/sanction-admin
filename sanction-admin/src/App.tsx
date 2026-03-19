@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import type {
-  PeriodFilter,
   UserType,
   Category,
   SortConfig,
@@ -13,6 +12,7 @@ import {
   mockSanctions,
   mockWarnings,
   mockDetections,
+  mockValidations,
   mockReports,
   mockMemos,
 } from './data/mock';
@@ -20,11 +20,13 @@ import Filters from './components/Filters';
 import SanctionUserTable from './components/SanctionUserTable';
 import SanctionDetailPanel from './components/SanctionDetailPanel';
 import MemoModal from './components/MemoModal';
+import ValidationModal from './components/ValidationModal';
 import Pagination from './components/Pagination';
 import FieldDefinitions from './components/FieldDefinitions';
 import LabelingGuide from './components/LabelingGuide';
+import LogView from './components/LogView';
 
-type Tab = 'main' | 'definitions' | 'labeling';
+type Tab = 'main' | 'log' | 'definitions' | 'labeling';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -32,11 +34,6 @@ function App() {
   const [activeTab, setActiveTab] = useState<Tab>('main');
 
   // 필터 상태
-  const [period, setPeriod] = useState<PeriodFilter>('all');
-  const [customDateRange, setCustomDateRange] = useState({
-    start: '2026-01-01',
-    end: '2026-03-11',
-  });
   const [userTypeFilter, setUserTypeFilter] = useState<UserType | 'ALL'>('ALL');
   const [categoryFilter, setCategoryFilter] = useState<Category | 'ALL'>('ALL');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'SANCTIONED' | 'NONE'>(
@@ -44,9 +41,9 @@ function App() {
   );
   const [searchQuery, setSearchQuery] = useState('');
 
-  // 정렬 상태 (기본: 누적 제재 내림차순)
+  // 정렬 상태 (기본: 마지막 유효일 내림차순)
   const [sortConfig, setSortConfig] = useState<SortConfig>({
-    field: 'cumulativeSanctionCount',
+    field: 'lastValidAt',
     direction: 'desc',
   });
 
@@ -56,7 +53,10 @@ function App() {
   // 상세 패널
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
-  // 메모 모달
+  // 유효 모달
+  const [validationUserId, setValidationUserId] = useState<string | null>(null);
+
+  // 메모 모달 (상세 패널 내)
   const [memoUserId, setMemoUserId] = useState<string | null>(null);
   const [memoStore, setMemoStore] = useState<Record<string, AdminMemo[]>>(mockMemos);
 
@@ -64,24 +64,20 @@ function App() {
   const filteredUsers = useMemo(() => {
     let result = [...mockUsers];
 
-    // 구분 필터
     if (userTypeFilter !== 'ALL') {
       result = result.filter((u) => u.userType === userTypeFilter);
     }
 
-    // 카테고리 필터
     if (categoryFilter !== 'ALL') {
       result = result.filter((u) => u.lastCategory === categoryFilter);
     }
 
-    // 상태 필터
     if (statusFilter === 'SANCTIONED') {
       result = result.filter((u) => u.status === 'SANCTIONED');
     } else if (statusFilter === 'NONE') {
       result = result.filter((u) => u.status === null);
     }
 
-    // 검색
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
       result = result.filter((u) => u.nickname.toLowerCase().includes(q));
@@ -143,8 +139,8 @@ function App() {
     setSelectedUserId(null);
   };
 
-  const handleMemoClick = (userId: string) => {
-    setMemoUserId(userId);
+  const handleValidationClick = (userId: string) => {
+    setValidationUserId(userId);
   };
 
   const handleMemoSubmit = (content: string) => {
@@ -168,10 +164,6 @@ function App() {
   };
 
   // 필터 변경 시 1페이지로 리셋
-  const handlePeriodChange = (p: PeriodFilter) => {
-    setPeriod(p);
-    setCurrentPage(1);
-  };
   const handleUserTypeChange = (t: UserType | 'ALL') => {
     setUserTypeFilter(t);
     setCurrentPage(1);
@@ -192,6 +184,11 @@ function App() {
   // 상세 패널용 데이터
   const selectedUser = selectedUserId
     ? mockUsers.find((u) => u.userId === selectedUserId) ?? null
+    : null;
+
+  // 유효 모달용 데이터
+  const validationUser = validationUserId
+    ? mockUsers.find((u) => u.userId === validationUserId) ?? null
     : null;
 
   // 메모 모달용 데이터
@@ -217,14 +214,14 @@ function App() {
               제재 관리
             </button>
             <button
-              onClick={() => setActiveTab('definitions')}
+              onClick={() => setActiveTab('log')}
               className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
-                activeTab === 'definitions'
+                activeTab === 'log'
                   ? 'bg-gray-800 text-white'
                   : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
               }`}
             >
-              필드 정의서
+              로그
             </button>
             <button
               onClick={() => setActiveTab('labeling')}
@@ -236,10 +233,24 @@ function App() {
             >
               라벨링
             </button>
+            <button
+              onClick={() => setActiveTab('definitions')}
+              className={`px-4 py-1.5 text-sm rounded-lg transition-colors ${
+                activeTab === 'definitions'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              필드 정의서
+            </button>
           </div>
         </div>
 
-        {activeTab === 'definitions' ? (
+        {activeTab === 'log' ? (
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <LogView />
+          </div>
+        ) : activeTab === 'definitions' ? (
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <FieldDefinitions />
           </div>
@@ -252,10 +263,6 @@ function App() {
         {/* 필터 */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
           <Filters
-            period={period}
-            onPeriodChange={handlePeriodChange}
-            customDateRange={customDateRange}
-            onCustomDateChange={setCustomDateRange}
             userTypeFilter={userTypeFilter}
             onUserTypeFilterChange={handleUserTypeChange}
             categoryFilter={categoryFilter}
@@ -270,8 +277,7 @@ function App() {
         {/* 테이블 */}
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="text-xs text-gray-400 mb-2">
-            총 {sortedUsers.length}명 | 신고/감지/경고/제재 숫자 = 선택한 기간 내
-            카운트 | 누적 제재 = 전체 기간 고정
+            총 {sortedUsers.length}명 | 전체 누적 기준 | 기본 정렬: 마지막 유효일
           </div>
 
           <SanctionUserTable
@@ -279,7 +285,7 @@ function App() {
             sortConfig={sortConfig}
             onSort={handleSort}
             onDetailClick={handleDetailClick}
-            onMemoClick={handleMemoClick}
+            onMemoClick={handleValidationClick}
           />
 
           <Pagination
@@ -299,9 +305,22 @@ function App() {
           sanctions={mockSanctions[selectedUser.userId] ?? []}
           warnings={mockWarnings[selectedUser.userId] ?? []}
           detections={mockDetections[selectedUser.userId] ?? []}
+          validations={mockValidations[selectedUser.userId] ?? []}
           reports={mockReports[selectedUser.userId] ?? []}
           memos={memoStore[selectedUser.userId] ?? []}
           onClose={handleCloseDetail}
+        />
+      )}
+
+      {/* 유효 모달 */}
+      {validationUser && (
+        <ValidationModal
+          nickname={validationUser.nickname}
+          onSubmit={(data) => {
+            console.log('유효 저장:', validationUser.nickname, data);
+            alert(`유효 처리 완료\n유저: ${validationUser.nickname}\n채널: ${data.channel}\n라벨: ${data.label}\n하위라벨: ${data.subLabel}\n메모: ${data.memo || '(없음)'}`);
+          }}
+          onClose={() => setValidationUserId(null)}
         />
       )}
 
